@@ -54,7 +54,7 @@ export const logout = (next) => {
 };
 
 export const isAuthenticated = () => {
-  return typeof window == undefined
+  return typeof window === undefined
     ? false
     : localStorage.getItem("jwt")
     ? JSON.parse(localStorage.getItem("jwt"))
