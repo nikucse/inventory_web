@@ -1,4 +1,4 @@
-import { API } from "../backend.js";
+import { API } from "../backend";
 
 export const register = (user) => {
   return fetch(`${API}/user/register`, {
@@ -16,11 +16,8 @@ export const register = (user) => {
 };
 
 export const login = (user) => {
-  const api = "http://localhost:8181/technuzone/public/login";
-
-  console.log(api, "=========>", user);
-
-  return fetch(`${api}`, {
+  console.log("User  ========>  ", user);
+  return fetch(`${API}/public/login`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -29,12 +26,15 @@ export const login = (user) => {
     body: JSON.stringify(user),
   })
     .then((response) => {
+      console.log(response.headers["Jwt-Token"]);
       return response.json();
     })
     .catch((err) => console.log(err));
 };
 
 export const authenticate = (data, next) => {
+  console.log("auth.authenticate  : ", data);
+
   if (typeof window !== undefined) {
     localStorage.setItem("jwt", JSON.stringify(data));
     next();
