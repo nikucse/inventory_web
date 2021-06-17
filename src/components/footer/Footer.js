@@ -3,16 +3,14 @@ import React from "react";
 const Footer = () => {
   return (
     <div>
-      <footer class='p-3 bg-light text-dark text-center position-relative'>
-        <div class='container'>
-          <p class='lead center'>
-            Copyright &copy;{" "}
-            <a
-              href='http://www.technuzone.com/'
-              class='position-absolute center'>
-              Technuzone@gmail.com
+      <footer className='p-5 bg-dark text-light text-center  position-relative'>
+        <div className='container'>
+          <div className='text-center p-3'>
+            © 2021 Copyright :
+            <a className='text-light' href='https://technuzone.com/'>
+              <span className='p-2'>Technuzone.com</span>
             </a>
-          </p>
+          </div>
         </div>
       </footer>
     </div>

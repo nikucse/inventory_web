@@ -7,8 +7,8 @@ import "./Login.css";
 
 const Login = () => {
   const [values, setValues] = useState({
-    email: "",
-    password: "",
+    email: "nikul@gmail.com",
+    password: "Nikul@123",
     error: "",
     loading: false,
     didRedirect: false,
@@ -45,9 +45,9 @@ const Login = () => {
     if (didRedirect) {
       console.log(user);
       if (user && user.role === "ROLE_ADMIN") {
-        return <Redirect to='/admin/dashboard' />;
+        return <Redirect to='/layout' />;
       } else {
-        return <Redirect to='/user/dashboard' />;
+        return <Redirect to='/layout' />;
       }
     }
     if (isAuthenticated()) {

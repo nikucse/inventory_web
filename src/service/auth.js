@@ -1,4 +1,5 @@
 import { API } from "../backend";
+import axios from "axios";
 
 export const register = (user) => {
   return fetch(`${API}/user/register`, {
@@ -16,27 +17,19 @@ export const register = (user) => {
 };
 
 export const login = (user) => {
-  console.log("User  ========>  ", user);
-  return fetch(`${API}/public/login`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  })
-    .then((response) => {
-      console.log(response.headers["Jwt-Token"]);
-      return response.json();
+  return axios
+    .post(`${API}/public/login`, user)
+    .then((res) => {
+      return res.data;
     })
-    .catch((err) => console.log(err));
+    .catch((error) => console.error(error));
 };
 
 export const authenticate = (data, next) => {
   console.log("auth.authenticate  : ", data);
 
   if (typeof window !== undefined) {
-    localStorage.setItem("jwt", JSON.stringify(data));
+    localStorage.setItem("jwt", JSON.stringify(data.jwtToken));
     next();
   }
 };
