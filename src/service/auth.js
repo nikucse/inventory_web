@@ -2,16 +2,10 @@ import { API } from "../backend";
 import axios from "axios";
 
 export const register = (user) => {
-  return fetch(`${API}/user/register`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  })
+  return axios
+    .post(`${API}/user/register`, user)
     .then((response) => {
-      return response.json();
+      return response.data.json();
     })
     .catch((err) => console.log(err));
 };

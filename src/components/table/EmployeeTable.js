@@ -6,29 +6,54 @@ const EmployeeTable = () => {
       <table className='table'>
         <thead>
           <tr>
-            <th scope='col'>#</th>
-            <th scope='col'>First</th>
-            <th scope='col'>Last</th>
-            <th scope='col'>Handle</th>
+            <th scope='col'>Full Name</th>
+            <th scope='col'>Contact No</th>
+            <th scope='col'>Designation</th>
+            <th scope='col'>Per Day Wages</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th scope='row'>1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+            <th scope='row'>Nikul Kumar</th>
+            <td>9958597400</td>
+            <td>Software Developer</td>
+            <td>500</td>
           </tr>
           <tr>
-            <th scope='row'>2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
+            <th scope='row'>Nikul Kumar</th>
+            <td>9958597400</td>
+            <td>Software Developer</td>
+            <td>500</td>
           </tr>
           <tr>
-            <th scope='row'>3</th>
-            <td colspan='2'>Larry the Bird</td>
-            <td>@twitter</td>
+            <th scope='row'>Nikul Kumar</th>
+            <td>9958597400</td>
+            <td>Software Developer</td>
+            <td>500</td>
+          </tr>
+          <tr>
+            <th scope='row'>Nikul Kumar</th>
+            <td>9958597400</td>
+            <td>Software Developer</td>
+            <td>500</td>
+          </tr>
+          <tr>
+            <th scope='row'>Nikul Kumar</th>
+            <td>9958597400</td>
+            <td>Software Developer</td>
+            <td>500</td>
+          </tr>
+          <tr>
+            <th scope='row'>Nikul Kumar</th>
+            <td>9958597400</td>
+            <td>Software Developer</td>
+            <td>500</td>
+          </tr>
+          <tr>
+            <th scope='row'>Nikul Kumar</th>
+            <td>9958597400</td>
+            <td>Software Developer</td>
+            <td>500</td>
           </tr>
         </tbody>
       </table>

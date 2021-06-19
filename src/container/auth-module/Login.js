@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
-
 import { authenticate, login, isAuthenticated } from "../../service/auth";
 
 import "./Login.css";
