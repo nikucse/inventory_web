@@ -12,6 +12,7 @@ import AddEmployee from "./components/form/AddEmployee";
 import AddExpense from "./components/form/AddExpense";
 import AddMaterial from "./components/form/AddMaterial";
 import AddOrder from "./components/form/AddOrder";
+import ProductTable from "./components/table/ProductTable";
 
 const Routes = () => {
   return (
@@ -24,6 +25,7 @@ const Routes = () => {
         <Route path='/admin/dashboard' exact component={Dashboard} />
         <Route path='/super/dashboard' exact component={Dashboard} />
         <Route path='/product' exact component={AddProduct} />
+        <Route path='/product/list' exact component={ProductTable} />
         <Route path='/material' exact component={AddMaterial} />
         <Route path='/bill' exact component={AddBill} />
         <Route path='/customer' exact component={AddCustomer} />

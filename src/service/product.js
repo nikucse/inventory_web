@@ -1,9 +1,20 @@
 import { API } from "../backend";
 import axios from "axios";
 
+const token = JSON.parse(localStorage.getItem("jwt"));
+
+const authAxios = axios.create({
+  baseURL: API,
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+});
+
 export const addProduct = (product) => {
-  return axios
-    .post(`${API}/product`, product)
+  console.log("Product    -===========>  ", product);
+
+  return authAxios
+    .post(`/product/add`, product)
     .then((res) => {
       return res.data;
     })
@@ -11,17 +22,17 @@ export const addProduct = (product) => {
 };
 
 export const getAllProduct = () => {
-  return axios
-    .get(`${API}/product`)
-    .then((res) => {
-      return res.data;
+  return authAxios
+    .get(`/product`)
+    .then((response) => {
+      return response.data;
     })
-    .catch((error) => console.error(error));
+    .catch((err) => console.log(err));
 };
 
 export const getProductByDate = (date) => {
-  return axios
-    .get(`${API}/product/${date}`)
+  return authAxios
+    .get(`/product/${date}`)
     .then((res) => {
       return res.data;
     })
@@ -29,8 +40,8 @@ export const getProductByDate = (date) => {
 };
 
 export const getProductById = (id) => {
-  return axios
-    .get(`${API}/product/id/${id}`)
+  return authAxios
+    .get(`/product/id/${id}`)
     .then((res) => {
       return res.data;
     })

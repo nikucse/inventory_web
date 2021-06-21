@@ -100,8 +100,8 @@ const AddProduct = () => {
             className='form-select'
             onChange={handleChange("category")}
             value={category}>
-            <option selected>BED</option>
-            <option>SOFA</option>
+            <option value={"Bed"}>BED</option>
+            <option value={"Sofa"}>SOFA</option>
           </select>
         </div>
         <div className='col-md-4'>
@@ -118,11 +118,11 @@ const AddProduct = () => {
           />
         </div>
         <div className='col-md-4'>
-          <label htmlFor='productImage' class='form-label'>
+          <label htmlFor='productImage' className='form-label'>
             Product Image
           </label>
           <input
-            class='form-control'
+            className='form-control'
             type='file'
             id='productImage'
             multiple
@@ -178,9 +178,24 @@ const AddProduct = () => {
             className='form-select'
             onChange={handleChange("buildBy")}
             value={buildBy}>
-            <option selected>Selected...</option>
-            <option>Rajesh Sharma</option>
-            <option>Manoj Sharma</option>
+            <option value={""}>Selected...</option>
+            <option value={"Rajesh Sharma"}>Rajesh Sharma</option>
+            <option value={"Manoj Sharma"}>Manoj Sharma</option>
+          </select>
+        </div>
+
+        <div className='col-md-3'>
+          <label htmlFor='location' className='form-label'>
+            Location
+          </label>
+          <select
+            id='location'
+            className='form-select'
+            onChange={handleChange("location")}
+            value={location}>
+            <option value={""}>Selected...</option>
+            <option value={"Factory"}>Factory</option>
+            <option value={"Site"}>Site</option>
           </select>
         </div>
 
@@ -193,12 +208,12 @@ const AddProduct = () => {
             className='form-select'
             onChange={handleChange("status")}
             value={status}>
-            <option selected>Initiated</option>
-            <option>InProgress</option>
-            <option>Polish</option>
-            <option>Kushan</option>
-            <option>Dispatched</option>
-            <option>Dilevered</option>
+            <option value={"Initiated"}>Initiated</option>
+            <option value={"InProgress"}>InProgress</option>
+            <option value={"Polish"}>Polish</option>
+            <option value={"Kushan"}>Kushan</option>
+            <option value={"Dispatched"}>Dispatched</option>
+            <option value={"Dilevered"}>Dilevered</option>
           </select>
         </div>
         <div className='col-md-4'>
@@ -216,7 +231,7 @@ const AddProduct = () => {
         </div>
 
         <div className='col-12 center'>
-          <button type='submit' className='btn btn-primary'>
+          <button type='submit' className='btn btn-primary' onClick={onSubmit}>
             Submit
           </button>
         </div>

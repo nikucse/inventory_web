@@ -14,6 +14,7 @@ export const login = (user) => {
   return axios
     .post(`${API}/public/login`, user)
     .then((res) => {
+      console.log("================>", res);
       return res.data;
     })
     .catch((error) => console.error(error));
