@@ -1,5 +1,4 @@
-import { API } from "../backend";
-import axios from "axios";
+import { authAxios as axios } from "../util/interceptor";
 
 export const addEmployee = (employee) => {
   return axios

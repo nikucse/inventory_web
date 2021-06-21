@@ -1,14 +1,4 @@
-import { API } from "../backend";
-import axios from "axios";
-
-const token = JSON.parse(localStorage.getItem("jwt"));
-
-const authAxios = axios.create({
-  baseURL: API,
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-});
+import { authAxios } from "../util/interceptor";
 
 export const addProduct = (product) => {
   console.log("Product    -===========>  ", product);
