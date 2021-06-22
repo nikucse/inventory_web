@@ -2,6 +2,7 @@ import React from "react";
 
 const Header = () => {
   return (
+  
     <div>
       <nav className='navbar navbar-expand-md bg-dark navbar-dark pb-2 fixed-top'>
         <div className='container'>
@@ -15,7 +16,7 @@ const Header = () => {
             data-bs-target='#navmenu'>
             <span className='navbar-toggler-icon'></span>
           </button>
-          <div className='collapse navbar-collapse' id='navmenu'>
+          <div className='collapse navbar-collapse bg-dark' id='navmenu'>
             <ul className='navbar-nav ms-auto'>
               <li className='nav-item'>
                 <div className='input-group my-2 mr-3'>
