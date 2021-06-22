@@ -4,7 +4,7 @@ import NavbarList from "./NavbarList";
 const SideNavbar = () => {
   return (
     <div>
-      <h2>SideNavbar</h2>
+      {/* <h2>SideNavbar</h2> */}
       <NavbarList />
     </div>
   );
