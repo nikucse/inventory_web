@@ -76,10 +76,10 @@ const AddProduct = () => {
 
     return (
         <div className='container mt-3'>
-            <h2 className='ml-3'>Add Product</h2>
+            <h2 className=''>Add Product</h2>
             <form className='g-3'>
                 <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-6 pl-0">
                         <div className='col-md-12 mb-3'>
                             <label htmlFor='name' className='form-label'>
                                 Product Name
@@ -98,7 +98,7 @@ const AddProduct = () => {
                             <label htmlFor='category' className='form-label'>
                                 Category
                             </label>
-                            <select class="form-control form-control">
+                            <select class="form-control">
                                 <option selected>BED</option>
                                 <option>SOFA</option>
                             </select>
@@ -134,7 +134,7 @@ const AddProduct = () => {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-6 pl-0">
 
                         <div className='col-md-12 mb-3'>
                             <label htmlFor='color' className='form-label'>
@@ -177,7 +177,7 @@ const AddProduct = () => {
                             />
                         </div>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-6 pl-0">
 
                         <div className='col-md-12 mb-3'>
                             <label htmlFor='buildBy' className='form-label'>
@@ -227,8 +227,8 @@ const AddProduct = () => {
                     </div>
                 </div>
 
-                <div className='col-md-6 center mb-3 mx-auto'>
-                    <button type='submit' className='btn btn-primary btn-block'>
+                <div className='center mb-3 mx-auto'>
+                    <button type='submit' className='btn btn-primary'>
                         Submit
                     </button>
                 </div>

@@ -23,12 +23,12 @@ export const SidebarData = [
     icon: <FaIcons.FaCartPlus />,
     cName: 'nav-text'
   },
-  {
-    title: 'Add Products back',
-    path: '/add-product-back',
-    icon: <FaIcons.FaCartPlus />,
-    cName: 'nav-text'
-  },
+  // {
+  //   title: 'Add Products back',
+  //   path: '/add-product-back',
+  //   icon: <FaIcons.FaCartPlus />,
+  //   cName: 'nav-text'
+  // },
   {
     title: 'Report',
     path: '/reports',
@@ -44,13 +44,25 @@ export const SidebarData = [
   },
   {
     title: 'Employees',
-    path: '/employee',
+    path: '/add-employee',
+    icon: <IoIcons.IoMdPeople />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Add Employee',
+    path: '/add-employee',
     icon: <IoIcons.IoMdPeople />,
     cName: 'nav-text'
   },
   {
     title: 'Customers',
-    path: '/customer',
+    path: '/add-customer',
+    icon: <IoIcons.IoIosPaper />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Add Customers',
+    path: '/add-customer',
     icon: <IoIcons.IoIosPaper />,
     cName: 'nav-text'
   },
@@ -79,30 +91,4 @@ export const SidebarData = [
     cName: 'nav-text'
   },
  
-
-  
-  // {
-  //   title: 'Messages',
-  //   path: '/messages',
-  //   icon: <FaIcons.FaEnvelopeOpenText />,
-  //   cName: 'nav-text'
-  // },
-  // {
-  //   title: 'Team',
-  //   path: '/team',
-  //   icon: <IoIcons.IoMdPeople />,
-  //   cName: 'nav-text'
-  // },
-  // {
-  //   title: 'Reports',
-  //   path: '/reports',
-  //   icon: <IoIcons.IoIosPaper />,
-  //   cName: 'nav-text'
-  // },
-  // {
-  //   title: 'Support',
-  //   path: '/support',
-  //   icon: <IoIcons.IoMdHelpCircle />,
-  //   cName: 'nav-text'
-  // }
 ];

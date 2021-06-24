@@ -2,7 +2,6 @@ import React from "react";
 import Login from "../src/container/auth-module/Login";
 // import Navbar from "./components/navbar/Navbar";
 import Layout from "./container/layout/Layout";
-import AddProduct_back from "./components/form/AddProduct_back";
 import AddProduct from "./components/form/AddProduct";
 import AddAttendance from "./components/form/AddAttendance";
 import AddBill from "./components/form/AddBill";
@@ -23,28 +22,27 @@ const Routes = () => {
   return (
     <Router>
       <Navbar />
-        <Switch>
-          <Route path='/' exact component={Home} />
-          <Route path='/reports' component={Reports} />
-          <Route path='/products' component={Products} />
-          <Route path='/add-product-back' exact component={AddProduct_back} />
-          <Route path='/add-product' exact component={AddProduct} />
-          <Route path='/' exact component={Login} />
-          <Route path='/dashboard' exact component={Layout} />
-          {/* <Route path='/navbar' exact component={Navbar} /> */}
-          <Route path='/user/dashboard' exact component={Dashboard} />
-          <Route path='/admin/dashboard' exact component={Dashboard} />
-          <Route path='/super/dashboard' exact component={Dashboard} />
-          <Route path='/material' exact component={AddMaterial} />
-          <Route path='/bill' exact component={AddBill} />
-          <Route path='/customer' exact component={AddCustomer} />
-          <Route path='/employee' exact component={AddEmployee} />
-          <Route path='/expense' exact component={AddExpense} />
-          <Route path='/attendance' exact component={AddAttendance} />
-          <Route path='/order' exact component={AddOrder} />
-        </Switch>
-      </Router>
-    
+      <Switch>
+        <Route path='/' exact component={Home} />
+        <Route path='/reports' component={Reports} />
+        <Route path='/products' component={Products} />
+        <Route path='/add-product' exact component={AddProduct} />
+        <Route path='/' exact component={Login} />
+        <Route path='/dashboard' exact component={Layout} />
+        {/* <Route path='/navbar' exact component={Navbar} /> */}
+        <Route path='/user/dashboard' exact component={Dashboard} />
+        <Route path='/admin/dashboard' exact component={Dashboard} />
+        <Route path='/super/dashboard' exact component={Dashboard} />
+        <Route path='/material' exact component={AddMaterial} />
+        <Route path='/bill' exact component={AddBill} />
+        <Route path='/add-customer' exact component={AddCustomer} />
+        <Route path='/add-employee' exact component={AddEmployee} />
+        <Route path='/expense' exact component={AddExpense} />
+        <Route path='/attendance' exact component={AddAttendance} />
+        <Route path='/order' exact component={AddOrder} />
+      </Switch>
+    </Router>
+
   );
 };
 
