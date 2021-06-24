@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaEdit } from "react-icons/fa";
-import { getAllProduct } from "../service/product";
+import { getAllProduct } from "../service/ProductService";
 
 import "./products.css";
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addProduct } from "../../service/product";
+import { addProduct } from "../../service/ProductService";
 
 const AddEmployee = () => {
   const [values, setValues] = useState({
@@ -76,9 +76,9 @@ const AddEmployee = () => {
 
   return (
     <div className='container'>
-      <h1 className='text-center'>Add Customer</h1>
+      <h1 className=''>Add Customer</h1>
       <form className='row g-3'>
-        <div className='col-md-4'>
+        <div className='col-md-6 mb-3'>
           <label htmlFor='fullName' className='form-label'>
             Full Name
           </label>
@@ -91,7 +91,7 @@ const AddEmployee = () => {
             value={fullName}
           />
         </div>
-        <div className='col-md-4'>
+        <div className='col-md-6 mb-3'>
           <label htmlFor='emailId' className='form-label'>
             Email
           </label>
@@ -104,7 +104,7 @@ const AddEmployee = () => {
             value={emailId}
           />
         </div>
-        <div className='col-md-4'>
+        <div className='col-md-6 mb-3'>
           <label htmlFor='organization' className='form-label'>
             Organization Name
           </label>
@@ -117,33 +117,21 @@ const AddEmployee = () => {
             value={organization}
           />
         </div>
-        <div className='col-12'>
-          <label htmlFor='address' className='form-label'>
-            Address
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            id='address'
-            placeholder='Apartment, studio, or floor'
-            onChange={handleChange("address")}
-            value={address}
-          />
-        </div>
-        <div className='col-md-4'>
+
+        <div className='col-md-6 mb-3'>
           <label htmlFor='productId' className='form-label'>
             Product Item
           </label>
           <select
             id='productId'
-            className='form-select'
+            className='form-control'
             onChange={handleChange("productId")}
             value='test'>
             <option>Choose...</option>
             <option>...</option>
           </select>
         </div>
-        <div className='col-md-4'>
+        <div className='col-md-6 mb-3'>
           <label htmlFor='primaryContactNo' className='form-label'>
             Primary Contact No
           </label>
@@ -156,7 +144,7 @@ const AddEmployee = () => {
             value={primaryContactNo}
           />
         </div>
-        <div className='col-md-4'>
+        <div className='col-md-6 mb-3'>
           <label htmlFor='secondaryContactNo' className='form-label'>
             Secondary Contact No
           </label>
@@ -169,11 +157,11 @@ const AddEmployee = () => {
             value={secondaryContactNo}
           />
         </div>
-        <div className='col-md-4'>
+        <div className='col-md-7 mb-3'>
           <label htmlFor='other' className='form-label'>
             Other
           </label>
-          <input
+          <textarea
             type='text'
             className='form-control'
             id='other'
@@ -182,33 +170,21 @@ const AddEmployee = () => {
             value={other}
           />
         </div>
-        <div className='col-md-2'>
-          <label htmlFor='country' className='form-label'>
-            Country
+
+        <div className='col-7 mb-3'>
+          <label htmlFor='address' className='form-label'>
+            Address
           </label>
-          <select
-            id='country'
-            className='form-select'
-            onChange={handleChange("country")}
-            value='test'>
-            <option>INDIA</option>
-            <option>...</option>
-          </select>
+          <textarea
+            type='text'
+            className='form-control'
+            id='address'
+            placeholder='Apartment, studio, or floor'
+            onChange={handleChange("address")}
+            value={address}
+          />
         </div>
-        <div className='col-md-2'>
-          <label htmlFor='state' className='form-label'>
-            State
-          </label>
-          <select
-            id='state'
-            className='form-select'
-            onChange={handleChange("state")}
-            value='test'>
-            <option>Choose...</option>
-            <option>...</option>
-          </select>
-        </div>
-        <div className='col-md-2'>
+        <div className='col-md-6 mb-3'>
           <label htmlFor='city' className='form-label'>
             City
           </label>
@@ -220,7 +196,7 @@ const AddEmployee = () => {
             value={city}
           />
         </div>
-        <div className='col-md-2'>
+        <div className='col-md-6 mb-3'>
           <label htmlFor='zip' className='form-label'>
             Zip Code
           </label>
@@ -232,9 +208,35 @@ const AddEmployee = () => {
             value={zip}
           />
         </div>
-        <div className='col-12 center'>
+        <div className='col-md-6 mb-3'>
+          <label htmlFor='country' className='form-label'>
+            Country
+          </label>
+          <select
+            id='country'
+            className='form-control'
+            onChange={handleChange("country")}
+            value='test'>
+            <option>INDIA</option>
+            <option>...</option>
+          </select>
+        </div>
+        <div className='col-md-6 mb-3'>
+          <label htmlFor='state' className='form-label'>
+            State
+          </label>
+          <select
+            id='state'
+            className='form-control'
+            onChange={handleChange("state")}
+            value='test'>
+            <option>Choose...</option>
+            <option>...</option>
+          </select>
+        </div>
+        <div className='col-12 center mb-3'>
           <button type='submit' className='btn btn-primary'>
-            Sign in
+            Add Customer
           </button>
         </div>
       </form>

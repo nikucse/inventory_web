@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { addProduct } from "../../service/product";
+import { addProduct } from "../../service/ProductService";
 
 const AddAttendance = () => {
   const [values, setValues] = useState({

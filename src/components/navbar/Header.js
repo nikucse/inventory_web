@@ -1,14 +1,19 @@
 import React from "react";
+import * as FaIcons from 'react-icons/fa';
 
-const Header = () => {
+
+const Header = (props) => {
   return (
   
     <div>
       <nav className='navbar navbar-expand-md bg-dark navbar-dark pb-2 fixed-top'>
-        <div className='container'>
+        <div className='container-fluid ml-0 mr-0'>
           <a href='#' className='navbar-brand'>
-            LOGO
+            {/* LOGO */}
+          <FaIcons.FaBars onClick={props.showSidebar} />
           </a>
+          {/* <Link to='#' className='menu-bars'>
+        </Link> */}
           <button
             className='navbar-toggler'
             type='button'
@@ -17,7 +22,7 @@ const Header = () => {
             <span className='navbar-toggler-icon'></span>
           </button>
           <div className='collapse navbar-collapse bg-dark' id='navmenu'>
-            <ul className='navbar-nav ms-auto'>
+            <ul className='navbar-nav ml-auto'>
               <li className='nav-item'>
                 <div className='input-group my-2 mr-3'>
                   <input

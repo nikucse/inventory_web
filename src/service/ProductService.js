@@ -13,7 +13,7 @@ export const addProduct = (product) => {
 
 export const getAllProduct = () => {
   return authAxios
-    .get(`/product`)
+    .get(`/product/list`)
     .then((response) => {
       return response.data;
     })
