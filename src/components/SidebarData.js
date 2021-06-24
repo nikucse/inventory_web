@@ -13,7 +13,19 @@ export const SidebarData = [
  
   {
     title: 'Products',
-    path: '/product',
+    path: '/productS',
+    icon: <FaIcons.FaCartPlus />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Add Products',
+    path: '/add-product',
+    icon: <FaIcons.FaCartPlus />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Add Products back',
+    path: '/add-product-back',
     icon: <FaIcons.FaCartPlus />,
     cName: 'nav-text'
   },

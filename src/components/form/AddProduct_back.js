@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { addProduct } from "../../service/product";
 
-const AddProduct = () => {
+const AddProduct_back = () => {
   const [values, setValues] = useState({
     name: "",
     category,
@@ -225,4 +225,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default AddProduct_back;
