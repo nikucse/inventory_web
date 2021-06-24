@@ -1,10 +1,10 @@
-import React from 'react';
-import './App.css';
-import Navbar from './components/Navbar';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Home from './container/Home';
-import Reports from './container/Reports';
-import Products from './container/Products';
+import React from "react";
+import "./App.css";
+import Navbar from "./components/Navbar";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from "./container/Home";
+import Reports from "./container/Reports";
+import Products from "./container/Products";
 
 import Dashboard from "../src/container/dashboard/Dashboard";
 import Login from "../src/container/auth-module/Login";
@@ -19,24 +19,19 @@ import AddExpense from "./components/form/AddExpense";
 import AddMaterial from "./components/form/AddMaterial";
 import AddOrder from "./components/form/AddOrder";
 import Footer from "./components/footer/Footer";
-import Header from './components/navbar/Header';
-import reactDom from 'react-dom';
-
 
 function App() {
   return (
     <div>
-      {/* <Header /> */}
-
       <Router>
-      <Navbar />
+        <Navbar />
 
         <Switch>
-          <Route path='/' exact component={Home} />
+          <Route path='/' exact component={Login} />
+          <Route path='/login' exact component={Login} />
+          <Route path='/home' exact component={Home} />
           <Route path='/reports' component={Reports} />
           <Route path='/products' component={Products} />
-
-          <Route path='/' exact component={Login} />
           <Route path='/dashboard' exact component={Layout} />
           {/* <Route path='/navbar' exact component={avbar} /> */}
           <Route path='/user/dashboard' exact component={Dashboard} />
@@ -53,11 +48,8 @@ function App() {
         </Switch>
       </Router>
 
-
-
       <Footer />
     </div>
-
   );
 }
 

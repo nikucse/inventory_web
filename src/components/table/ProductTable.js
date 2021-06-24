@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Products from "../../container/Products";
 import { getAllProduct } from "../../service/product";
 
 const ProductTable = () => {
@@ -18,7 +19,7 @@ const ProductTable = () => {
 
   return (
     <div>
-      <h1>Product List</h1>
+      <h1>Product table</h1>
     </div>
   );
 };

@@ -5,7 +5,6 @@ import SideNavbar from "./SideNavbar";
 const Navbar = () => {
   return (
     <div>
-      {/* <Header /> */}
       <SideNavbar />
     </div>
   );

@@ -18,7 +18,7 @@ const Routes = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path='/' exact component={Login} />
+        <Route path={"/"} exact component={Login} />
         <Route path='/layout' exact component={Layout} />
         <Route path='/navbar' exact component={Navbar} />
         <Route path='/user/dashboard' exact component={Dashboard} />
@@ -34,6 +34,7 @@ const Routes = () => {
         <Route path='/order' exact component={AddOrder} />
         <Route path='/attendance' exact component={AddAttendance} />
         <Route path='/order' exact component={AddOrder} />
+        <Route path='*' exact component={AddOrder} />
       </Switch>
     </BrowserRouter>
   );
