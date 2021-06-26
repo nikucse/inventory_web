@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { FaEdit } from "react-icons/fa";
 import { getAllProduct } from "../service/ProductService";
-import { useTable, useGlobalFilter } from "react-table";
+import { useTable, useGlobalFilter, useFilters } from "react-table";
 import { COLUMNS } from "../util/columns";
-import GlobalFilter from "../components/filter/GlobalFilter";
+import GlobalFilter from "../components/filter/GlobalFilterOnReactTable";
 
 import "./products.css";
 
@@ -15,6 +15,7 @@ const Products = () => {
   const loadAllProducts = () => {
     getAllProduct().then((data) => {
       setProducts(data);
+      console.log(data);
     });
   };
 
@@ -22,78 +23,63 @@ const Products = () => {
     loadAllProducts();
   }, []);
 
-  const getData = (data) => {
-    if (data) return data;
-    else return [];
-  };
-
-  const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => getData(products), [products]);
-
   const onEditProduct = (product) => {
     console.log(product);
   };
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-    state,
-    setGlobalFilter,
-  } = useTable(
-    {
-      columns,
-      data,
-      initialState: {
-        hiddenColumns: columns.map((column) => {
-          if (column.show === false) return column.accessor || column.id;
-        }),
-      },
-    },
-    useGlobalFilter
-  );
+  const productList = products.map((product) => (
+    <tr key={product.id}>
+      <td>{product.productName}</td>
+      {/* <td>{product.category}</td> */}
+      <td>{product.dimension}</td>
+      <td>{product.productImageLink}</td>
+      <td>{product.price}</td>
+      <td>{product.actualPrice}</td>
+      <td>{product.buildBy}</td>
+      <td>{product.location}</td>
+      <td>{product.status}</td>
+      <td>{product.message}</td>
+      <td>{product.date.substring(0, 10)}</td>
+      <td>{product.completedDate}</td>
+      <td className='text-primary' onClick={() => onEditProduct(product)}>
+        <FaEdit />
+      </td>
+    </tr>
+  ));
 
-  const { globalFilter } = state;
-
-  const tableDesign = () => {
-    return (
-      <div className='container'>
-        <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
-        <h1>Basic Table</h1>
-        <table {...getTableProps()}>
-          <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()} className='bg-primary'>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()} className='px-4'>
-                    {column.render("Header")}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => {
-                    return (
-                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+  return (
+    <div className='container-fluid py-5'>
+      <div className='row justify-content-center'>
+        <div className='col-md-6 text-center m-2'>
+          <h2 className='heading-section'>Product List</h2>
+        </div>
       </div>
-    );
-  };
-
-  return <div className='container-fluid py-5'>{tableDesign()}</div>;
+      <div className='row justify-content-center'>
+        <div className='col-md-12'>
+          <table className='table'>
+            <thead className='bg-primary text-light'>
+              <tr>
+                <th>Name</th>
+                {/* <th>Category</th> */}
+                <th>Dimension</th>
+                <th>Photo</th>
+                <th>Price</th>
+                <th>Actual Price</th>
+                <th>Build By</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Message</th>
+                <th>Order Date</th>
+                <th>Completed Date</th>
+                <th>Edit</th>
+              </tr>
+            </thead>
+            <tbody>{productList}</tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Products;

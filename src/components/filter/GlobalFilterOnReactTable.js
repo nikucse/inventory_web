@@ -1,6 +1,6 @@
 import React from "react";
 
-const GlobalFilter = ({ filter, setFilter }) => {
+const GlobalFilterOnReactTable = ({ filter, setFilter }) => {
   return (
     <div>
       <span>Search: </span>
@@ -9,4 +9,4 @@ const GlobalFilter = ({ filter, setFilter }) => {
   );
 };
 
-export default GlobalFilter;
+export default GlobalFilterOnReactTable;
