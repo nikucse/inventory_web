@@ -2,7 +2,6 @@ import React from "react";
 import Login from "../src/container/auth-module/Login";
 // import Navbar from "./components/navbar/Navbar";
 import Layout from "./container/layout/Layout";
-import AddProduct from "./components/form/AddProduct";
 import AddAttendance from "./components/form/AddAttendance";
 import AddBill from "./components/form/AddBill";
 import AddCustomer from "./components/form/AddCustomer";
@@ -17,6 +16,7 @@ import Products from "./container/Products";
 import Dashboard from "../src/container/dashboard/Dashboard";
 import NotFound from "./components/NotFound";
 import Employees from "./container/Employees";
+import AddProduct from "./components/form/AddProduct";
 
 const Routes = () => {
   return (
