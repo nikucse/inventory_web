@@ -42,11 +42,10 @@ const Login = () => {
 
   const performRedirect = () => {
     if (didRedirect) {
-      console.log(user);
       if (user && user.role === "ROLE_ADMIN") {
-        return <Redirect to='/layout' />;
+        return <Redirect to='/dashboard' />;
       } else {
-        return <Redirect to='/layout' />;
+        return <Redirect to='/dashboard' />;
       }
     }
     if (isAuthenticated()) {

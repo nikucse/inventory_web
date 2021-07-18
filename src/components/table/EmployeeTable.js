@@ -5,7 +5,7 @@ const EmployeeTable = () => {
     <div>
       <table className='table'>
         <thead>
-          <tr className='bg-warning'>
+          <tr className='bg-primary'>
             <th scope='col'>Full Name</th>
             <th scope='col'>Contact No</th>
             <th scope='col'>Designation</th>

@@ -12,17 +12,13 @@ const LayoutComponent = () => {
                         <DailyStatusCount />
                         <div className='container-fluid pt-4'>
                             <div className='row g-4'>
-                                <div className='col-md-7  bg-info'>
+                                <div className='col-md-12  bg-white'>
                                     <ProductTable />
                                 </div>
-                                <div className='col-md-4 offset-md-1 bg-danger'>
-                                    <EmployeeTable />
-                                </div>
-                                <div className='col-md-6 md-5 bg-primary'>
-                                    <EmployeeTable />
-                                </div>
-                                <div className='col-md-5  md-5 offset-md-1 bg-primary'>
-                                    <EmployeeTable />
+                            </div>
+                            <div className='row g-4'>
+                                <div className='col-md-12  bg-white'>
+                                    <ProductTable />
                                 </div>
                             </div>
                         </div>

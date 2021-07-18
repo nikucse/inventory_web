@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { addProduct } from "../../service/ProductService";
+import "./AddProduct.css";
 
 const AddProduct = () => {
   const [values, setValues] = useState({
@@ -70,9 +71,23 @@ const AddProduct = () => {
 
   const handleChange = (name) => (event) => {
     console.log("=====>   ", name + "    =======>   ", event.target.value);
-
     setValues({ ...values, error: false, [name]: event.target.value });
   };
+
+  const fileToBase64Convertor = (file,callback) =>{
+    if(file && file.length > 0){
+      let reader = new FileReader();
+      reader.readAsDataURL(file[0]);
+      reader.onload = function () {
+      console.log("Base 64 ===>  ",reader.result);
+      callback(null,reader.result);
+      }
+      reader.onerror = function(error){
+        console.log("Error ",error);
+        callback(error);
+      }
+    }
+  }
 
   return (
     <div className='container mt-3'>
@@ -120,15 +135,16 @@ const AddProduct = () => {
           </div>
           <div className='col-md-6'>
             <label htmlFor='productImage' class='form-label'>
-              Product Image
+              Product Image test
             </label>
             <input
-              class='form-control'
+              class='form-control productImage'
               type='file'
               id='productImage'
               multiple
               onChange={handleChange("productImage")}
               value={productImage}
+              accept=".pdf, .jpeg, .png, .jpg"
             />
           </div>
         </div>
@@ -224,7 +240,7 @@ const AddProduct = () => {
         </div>
 
         <div className='center mb-3 mx-auto'>
-          <button type='submit' className='btn btn-primary'>
+          <button type='submit' className='btn btn-primary' onSubmit={onSubmit}>
             Submit
           </button>
         </div>
