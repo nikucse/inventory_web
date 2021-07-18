@@ -187,7 +187,7 @@ const AddEmployee = () => {
             value={adhaarCardNo}
           />
         </div>
-        <div className='col-7'>
+        <div className='col-7 mb-3'>
           <label htmlFor='address' className='form-label'>
             Address
           </label>
