@@ -1,0 +1,10 @@
+const rawMaterial = {
+    materialName,
+	type,
+	size,
+	color,
+	materialImageLink,
+	totalCost,
+	quantity,
+	isAvailable,
+},

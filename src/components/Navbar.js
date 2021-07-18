@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 // import * as FaIcons from 'react-icons/fa';
-import * as AiIcons from 'react-icons/ai';
-import { Link } from 'react-router-dom';
-import { SidebarData } from './SidebarData';
-import './Navbar.css';
-import { IconContext } from 'react-icons';
-import Header from './navbar/Header';
+import * as AiIcons from "react-icons/ai";
+import { Link } from "react-router-dom";
+import { SidebarData } from "./SidebarData";
+import "./Navbar.css";
+import { IconContext } from "react-icons";
+import Header from "./navbar/Header";
 
 function Navbar() {
   const [sidebar, setSidebar] = useState(false);
@@ -13,18 +13,12 @@ function Navbar() {
   const showSidebar = () => setSidebar(!sidebar);
 
   return (
-
-    <IconContext.Provider value={{ color: '#fff' }}>
-      <Header  showSidebar={showSidebar}/>
-      <div className='navbar'>
-
-        
-
-      </div>
+    <IconContext.Provider value={{ color: "#fff" }}>
+      <Header showSidebar={showSidebar} />
+      <div className='navbar'></div>
       {/* <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-         */}
-      <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-
+       */}
+      <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
         <ul className='nav-menu-items' onClick={showSidebar}>
           <li className='navbar-toggle'>
             <Link to='#' className='menu-bars'>
@@ -45,7 +39,6 @@ function Navbar() {
         </ul>
       </nav>
     </IconContext.Provider>
-
   );
 }
 

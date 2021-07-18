@@ -1,9 +1,8 @@
-import { API } from "../backend";
-import axios from "axios";
+import { authAxios as axios } from "../util/interceptor";
 
 export const addAttendance = (attendance) => {
   return axios
-    .post(`${API}/attendance`, attendance)
+    .post(`/attendance`, attendance)
     .then((res) => {
       return res.data;
     })
@@ -12,7 +11,7 @@ export const addAttendance = (attendance) => {
 
 export const getAllAttendance = () => {
   return axios
-    .get(`${API}/attendance`)
+    .get(`/attendance`)
     .then((res) => {
       return res.data;
     })
@@ -21,7 +20,7 @@ export const getAllAttendance = () => {
 
 export const getAttendanceByDate = (date) => {
   return axios
-    .get(`${API}/attendance/${date}`)
+    .get(`/attendance/${date}`)
     .then((res) => {
       return res.data;
     })

@@ -1,27 +1,27 @@
-import React from 'react';
-import * as FaIcons from 'react-icons/fa';
-import * as AiIcons from 'react-icons/ai';
-import * as IoIcons from 'react-icons/io';
+import React from "react";
+import * as FaIcons from "react-icons/fa";
+import * as AiIcons from "react-icons/ai";
+import * as IoIcons from "react-icons/io";
 
 export const SidebarData = [
   {
-    title: 'Dashboard',
-    path: '/dashboard',
+    title: "Dashboard",
+    path: "/dashboard",
     icon: <AiIcons.AiFillHome />,
-    cName: 'nav-text'
+    cName: "nav-text",
   },
- 
+
   {
-    title: 'Products',
-    path: '/productS',
+    title: "Products",
+    path: "/products",
     icon: <FaIcons.FaCartPlus />,
-    cName: 'nav-text'
+    cName: "nav-text",
   },
   {
-    title: 'Add Products',
-    path: '/add-product',
+    title: "Add Products",
+    path: "/add-product",
     icon: <FaIcons.FaCartPlus />,
-    cName: 'nav-text'
+    cName: "nav-text",
   },
   // {
   //   title: 'Add Products back',
@@ -30,65 +30,64 @@ export const SidebarData = [
   //   cName: 'nav-text'
   // },
   {
-    title: 'Report',
-    path: '/reports',
+    title: "Report",
+    path: "/reports",
     icon: <FaIcons.FaCartPlus />,
-    cName: 'nav-text'
+    cName: "nav-text",
   },
 
   {
-    title: 'Material',
-    path: '/material',
+    title: "Material",
+    path: "/material",
     icon: <FaIcons.FaEnvelopeOpenText />,
-    cName: 'nav-text'
+    cName: "nav-text",
   },
   {
-    title: 'Employees',
-    path: '/add-employee',
+    title: "Employees",
+    path: "/employees",
     icon: <IoIcons.IoMdPeople />,
-    cName: 'nav-text'
+    cName: "nav-text",
   },
   {
-    title: 'Add Employee',
-    path: '/add-employee',
+    title: "Add Employee",
+    path: "/add-employee",
     icon: <IoIcons.IoMdPeople />,
-    cName: 'nav-text'
+    cName: "nav-text",
   },
   {
-    title: 'Customers',
-    path: '/add-customer',
+    title: "Customers",
+    path: "/add-customer",
     icon: <IoIcons.IoIosPaper />,
-    cName: 'nav-text'
+    cName: "nav-text",
   },
   {
-    title: 'Add Customers',
-    path: '/add-customer',
+    title: "Add Customers",
+    path: "/add-customer",
     icon: <IoIcons.IoIosPaper />,
-    cName: 'nav-text'
+    cName: "nav-text",
   },
   {
-    title: 'Bill Detail',
-    path: '/bill',
+    title: "Bill Detail",
+    path: "/bill",
     icon: <IoIcons.IoMdHelpCircle />,
-    cName: 'nav-text'
+    cName: "nav-text",
   },
   {
-    title: 'Order Detail',
-    path: '/order',
+    title: "Order Detail",
+    path: "/order",
     icon: <IoIcons.IoMdHelpCircle />,
-    cName: 'nav-text'
+    cName: "nav-text",
   },
   {
-    title: 'Attendance',
-    path: '/attendance',
+    title: "Attendance",
+    path: "/attendance",
     icon: <IoIcons.IoMdHelpCircle />,
-    cName: 'nav-text'
+    cName: "nav-text",
   },
   {
-    title: 'Order Detail',
-    path: '/order',
+    title: "Account Detail",
+    path: "/account",
     icon: <IoIcons.IoMdHelpCircle />,
-    cName: 'nav-text'
+    cName: "nav-text",
   },
- 
 ];

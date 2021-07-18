@@ -1,9 +1,8 @@
-import { API } from "../backend";
-import axios from "axios";
+import { authAxios as axios } from "../util/interceptor";
 
 export const addEmployee = (employee) => {
   return axios
-    .post(`${API}/employee`, employee)
+    .post(`/employee`, employee)
     .then((res) => {
       return res.data;
     })
@@ -12,7 +11,7 @@ export const addEmployee = (employee) => {
 
 export const getAllEmployee = () => {
   return axios
-    .get(`${API}/employee`)
+    .get(`/employee/list`)
     .then((res) => {
       return res.data;
     })
@@ -21,7 +20,7 @@ export const getAllEmployee = () => {
 
 export const getEmployeeById = (id) => {
   return axios
-    .get(`${API}/employee/${id}`)
+    .get(`/employee/${id}`)
     .then((res) => {
       return res.data;
     })

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addProduct } from "../../service/product";
+import { addProduct } from "../../service/ProductService";
 
 const AddEmployee = () => {
   const [values, setValues] = useState({
@@ -117,7 +117,7 @@ const AddEmployee = () => {
             value={organization}
           />
         </div>
-        
+
         <div className='col-md-6 mb-3'>
           <label htmlFor='productId' className='form-label'>
             Product Item
@@ -170,7 +170,7 @@ const AddEmployee = () => {
             value={other}
           />
         </div>
-        
+
         <div className='col-7 mb-3'>
           <label htmlFor='address' className='form-label'>
             Address

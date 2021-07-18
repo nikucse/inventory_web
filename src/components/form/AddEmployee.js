@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { addEmployee } from "../../service/employee";
+import { addEmployee } from "../../service/EmployeeService";
 
 const AddEmployee = () => {
   const [values, setValues] = useState({
@@ -121,7 +121,7 @@ const AddEmployee = () => {
             value={designation}
           />
         </div>
-        
+
         <div className='col-6 mb-3'>
           <label htmlFor='perDayWages' className='form-label'>
             Per Day Wages
