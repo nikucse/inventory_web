@@ -1,29 +1,30 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 import { addProduct } from "../../service/ProductService";
 import "./AddProduct.css";
-
+import { useHistory } from "react-router-dom";
 const AddProduct = () => {
+  let history = useHistory();
   const [values, setValues] = useState({
-    name: "",
-    category,
+    productName: "",
+    category: "sofa",
     productImage,
     dimension: "",
     color: "",
     price: "",
     actualPrice: "",
-    buildBy: "",
+    buildBy: "Rajesh Shrama",
     location: "",
-    status: "",
+    status: "Initiated",
     message: "",
     error,
     loading,
     didRedirect,
-    
+    isEdit : false
+
   });
 
   const {
-    name,
+    productName,
     category,
     productImage,
     dimension,
@@ -37,87 +38,98 @@ const AddProduct = () => {
     error,
     loading,
     didRedirect,
+    isEdit
   } = values;
-  const categoryOptionData = [{
-    "value" : "sofa",
-    "lable" :"SOFA",
+  const categoryOptionData = [
+    {
+    "value": "sofa",
+    "lable": "SOFA",
     "selected": "true"
   },
   {
-    "value" : "table",
-    "lable" :"TABLE",
+    "value": "table",
+    "lable": "TABLE",
     "selected": "false"
   },
   {
-    "value" : "chair",
-    "lable" :"CHAIR",
+    "value": "chair",
+    "lable": "CHAIR",
     "selected": "true"
   },
   {
-    "value" : "bed",
-    "lable" :"BED",
+    "value": "bed",
+    "lable": "BED",
     "selected": "false"
   },
   {
-    "value" : "cupboard",
-    "lable" :"CUPBOARD",
+    "value": "cupboard",
+    "lable": "CUPBOARD",
     "selected": "false"
   }
-]
-const buildByOptionData = [{
-  "value" : "Rajesh Shrama",
-  "lable" :"Rajesh Shrama",
-  "selected": "true"
-}, {
-  "value" : "Monoj Shrama",
-  "lable" :"Manoj Shrama",
-  "selected": "false"
-},
-{
-  "value" : "Rahool Patil",
-  "lable" :"Rahool Patil",
-  "selected": "false"
-}]
+  ]
+  const buildByOptionData = [{
+    "value": "Rajesh Shrama",
+    "lable": "Rajesh Shrama",
+    "selected": "true"
+  }, {
+    "value": "Monoj Shrama",
+    "lable": "Manoj Shrama",
+    "selected": "false"
+  },
+  {
+    "value": "Rahool Patil",
+    "lable": "Rahool Patil",
+    "selected": "false"
+  }]
 
-const statusOptionData = [{
-  "value" : "Initiated",
-  "lable" :"Initiated",
-  "selected": "true"
-}, {
-  "value" : "InProgress",
-  "lable" :"InProgress",
-  "selected": "false"
-},
-{
-  "value" : "Polish",
-  "lable" :"Polish",
-  "selected": "false"
-},
-{
-  "value" : "Kushan",
-  "lable" :"Kushan",
-  "selected": "false"
-},
-{
-  "value" : "Dispatched",
-  "lable" :"Dispatched",
-  "selected": "false"
-},
-{
-  "value" : "Dilevered",
-  "lable" :"Dilevered",
-  "selected": "false"
-},
+  const statusOptionData = [{
+    "value": "Initiated",
+    "lable": "Initiated",
+    "selected": "true"
+  }, {
+    "value": "InProgress",
+    "lable": "InProgress",
+    "selected": "false"
+  },
+  {
+    "value": "Polish",
+    "lable": "Polish",
+    "selected": "false"
+  },
+  {
+    "value": "Kushan",
+    "lable": "Kushan",
+    "selected": "false"
+  },
+  {
+    "value": "Dispatched",
+    "lable": "Dispatched",
+    "selected": "false"
+  },
+  {
+    "value": "Dilevered",
+    "lable": "Dilevered",
+    "selected": "false"
+  },
 
 
 
-]
+  ]
+  useEffect(()=>{
+    console.log("history = = ", history.location.state);
+    if(history.location.state.productName)
+    setValues({...values, ...history.location.state, isEdit: true})
+    history.push({
+      state: {}
+    })
+  }, [])
   const onSubmit = (event) => {
     event.preventDefault();
+    // alert(321)
     setValues({ ...values, error: false, loading: true });
 
     addProduct({
-      name,
+      productName,
       category,
       productImage,
       dimension,
@@ -145,28 +157,29 @@ const statusOptionData = [{
 
   const handleChange = (name) => (event) => {
     console.log("=====>   ", name + "    =======>   ", event.target.value);
-    console.log("values = ",values)
+    console.log("values = ", values)
     setValues({ ...values, error: false, [name]: event.target.value });
   };
 
-  const fileToBase64Convertor = (file,callback) =>{
-    if(file && file.length > 0){
+  const fileToBase64Convertor = (file, callback) => {
+    if (file && file.length > 0) {
       let reader = new FileReader();
       reader.readAsDataURL(file[0]);
       reader.onload = function () {
-      console.log("Base 64 ===>  ",reader.result);
-      callback(null,reader.result);
+        console.log("Base 64 ===>  ", reader.result);
+        callback(null, reader.result);
       }
-      reader.onerror = function(error){
-        console.log("Error ",error);
+      reader.onerror = function (error) {
+        console.log("Error ", error);
         callback(error);
       }
     }
   }
-
   return (
     <div className='container mt-3'>
-      <h2 className=''>Add Product</h2>
+      {
+        isEdit ?  <h2 className=''>Edit Product</h2> :  <h2 className=''>Add Product</h2>
+      }
       <form className='g-3'>
         <div className='row'>
           <div className='col-md-6 pl-0'>
@@ -180,7 +193,7 @@ const statusOptionData = [{
                 id='name'
                 placeholder='Product Name'
                 onChange={handleChange("name")}
-                value={name}
+                value={productName}
               />
             </div>
 
@@ -188,15 +201,15 @@ const statusOptionData = [{
               <label htmlFor='category' className='form-label'>
                 Category
               </label>
-              <select class='form-control'
-              id='category'
-              className='form-control form-control'
-              onChange={handleChange("category")}
-              value={category}>
-               {
-                 categoryOptionData.map( option => <option value={option.value}>{option.lable}</option>
+              <select className='form-control'
+                id='category'
+                className='form-control form-control'
+                onChange={handleChange("category")}
+                value={category}>
+                {
+                  categoryOptionData.map(option => <option key={option.value} value={option.value}>{option.lable}</option>
                   )
-               } 
+                }
               </select>
             </div>
 
@@ -215,11 +228,11 @@ const statusOptionData = [{
             </div>
           </div>
           <div className='col-md-6'>
-            <label htmlFor='productImage' class='form-label'>
+            <label htmlFor='productImage' className='form-label'>
               Product Image test
             </label>
             <input
-              class='form-control productImage'
+              className='form-control productImage'
               type='file'
               id='productImage'
               multiple
@@ -282,9 +295,9 @@ const statusOptionData = [{
                 onChange={handleChange("buildBy")}
                 value={buildBy}>
                 {
-                 buildByOptionData.map( option => <option value={option.value}>{option.lable}</option>
+                  buildByOptionData.map(option => <option key={option.value} value={option.value}>{option.lable}</option>
                   )
-               }
+                }
               </select>
             </div>
 
@@ -297,11 +310,11 @@ const statusOptionData = [{
                 className='form-control form-control'
                 onChange={handleChange("status")}
                 value={status}>
-                   {
-                statusOptionData.map( option => <option value={option.value}>{option.lable}</option>
+                {
+                  statusOptionData.map(option => <option key={option.value} value={option.value}>{option.lable}</option>
                   )
-               }
-                
+                }
+
               </select>
             </div>
             <div className='col-md-12 mb-3'>
@@ -321,7 +334,7 @@ const statusOptionData = [{
         </div>
 
         <div className='center mb-3 mx-auto'>
-          <button type='submit' className='btn btn-primary' onSubmit={onSubmit}>
+          <button type='submit' className='btn btn-primary' onClick={onSubmit}>
             Submit
           </button>
         </div>

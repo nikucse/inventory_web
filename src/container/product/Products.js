@@ -1,16 +1,18 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { FaEdit } from "react-icons/fa";
-import { getAllProduct } from "../service/ProductService";
-import { useTable, useGlobalFilter, useFilters } from "react-table";
-import { COLUMNS } from "../util/columns";
-import GlobalFilter from "../components/filter/GlobalFilterOnReactTable";
+import { getAllProduct } from "../../service/ProductService";
+import { useHistory } from "react-router-dom";
+// import { useTable, useGlobalFilter, useFilters } from "react-table";
+// import { COLUMNS } from "../util/columns";
+// import GlobalFilter from "../components/filter/GlobalFilterOnReactTable";
 
 import "./products.css";
 
-const Products = () => {
+const Products = (props) => {
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState({});
   const [error, setError] = useState([]);
+  let history = useHistory();
 
   const loadAllProducts = () => {
     getAllProduct().then((data) => {
@@ -21,10 +23,16 @@ const Products = () => {
 
   useEffect(() => {
     loadAllProducts();
+    
   }, []);
 
   const onEditProduct = (product) => {
     console.log(product);
+    history.push({ 
+      pathname : "/app/add-product",
+      state : product
+    })
+
   };
 
   const productList = products.map((product) => (

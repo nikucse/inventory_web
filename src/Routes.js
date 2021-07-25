@@ -12,11 +12,11 @@ import AddOrder from "./components/form/AddOrder";
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Reports from "./container/Reports";
-import Products from "./container/Products";
+import Products from "./container/product/Products";
 import Dashboard from "../src/container/dashboard/Dashboard";
 import NotFound from "./components/NotFound";
 import Employees from "./container/Employees";
-import AddProduct from "./components/product/AddProduct";
+import AddProduct from "./container/product/AddProduct";
 
 const Routes = () => {
   return (
