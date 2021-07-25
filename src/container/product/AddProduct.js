@@ -117,7 +117,7 @@ const AddProduct = () => {
   ]
   useEffect(()=>{
     console.log("history = = ", history.location.state);
-    if(history.location.state.productName)
+    if(history.location.state && history.location.state.productName)
     setValues({...values, ...history.location.state, isEdit: true})
     history.push({
       state: {}
