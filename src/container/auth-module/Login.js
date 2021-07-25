@@ -6,8 +6,8 @@ import "./Login.css";
 
 const Login = () => {
   const [values, setValues] = useState({
-    email: "nikul@gmail.com",
-    password: "Nikul@123",
+    email: "ajit@gmail.com",
+    password: "Ajit@123",
     error: "",
     loading: false,
     didRedirect: false,
@@ -43,9 +43,9 @@ const Login = () => {
   const performRedirect = () => {
     if (didRedirect) {
       if (user && user.role === "ROLE_ADMIN") {
-        return <Redirect to='/dashboard' />;
+        return <Redirect to='/app/dashboard' />;
       } else {
-        return <Redirect to='/dashboard' />;
+        return <Redirect to='/app/dashboard' />;
       }
     }
     if (isAuthenticated()) {
@@ -116,8 +116,8 @@ const Login = () => {
   };
 
   return (
-    <div className='p-5 bg-dark text-light Login'>
-      <div className='container'>
+    <div className='p-5 h-100 bg-dark text-light Login'>
+      <div className='container login-in'>
         {loadingMessage()}
         {errorMessage()}
         {logInForm()}

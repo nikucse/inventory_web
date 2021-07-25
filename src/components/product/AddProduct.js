@@ -19,6 +19,7 @@ const AddProduct = () => {
     error,
     loading,
     didRedirect,
+    
   });
 
   const {
@@ -37,7 +38,80 @@ const AddProduct = () => {
     loading,
     didRedirect,
   } = values;
+  const categoryOptionData = [{
+    "value" : "sofa",
+    "lable" :"SOFA",
+    "selected": "true"
+  },
+  {
+    "value" : "table",
+    "lable" :"TABLE",
+    "selected": "false"
+  },
+  {
+    "value" : "chair",
+    "lable" :"CHAIR",
+    "selected": "true"
+  },
+  {
+    "value" : "bed",
+    "lable" :"BED",
+    "selected": "false"
+  },
+  {
+    "value" : "cupboard",
+    "lable" :"CUPBOARD",
+    "selected": "false"
+  }
+]
+const buildByOptionData = [{
+  "value" : "Rajesh Shrama",
+  "lable" :"Rajesh Shrama",
+  "selected": "true"
+}, {
+  "value" : "Monoj Shrama",
+  "lable" :"Manoj Shrama",
+  "selected": "false"
+},
+{
+  "value" : "Rahool Patil",
+  "lable" :"Rahool Patil",
+  "selected": "false"
+}]
 
+const statusOptionData = [{
+  "value" : "Initiated",
+  "lable" :"Initiated",
+  "selected": "true"
+}, {
+  "value" : "InProgress",
+  "lable" :"InProgress",
+  "selected": "false"
+},
+{
+  "value" : "Polish",
+  "lable" :"Polish",
+  "selected": "false"
+},
+{
+  "value" : "Kushan",
+  "lable" :"Kushan",
+  "selected": "false"
+},
+{
+  "value" : "Dispatched",
+  "lable" :"Dispatched",
+  "selected": "false"
+},
+{
+  "value" : "Dilevered",
+  "lable" :"Dilevered",
+  "selected": "false"
+},
+
+
+
+]
   const onSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, error: false, loading: true });
@@ -71,6 +145,7 @@ const AddProduct = () => {
 
   const handleChange = (name) => (event) => {
     console.log("=====>   ", name + "    =======>   ", event.target.value);
+    console.log("values = ",values)
     setValues({ ...values, error: false, [name]: event.target.value });
   };
 
@@ -113,9 +188,15 @@ const AddProduct = () => {
               <label htmlFor='category' className='form-label'>
                 Category
               </label>
-              <select class='form-control'>
-                <option selected>BED</option>
-                <option>SOFA</option>
+              <select class='form-control'
+              id='category'
+              className='form-control form-control'
+              onChange={handleChange("category")}
+              value={category}>
+               {
+                 categoryOptionData.map( option => <option value={option.value}>{option.lable}</option>
+                  )
+               } 
               </select>
             </div>
 
@@ -200,9 +281,10 @@ const AddProduct = () => {
                 className='form-control form-control'
                 onChange={handleChange("buildBy")}
                 value={buildBy}>
-                <option selected>Selected...</option>
-                <option>Rajesh Sharma</option>
-                <option>Manoj Sharma</option>
+                {
+                 buildByOptionData.map( option => <option value={option.value}>{option.lable}</option>
+                  )
+               }
               </select>
             </div>
 
@@ -215,12 +297,11 @@ const AddProduct = () => {
                 className='form-control form-control'
                 onChange={handleChange("status")}
                 value={status}>
-                <option selected>Initiated</option>
-                <option>InProgress</option>
-                <option>Polish</option>
-                <option>Kushan</option>
-                <option>Dispatched</option>
-                <option>Dilevered</option>
+                   {
+                statusOptionData.map( option => <option value={option.value}>{option.lable}</option>
+                  )
+               }
+                
               </select>
             </div>
             <div className='col-md-12 mb-3'>

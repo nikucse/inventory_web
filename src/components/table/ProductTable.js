@@ -5,7 +5,7 @@ const ProductTable = () => {
 
   const loadAllProducts = () => {
     getAllProduct().then((data) => {
-      setProducts(data.slice(0, 5));
+      setProducts(data);
       console.log(data);
     });
   };
