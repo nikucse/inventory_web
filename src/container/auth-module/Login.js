@@ -6,8 +6,10 @@ import "./Login.css";
 
 const Login = () => {
   const [values, setValues] = useState({
-    email: "ajit@gmail.com",
-    password: "Ajit@123",
+    email: "nikul@gmail.com",
+    password: "Nikul@123",
+    // email: "ajit@gmail.com",
+    // password: "Ajit@123",
     error: "",
     loading: false,
     didRedirect: false,

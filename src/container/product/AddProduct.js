@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { addProduct } from "../../service/ProductService";
 import "./AddProduct.css";
 import { useHistory } from "react-router-dom";
-import ImageUploader from "../../components/ImageUploader"
+import ImageUploader from "../../components/ImageUploader";
 const AddProduct = () => {
   let history = useHistory();
  
@@ -110,7 +110,7 @@ const AddProduct = () => {
     "selected": "false"
   }]
   useEffect(() => {
-    console.log("history = = ", history.location.state);
+    // console.log("history = = ", history.location.state);
     if (history.location.state && history.location.state.productName)
       setValues({ ...values, ...history.location.state, isEdit: true })
     history.push({
@@ -120,15 +120,21 @@ const AddProduct = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    const productFormData = new FormData();
     setValues({ ...values, error: false, loading: true });
-    for ( var key in values ) {
-      productFormData.append(key, values[key]);
-  }
-    // console.log(" productFormData  = ", [...productFormData])
-    // console.log(" product form data  = ", productFormData)
 
-    addProduct(productFormData)
+    addProduct({
+      productName,
+      category,
+      productImage,
+      dimension,
+      color,
+      price,
+      actualPrice,
+      buildBy,
+      location,
+      status,
+      message,
+    })
       .then((data) => {
         if (data.error) {
           setValues({ ...values, error: data.error, loading: false });
@@ -141,30 +147,34 @@ const AddProduct = () => {
         }
       })
       .catch(console.log("Login request failed"));
-
   };
+
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value });
+
   };
-  const setImageData =(imageData)=>{
-    setValues({ ...values, error: false, "imageData": imageData });
+  const setImageData = async (imageData)=>{
+    console.log("setImageData");
+    const base64 = await convertBase64(imageData)
+    console.log("base64 = ", base64);
+    // setValues({ ...values, error: false, "productImage": imageData });
   }
- 
-  // const fileToBase64Convertor = (file, callback) => {
-  //   if (file && file.length > 0) {
-  //     let reader = new FileReader();
-  //     reader.readAsDataURL(file[0]);
-  //     reader.onload = function () {
-  //       console.log("Base 64 ===>  ", reader.result);
-  //       callback(null, reader.result);
-  //     }
-  //     reader.onerror = function (error) {
-  //       console.log("Error ", error);
-  //       callback(error);
-  //     }
-  //   }
-  // }
+
+
+  const convertBase64 = (file)=>{
+    return new Promise((resolve,reject)=>{
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = ()=>{
+        resolve(fileReader.result);
+      }
+      fileReader.onerror = error=>{
+        reject(error);
+      }
+    })
+  }
+
  
   return (
     <div className='container mt-3'>
