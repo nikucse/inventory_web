@@ -6,6 +6,9 @@ import { useHistory } from "react-router-dom";
 // import { COLUMNS } from "../util/columns";
 // import GlobalFilter from "../components/filter/GlobalFilterOnReactTable";
 
+import {getFile} from "../../util/aws";
+
+
 import "./products.css";
 
 const Products = (props) => {
@@ -48,6 +51,7 @@ const Products = (props) => {
       <td>{product.message}</td>
       <td>{product.date.substring(0, 10)}</td>
       <td>{product.completedDate}</td>
+      {/* {getFile(product.productImageLink)} */}
       <td className="text-primary" onClick={() => onEditProduct(product)}>
         <FaEdit />
       </td>

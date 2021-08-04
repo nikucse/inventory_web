@@ -326,8 +326,8 @@ const AddProduct = () => {
             </div>
           </div>
 
-          <div className='center mb-3 mx-auto'>
-            <button type='submit' className='btn btn-primary' onClick={onSubmit}>
+          <div className='col-12 text-center'>
+            <button type='submit' className='btn btn-primary btn-lg col-md-6' onClick={onSubmit}>
               Submit
             </button>
           </div>

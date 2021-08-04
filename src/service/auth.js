@@ -29,16 +29,9 @@ export const authenticate = (data, next) => {
   }
 };
 
-export const logout = (next) => {
-  if (typeof window !== undefined) {
+export const logoutUser = () => {
+  if (localStorage.getItem("jwt"))
     localStorage.removeItem("jwt");
-    next();
-    return fetch(`${API}/user/logout`, {
-      method: "GET",
-    })
-      .then((response) => console.log("Logout Successful"))
-      .catch((err) => console.log(err));
-  }
 };
 
 export const isAuthenticated = () => {

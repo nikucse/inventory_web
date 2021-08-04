@@ -2,7 +2,7 @@ import { authAxios as axios } from "../util/interceptor";
 
 export const addEmployee = (employee) => {
   return axios
-    .post(`/employee`, employee)
+    .post(`/employee/add`, employee)
     .then((res) => {
       return res.data;
     })

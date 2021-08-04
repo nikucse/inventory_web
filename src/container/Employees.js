@@ -28,10 +28,10 @@ const Employees = () => {
       <td>{employee.designation}</td>
       <td>{employee.perDayWages}</td>
       <td>{employee.primaryContactNo}</td>
-      <td>{employee.secondaryContactNo}</td>
+      {/* <td>{employee.secondaryContactNo}</td> */}
       <td>{employee.joiningDate.substring(0, 10)}</td>
       <td>{employee.totalAmount}</td>
-      <td>{employee.address}</td>
+      {/* <td>{employee.address}</td> */}
       <td>{employee.state}</td>
       <td>{employee.adhaarCardNo}</td>
       <td>{employee.completedDate}</td>
@@ -57,10 +57,10 @@ const Employees = () => {
                 <th>Designation</th>
                 <th>Wages</th>
                 <th>Contact No-1</th>
-                <th>Contact No-2</th>
+                {/* <th>Contact No-2</th>  */}
                 <th>Joining Date</th>
                 <th>Total Amount</th>
-                <th>Address</th>
+                {/* <th>Address</th> */}
                 <th>State</th>
                 <th>Adhar Card</th>
                 <th>Edit</th>

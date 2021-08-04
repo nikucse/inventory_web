@@ -10,8 +10,6 @@ const Header = (props) => {
             {/* LOGO */}
             <FaIcons.FaBars onClick={props.showSidebar} />
           </a>
-          {/* <Link to='#' className='menu-bars'>
-        </Link> */}
           <button
             className="navbar-toggler"
             type="button"

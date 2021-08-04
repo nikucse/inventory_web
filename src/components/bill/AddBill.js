@@ -47,17 +47,17 @@ const AddBill = () => {
   return (
     <div className='container'>
       <h1 className='text-center'>Upload Bill</h1>
-      <form className='row g-2'>
-        <div className='col-md-6'>
+      <form className='row g-3'>
+        <div className=' form-group col-md-6'>
           <label htmlFor='billType' className='form-label'>
-            Bill Type
+            Build By
           </label>
           <select
             id='billType'
             className='form-select'
-            onChange={handleChange}
+            onChange={handleChange("billType")}
             value={billType}>
-            <option>SELECT</option>
+            <option value={""}>Selected...</option>
             <option value='In'>In</option>
             <option value='Out'>Out</option>
           </select>

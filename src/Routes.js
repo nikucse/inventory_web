@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import Login from "../src/container/auth-module/Login";
-// import Navbar from "./components/navbar/Navbar";
 import Layout from "./container/layout/Layout";
 import AddAttendance from "./components/attendance/AddAttendance";
 import AddBill from "./components/bill/AddBill";
@@ -23,13 +22,10 @@ const Routes = () => {
     <div>
       <Navbar />
     <Switch>
-
-        {/* <Route path='/' exact component={Login} /> */}
         <Route exact path='/app/dashboard' component={Layout} />
         <Route  path='/app/add-product' exact component={AddProduct} />
         <Route path='/app/reports' component={Reports} />
         <Route path='/app/products' component={Products} />
-        <Route path='/app/add-product' exact component={AddProduct} />
         <Route path='/app/login' exact component={Login} />
         <Route path='/app/user/dashboard' exact component={Dashboard} />
         <Route path='/app/admin/dashboard' exact component={Dashboard} />

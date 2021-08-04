@@ -104,7 +104,7 @@ const AddEmployee = () => {
             className='form-control'
             id='emailId'
             placeholder='Email Id'
-            onChange={handleChange("email")}
+            onChange={handleChange("emailId")}
             value={emailId}
           />
         </div>
@@ -251,7 +251,7 @@ const AddEmployee = () => {
           />
         </div>
         <div className='col-12 text-center'>
-          <button type='submit' className='btn btn-primary btn-lg col-md-6'>
+          <button type='submit' className='btn btn-primary btn-lg col-md-6' onClick={onSubmit}>
             Add Employee
           </button>
         </div>
