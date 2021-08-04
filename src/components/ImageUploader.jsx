@@ -15,7 +15,7 @@ const ImageUploader = ({ parentImageSet }) => {
             </label>
 
             <input
-                className='form-control productImage'
+                className='form-control mr-3'
                 type='file'
                 id='productImage'
                 multiple
@@ -24,7 +24,7 @@ const ImageUploader = ({ parentImageSet }) => {
                 accept=".pdf, .jpeg, .png, .jpg"
             />
             {imagePreview &&
-                <div className="card">
+                <div className="card mr-3">
                     <img src="img_avatar.png"
                         src={
                             imagePreview !== null ?
