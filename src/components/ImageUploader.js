@@ -10,14 +10,14 @@ const ImageUploader = ({ parentImageSet }) => {
     };
     return (
         <div className='col-md-6'>
-            <label htmlFor='productImage' className='form-label'>
+            <label htmlFor='productImageLink' className='form-label'>
                 Product Image test
             </label>
 
             <input
                 className='form-control productImage'
                 type='file'
-                id='productImage'
+                id='productImageLink'
                 multiple
                 onChange={handleUploadClick}
                 // value={productImage}

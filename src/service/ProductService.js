@@ -2,7 +2,6 @@ import { authAxios } from "../util/interceptor";
 
 export const addProduct = (product) => {
   console.log("Product    -===========>  ", product);
-  alert(123)
   return authAxios
     .post(`/product/add`, product)
     .then((res) => {

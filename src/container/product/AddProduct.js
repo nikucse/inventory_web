@@ -9,7 +9,7 @@ const AddProduct = () => {
   const [values, setValues] = useState({
     productName: "",
     category: "sofa",
-    productImage,
+    productImageLink,
     dimension: "",
     color: "",
     price: "",
@@ -24,12 +24,11 @@ const AddProduct = () => {
     isEdit: false
 
   });
-  // const [ productFormData, setproductFormData ] = useState(null)
 
   const {
     productName,
     category,
-    productImage,
+    productImageLink,
     dimension,
     color,
     price,
@@ -109,8 +108,8 @@ const AddProduct = () => {
     "lable": "Dilevered",
     "selected": "false"
   }]
+
   useEffect(() => {
-    // console.log("history = = ", history.location.state);
     if (history.location.state && history.location.state.productName)
       setValues({ ...values, ...history.location.state, isEdit: true })
     history.push({
@@ -125,7 +124,7 @@ const AddProduct = () => {
     addProduct({
       productName,
       category,
-      productImage,
+      productImageLink,
       dimension,
       color,
       price,
@@ -151,14 +150,20 @@ const AddProduct = () => {
 
 
   const handleChange = (name) => (event) => {
-    setValues({ ...values, error: false, [name]: event.target.value });
 
+    console.log("name=====> ",name);
+
+    setValues({ ...values, error: false, [name]: event.target.value });
   };
   const setImageData = async (imageData)=>{
+    
+    alert("name=====> ",imageData);
+
     console.log("setImageData");
+    
     const base64 = await convertBase64(imageData)
     console.log("base64 = ", base64);
-    // setValues({ ...values, error: false, "productImage": imageData });
+    setValues({ ...values, error: false, "productImageLink": base64 });
   }
 
 

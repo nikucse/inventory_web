@@ -250,8 +250,8 @@ const AddEmployee = () => {
             value={zip}
           />
         </div>
-        <div className='col-12 center mb-3'>
-          <button type='submit' className='btn btn-primary'>
+        <div className='col-12 text-center'>
+          <button type='submit' className='btn btn-primary btn-lg col-md-6'>
             Add Employee
           </button>
         </div>
