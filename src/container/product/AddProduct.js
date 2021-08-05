@@ -3,6 +3,7 @@ import { addProduct } from "../../service/ProductService";
 import "./AddProduct.css";
 import { useHistory } from "react-router-dom";
 import ImageUploader from "../../components/ImageUploader";
+import {convertBase64} from "../../util/BasicUtils";
 const AddProduct = () => {
   let history = useHistory();
  
@@ -145,41 +146,19 @@ const AddProduct = () => {
           console.log("Add Product Detail =====> ", data);
         }
       })
-      .catch(console.log("Login request failed"));
+      .catch(console.log("Add Product request failed"));
   };
 
 
   const handleChange = (name) => (event) => {
-
-    console.log("name=====> ",name);
-
     setValues({ ...values, error: false, [name]: event.target.value });
   };
-  const setImageData = async (imageData)=>{
-    
-    alert("name=====> ",imageData);
 
-    console.log("setImageData");
-    
+  const setImageData = async (imageData)=>{
     const base64 = await convertBase64(imageData)
     console.log("base64 = ", base64);
     setValues({ ...values, error: false, "productImageLink": base64 });
   }
-
-
-  const convertBase64 = (file)=>{
-    return new Promise((resolve,reject)=>{
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = ()=>{
-        resolve(fileReader.result);
-      }
-      fileReader.onerror = error=>{
-        reject(error);
-      }
-    })
-  }
-
  
   return (
     <div className='container mt-3'>
@@ -233,7 +212,7 @@ const AddProduct = () => {
               />
             </div>
           </div>
-          <ImageUploader parentImageSet={setImageData} />
+          <ImageUploader parentImageSet={setImageData} fieldLabel="Upload Product Image" field="productImageLink"/>
         </div>
           <div className='row'>
             <div className='col-md-6 pl-0'>

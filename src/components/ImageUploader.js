@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const ImageUploader = ({ parentImageSet }) => {
+const ImageUploader = ({ parentImageSet,fieldLabel,field }) => {
     const [imagePreview, setImagePreview] = useState(null);
 
     const handleUploadClick = event => {
@@ -10,17 +10,16 @@ const ImageUploader = ({ parentImageSet }) => {
     };
     return (
         <div className='col-md-6'>
-            <label htmlFor='productImageLink' className='form-label'>
-                Product Image test
+            <label htmlFor={field} className='form-label'>
+                {fieldLabel}
             </label>
 
             <input
                 className='form-control productImage'
                 type='file'
-                id='productImageLink'
+                id={field}
                 multiple
                 onChange={handleUploadClick}
-                // value={productImage}
                 accept=".pdf, .jpeg, .png, .jpg"
             />
             {imagePreview &&

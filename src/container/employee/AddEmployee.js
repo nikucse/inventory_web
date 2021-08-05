@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import { addEmployee } from "../../service/EmployeeService";
 
 const AddEmployee = () => {
+
+  let history = useHistory();
   const [values, setValues] = useState({
     fullName: "",
     emailId: "",
@@ -20,6 +22,7 @@ const AddEmployee = () => {
     error: "",
     loading: false,
     didRedirect: false,
+    isEdit: false
   });
 
   const {
@@ -39,7 +42,17 @@ const AddEmployee = () => {
     error,
     loading,
     didRedirect,
+    isEdit
   } = values;
+
+
+  useEffect(() => {
+    if (history.location.state && history.location.state.fullName)
+      setValues({ ...values, ...history.location.state, isEdit: true })
+    history.push({
+      state: {}
+    })
+  }, [])
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -80,7 +93,9 @@ const AddEmployee = () => {
 
   return (
     <div className='container'>
-      <h1 className=''>Add Employee</h1>
+      {
+        isEdit ? <h2 className=''>Update Employee</h2> : <h2 className=''>Add Employee</h2>
+      }
       <form className='row g-3'>
         <div className='col-md-6 mb-3'>
           <label htmlFor='fullName' className='form-label'>

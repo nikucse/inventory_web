@@ -1,6 +1,7 @@
-import { authAxios as axios } from "../util/interceptor";
+import { authAxios as axios } from '../util/interceptor';
 
 export const addAttendance = (attendance) => {
+  alert(attendance.date);
   return axios
     .post(`/attendance`, attendance)
     .then((res) => {
