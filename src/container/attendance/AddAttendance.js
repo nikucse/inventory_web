@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { addAttendance } from '../../service/attendance';
+import { addAttendance } from '../../service/AttendanceService';
 
 const AddAttendance = () => {
   const [selectedDate, setSelectedDate] = useState('');
@@ -30,6 +30,7 @@ const AddAttendance = () => {
       location,
     })
       .then((data) => {
+        console.log(data);
         if (data.error) {
           setValues({ ...values, error: data.error, loading: false });
         } else {
@@ -51,7 +52,7 @@ const AddAttendance = () => {
   return (
     <div className='container'>
       <br />
-      <h2 className='text-center'>Upload Bill</h2>
+      <h2 className='text-center'>Add Attendance</h2>
       <br />
       <form>
         <div className='row g-3 justify-content-center'>

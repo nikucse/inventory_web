@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { getAllProduct } from "../../service/ProductService";
+import React, { useState, useEffect } from 'react';
+import { getAllProduct } from '../../service/ProductService';
+import CuFileViewer from '../../util/FileViewer';
+
 const ProductTable = () => {
   const [products, setProducts] = useState([]);
 
@@ -17,12 +19,14 @@ const ProductTable = () => {
   const productList = products.map((product) => (
     <tr scope='row' key={product.id}>
       <td>{product.productName}</td>
-      <td>{product.productImageLink}</td>
+      <td onClick>
+        <CuFileViewer productUrl={product.productImageLink} />
+      </td>
       <td>{product.dimension}</td>
       <td>{product.status}</td>
       <td>{product.date.substring(0, 10)}</td>
       <td>
-        {product.completedDate ? product.completedDate.substring(0, 10) : ""}
+        {product.completedDate ? product.completedDate.substring(0, 10) : ''}
       </td>
     </tr>
   ));

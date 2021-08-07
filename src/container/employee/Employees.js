@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { FaEdit } from "react-icons/fa";
-import { useHistory } from "react-router";
-import { getAllEmployee } from "../../service/EmployeeService";
+import React, { useState, useEffect } from 'react';
+import { FaEdit, FaSearch } from 'react-icons/fa';
+import { useHistory } from 'react-router';
+import { getAllEmployee } from '../../service/EmployeeService';
 
 const Employees = () => {
   const [employees, setEmployees] = useState([]);
@@ -22,10 +22,10 @@ const Employees = () => {
 
   const onEditEmployee = (employee) => {
     console.log(employee);
-    history.push({ 
-      pathname : "/app/add-employee",
-      state : employee
-    })
+    history.push({
+      pathname: '/app/add-employee',
+      state: employee,
+    });
   };
 
   const employeeList = employees.map((employee) => (
@@ -46,9 +46,24 @@ const Employees = () => {
 
   return (
     <div className='container-fluid py-5'>
-      <div className='row justify-content-center'>
-        <div className='col-md-6 text-center m-2'>
+      <div className='row'>
+        <div className='col-md-6 m-2'>
           <h2 className='heading-section'>Employee List</h2>
+        </div>
+        <div className='col-md-4 justify-content-center m-2'>
+          <div className='input-group my-2 mr-3'>
+            <input
+              type='text'
+              className='form-control'
+              placeholder='Search Employee'
+            />
+            <button
+              className='btn btn-primary'
+              type='button'
+              id='button-addon2'>
+              <FaSearch />
+            </button>
+          </div>
         </div>
       </div>
       <div className='row justify-content-center'>

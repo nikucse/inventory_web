@@ -2,12 +2,9 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { FaEdit } from 'react-icons/fa';
 import { getAllProduct } from '../../service/ProductService';
 import { useHistory } from 'react-router-dom';
-// import { useTable, useGlobalFilter, useFilters } from "react-table";
-// import { COLUMNS } from "../util/columns";
-// import GlobalFilter from "../components/filter/GlobalFilterOnReactTable";
-import { getFile } from '../../util/aws';
-
+import MonthList from '../../components/common/MonthList';
 import './products.css';
+import FileViewer from '../../util/FileViewer';
 
 const Products = (props) => {
   const [products, setProducts] = useState([]);
@@ -38,7 +35,9 @@ const Products = (props) => {
     <tr key={product.id}>
       <td>{product.productName}</td>
       <td>{product.dimension}</td>
-      <td>{product.productImageLink}</td>
+      <td>
+        <FileViewer productUrl={product.productImageLink} />
+      </td>
       <td>{product.price}</td>
       <td>{product.actualPrice}</td>
       <td>{product.buildBy}</td>
@@ -47,7 +46,6 @@ const Products = (props) => {
       <td>{product.message}</td>
       <td>{product.date.substring(0, 10)}</td>
       <td>{product.completedDate}</td>
-      {getFile(product.productImageLink)}
       <td className='text-primary' onClick={() => onEditProduct(product)}>
         <FaEdit />
       </td>
@@ -60,6 +58,7 @@ const Products = (props) => {
         <div className='col-md-6 text-center m-2'>
           <h2 className='heading-section'>Product List</h2>
         </div>
+        <MonthList />
       </div>
       <div className='row justify-content-center'>
         <div className='col-md-12'>

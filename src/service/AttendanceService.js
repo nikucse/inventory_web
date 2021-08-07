@@ -1,9 +1,9 @@
 import { authAxios as axios } from '../util/interceptor';
 
 export const addAttendance = (attendance) => {
-  alert(attendance.date);
+  alert(attendance);
   return axios
-    .post(`/attendance`, attendance)
+    .post(`/attendance/add`, attendance)
     .then((res) => {
       return res.data;
     })

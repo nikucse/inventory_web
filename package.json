@@ -9,6 +9,7 @@
     "aws-sdk": "^2.960.0",
     "axios": "^0.21.1",
     "base-64": "^1.0.0",
+    "custom-error": "^0.2.1",
     "dotenv": "^8.2.0",
     "history": "^4.10.1",
     "node-sass": "^6.0.0",
