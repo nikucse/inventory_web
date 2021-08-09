@@ -2,7 +2,7 @@ import React from 'react';
 
 const MonthList = () => {
   return (
-    <div class='dropdown'>
+    <div className='dropdown'>
       <button
         className='btn btn-secondary dropdown-toggle'
         type='button'

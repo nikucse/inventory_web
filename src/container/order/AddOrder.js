@@ -125,7 +125,7 @@ const AddOrder = () => {
                 className='form-control'
                 selected={selectedDate}
                 dateFormat='dd/MM/yyyy'
-                maxDate={new Date()}
+                minDate={new Date()}
                 showYearDropdown
                 scrollableMonthYearDropdown
                 onChange={(date) => setSelectedDate(date)}

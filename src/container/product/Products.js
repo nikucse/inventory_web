@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaEdit } from 'react-icons/fa';
 import { getAllProduct } from '../../service/ProductService';
 import { useHistory } from 'react-router-dom';
@@ -31,16 +31,24 @@ const Products = (props) => {
     });
   };
 
+  const displayImage = (imageUrl) => {
+    console.log(imageUrl);
+  };
+
   const productList = products.map((product) => (
     <tr key={product.id}>
       <td>{product.productName}</td>
       <td>{product.dimension}</td>
-      <td>
+      <td onClick={() => displayImage(product.productImageLink)}>
         {product.productImageLink === '' ||
         product.productImageLink == undefined ? (
           ''
         ) : (
-          <FileViewer productUrl={product.productImageLink} />
+          <FileViewer
+            productUrl={product.productImageLink}
+            width={'96'}
+            height={'65'}
+          />
         )}
       </td>
       <td>{product.price}</td>

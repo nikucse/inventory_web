@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAllProduct } from '../../service/ProductService';
-import CuFileViewer from '../../util/FileViewer';
+import FileViewer from '../../util/FileViewer';
 
 const ProductTable = () => {
   const [products, setProducts] = useState([]);
@@ -24,7 +24,11 @@ const ProductTable = () => {
         product.productImageLink == '' ? (
           ''
         ) : (
-          <CuFileViewer productUrl={product.productImageLink} />
+          <FileViewer
+            productUrl={product.productImageLink}
+            width={'96'}
+            height={'65'}
+          />
         )}
       </td>
       <td>{product.dimension}</td>

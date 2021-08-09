@@ -8,8 +8,6 @@ import '../product/products.css';
 
 const Clients = () => {
   const [clients, setClients] = useState([]);
-  const [client, setClient] = useState({});
-  const [error, setError] = useState([]);
 
   const loadAllClients = () => {
     getAllClient().then((data) => {
@@ -62,12 +60,12 @@ const Clients = () => {
 
   const tableDesign = () => {
     return (
-      <div className='container'>
+      <div className='container-fluid'>
         <GlobalFilterOnReactTable
           filter={globalFilter}
           setFilter={setGlobalFilter}
         />
-        <h1>Client List</h1>
+        <h1 className='text-center'>Client List</h1>
         <table {...getTableProps()} className='table'>
           <thead className='bg-primary text-light'>
             {headerGroups.map((headerGroup) => (

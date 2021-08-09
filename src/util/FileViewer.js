@@ -8,7 +8,7 @@ import {
   AWS_ACCESS_KEY,
 } from '../backend';
 
-const FileViewer = ({ productUrl }) => {
+const FileViewer = ({ productUrl, width, height }) => {
   const [s3FilePath, setS3FilePath] = useState('');
 
   const getFile = (path) => {
@@ -27,7 +27,7 @@ const FileViewer = ({ productUrl }) => {
   return (
     <div>
       {getFile(productUrl)}
-      <img src={s3FilePath} width='96' height='65' alt='Not Found' />
+      <img src={s3FilePath} width={width} height={height} alt='Not Found' />
     </div>
   );
 };
