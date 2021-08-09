@@ -19,8 +19,13 @@ const ProductTable = () => {
   const productList = products.map((product) => (
     <tr scope='row' key={product.id}>
       <td>{product.productName}</td>
-      <td onClick>
-        <CuFileViewer productUrl={product.productImageLink} />
+      <td>
+        {product.productImageLink == undefined ||
+        product.productImageLink == '' ? (
+          ''
+        ) : (
+          <CuFileViewer productUrl={product.productImageLink} />
+        )}
       </td>
       <td>{product.dimension}</td>
       <td>{product.status}</td>

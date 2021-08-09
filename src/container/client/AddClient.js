@@ -234,8 +234,11 @@ const AddClient = () => {
             <option>...</option>
           </select>
         </div>
-        <div className=''>
-          <button type='submit' className='btn btn-primary' onClick={onSubmit}>
+        <div className='col-md-12 text-center p-3'>
+          <button
+            type='submit'
+            className='btn btn-primary btn-lg col-md-6'
+            onClick={onSubmit}>
             Submit
           </button>
         </div>

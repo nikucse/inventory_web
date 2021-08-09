@@ -18,23 +18,17 @@ export const SidebarData = [
     cName: 'nav-text',
   },
   {
-    title: 'Add Products',
+    title: 'Add Product',
     path: '/app/add-product',
     icon: <FaIcons.FaCartPlus />,
     cName: 'nav-text',
   },
   // {
-  //   title: 'Add Products back',
-  //   path: '/add-product-back',
+  //   title: 'Report',
+  //   path: '/app/reports',
   //   icon: <FaIcons.FaCartPlus />,
-  //   cName: 'nav-text'
+  //   cName: 'nav-text',
   // },
-  {
-    title: 'Report',
-    path: '/app/reports',
-    icon: <FaIcons.FaCartPlus />,
-    cName: 'nav-text',
-  },
 
   {
     title: 'Material',
@@ -56,7 +50,7 @@ export const SidebarData = [
   },
   {
     title: 'Clients',
-    path: '/app/add-client',
+    path: '/app/clients',
     icon: <IoIcons.IoIosPaper />,
     cName: 'nav-text',
   },
@@ -73,8 +67,14 @@ export const SidebarData = [
     cName: 'nav-text',
   },
   {
-    title: 'Order Detail',
+    title: 'Add Order',
     path: '/app/order',
+    icon: <IoIcons.IoMdHelpCircle />,
+    cName: 'nav-text',
+  },
+  {
+    title: 'Orders',
+    path: '/app/orders',
     icon: <IoIcons.IoMdHelpCircle />,
     cName: 'nav-text',
   },

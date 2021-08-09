@@ -1,25 +1,22 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { FaEdit } from "react-icons/fa";
-import { getAllProduct } from "../service/ProductService";
-import { useTable, useGlobalFilter } from "react-table";
-import { COLUMNS } from "../util/columns";
-import GlobalFilterOnReactTable from "../components/filter/GlobalFilterOnReactTable";
+import React, { useState, useEffect, useMemo } from 'react';
+import { getAllOrder } from '../../service/OrderService';
+import { useTable, useGlobalFilter } from 'react-table';
+import { COLUMNS } from '../../util/react-table-util/OrderColumns';
+import GlobalFilterOnReactTable from '../../components/filter/GlobalFilterOnReactTable';
 
-import "./products.css";
+import '../product/products.css';
 
-const Products = () => {
-  const [products, setProducts] = useState([]);
-  const [product, setProduct] = useState({});
-  const [error, setError] = useState([]);
+const Orders = () => {
+  const [orders, setOrders] = useState([]);
 
-  const loadAllProducts = () => {
-    getAllProduct().then((data) => {
-      setProducts(data);
+  const loadAllOrders = () => {
+    getAllOrder().then((data) => {
+      setOrders(data);
     });
   };
 
   useEffect(() => {
-    loadAllProducts();
+    loadAllOrders();
   }, []);
 
   const getData = (data) => {
@@ -28,10 +25,10 @@ const Products = () => {
   };
 
   const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => getData(products), [products]);
+  const data = useMemo(() => getData(orders), [orders]);
 
-  const onEditProduct = (product) => {
-    console.log(product);
+  const onEditOrder = (client) => {
+    console.log(client);
   };
 
   const {
@@ -57,6 +54,10 @@ const Products = () => {
 
   const { globalFilter } = state;
 
+  const showMoreInfo = (data) => {
+    console.log('========>', data);
+  };
+
   const tableDesign = () => {
     return (
       <div className='container'>
@@ -64,14 +65,14 @@ const Products = () => {
           filter={globalFilter}
           setFilter={setGlobalFilter}
         />
-        <h1>Basic Table</h1>
-        <table {...getTableProps()}>
-          <thead>
+        <h1 className='text-center'>Order List</h1>
+        <table {...getTableProps()} className='table'>
+          <thead className='bg-primary text-light'>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()} className='bg-primary'>
                 {headerGroup.headers.map((column) => (
                   <th {...column.getHeaderProps()} className='px-4'>
-                    {column.render("Header")}
+                    {column.render('Header')}
                   </th>
                 ))}
               </tr>
@@ -81,10 +82,16 @@ const Products = () => {
             {rows.map((row) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()}>
+                <tr
+                  {...row.getRowProps()}
+                  onClick={() => showMoreInfo(row.original)}>
                   {row.cells.map((cell) => {
                     return (
-                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      <td
+                        {...cell.getCellProps()}
+                        onClick={() => console.log('Cell=====> ', cell.value)}>
+                        {cell.render('Cell')}
+                      </td>
                     );
                   })}
                 </tr>
@@ -99,4 +106,4 @@ const Products = () => {
   return <div className='container-fluid py-5'>{tableDesign()}</div>;
 };
 
-export default Products;
+export default Orders;

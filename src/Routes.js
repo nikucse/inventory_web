@@ -4,9 +4,6 @@ import Layout from './container/layout/Layout';
 import AddAttendance from './container/attendance/AddAttendance';
 import AddBill from './container/bill-upload/AddBill';
 import AddClient from './container/client/AddClient';
-import AddExpense from './components/form/AddExpense';
-import AddMaterial from './components/form/AddMaterial';
-import AddOrder from './components/form/AddOrder';
 import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Reports from './container/Reports';
@@ -16,6 +13,11 @@ import NotFound from './components/NotFound';
 import Employees from './container/employee/Employees';
 import AddEmployee from './container/employee/AddEmployee';
 import AddProduct from './container/product/AddProduct';
+import Clients from './container/client/Clients';
+import AddExpense from './container/expense/AddExpense';
+import AddMaterial from './container/material/AddMaterial';
+import AddOrder from './container/order/AddOrder';
+import Orders from './container/order/Orders';
 
 const Routes = () => {
   return (
@@ -32,12 +34,14 @@ const Routes = () => {
         <Route path='/app/super/dashboard' exact component={Dashboard} />
         <Route path='/app/material' exact component={AddMaterial} />
         <Route path='/app/bill' exact component={AddBill} />
+        <Route path='/app/clients' exact component={Clients} />
         <Route path='/app/add-client' exact component={AddClient} />
         <Route path='/app/add-employee' exact component={AddEmployee} />
         <Route path='/app/employees' exact component={Employees} />
         <Route path='/app/expense' exact component={AddExpense} />
         <Route path='/app/attendance' exact component={AddAttendance} />
         <Route path='/app/order' exact component={AddOrder} />
+        <Route path='/app/orders' exact component={Orders} />
         <Route path='*' exact component={NotFound} />
       </Switch>
     </div>

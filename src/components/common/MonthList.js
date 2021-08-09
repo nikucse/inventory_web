@@ -13,64 +13,40 @@ const MonthList = () => {
       </button>
       <ul className='dropdown-menu' aria-labelledby='dropdownMenuButton1'>
         <li>
-          <a className='dropdown-item' href='#'>
-            January
-          </a>
+          <a className='dropdown-item'>January</a>
         </li>
         <li>
-          <a className='dropdown-item' href='#'>
-            February
-          </a>
+          <a className='dropdown-item'>February</a>
         </li>
         <li>
-          <a className='dropdown-item' href='#'>
-            March
-          </a>
+          <a className='dropdown-item'>March</a>
         </li>
         <li>
-          <a className='dropdown-item' href='#'>
-            April
-          </a>
+          <a className='dropdown-item'>April</a>
         </li>
         <li>
-          <a className='dropdown-item' href='#'>
-            May
-          </a>
+          <a className='dropdown-item'>May</a>
         </li>
         <li>
-          <a className='dropdown-item' href='#'>
-            June
-          </a>
+          <a className='dropdown-item'>June</a>
         </li>
         <li>
-          <a className='dropdown-item' href='#'>
-            July
-          </a>
+          <a className='dropdown-item'>July</a>
         </li>
         <li>
-          <a className='dropdown-item' href='#'>
-            August
-          </a>
+          <a className='dropdown-item'>August</a>
         </li>
         <li>
-          <a className='dropdown-item' href='#'>
-            September
-          </a>
+          <a className='dropdown-item'>September</a>
         </li>
         <li>
-          <a className='dropdown-item' href='#'>
-            October
-          </a>
+          <a className='dropdown-item'>October</a>
         </li>
         <li>
-          <a className='dropdown-item' href='#'>
-            November
-          </a>
+          <a className='dropdown-item'>November</a>
         </li>
         <li>
-          <a className='dropdown-item' href='#'>
-            December
-          </a>
+          <a className='dropdown-item'>December</a>
         </li>
       </ul>
     </div>

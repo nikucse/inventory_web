@@ -1,5 +1,5 @@
-import { API } from "../backend";
-import axios from "axios";
+import { API } from '../backend';
+import axios from 'axios';
 
 export const register = (user) => {
   return axios
@@ -14,30 +14,29 @@ export const login = (user) => {
   return axios
     .post(`${API}/public/login`, user)
     .then((res) => {
-      console.log("================>", res);
+      console.log('================>', res);
       return res.data;
     })
     .catch((error) => console.error(error));
 };
 
 export const authenticate = (data, next) => {
-  console.log("auth.authenticate  : ", data);
+  console.log('auth.authenticate  : ', data);
 
   if (typeof window !== undefined) {
-    localStorage.setItem("jwt", JSON.stringify(data.jwtToken));
+    localStorage.setItem('jwt', JSON.stringify(data.jwtToken));
     next();
   }
 };
 
 export const logoutUser = () => {
-  if (localStorage.getItem("jwt"))
-    localStorage.removeItem("jwt");
+  if (localStorage.getItem('jwt')) localStorage.removeItem('jwt');
 };
 
 export const isAuthenticated = () => {
   return typeof window === undefined
     ? false
-    : localStorage.getItem("jwt")
-    ? JSON.parse(localStorage.getItem("jwt"))
+    : localStorage.getItem('jwt')
+    ? JSON.parse(localStorage.getItem('jwt'))
     : false;
 };

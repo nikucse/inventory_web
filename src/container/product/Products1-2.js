@@ -1,24 +1,25 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { getAllClient } from '../../service/ClientService';
+import { FaEdit } from 'react-icons/fa';
+import { getAllProduct } from '../../service/ProductService';
 import { useTable, useGlobalFilter } from 'react-table';
-import { COLUMNS } from '../../util/react-table-util/ClientColumns';
+import { COLUMNS } from '../util/columns';
 import GlobalFilterOnReactTable from '../../components/filter/GlobalFilterOnReactTable';
 
-import '../product/products.css';
+import './products.css';
 
-const Clients = () => {
-  const [clients, setClients] = useState([]);
-  const [client, setClient] = useState({});
+const Products = () => {
+  const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState({});
   const [error, setError] = useState([]);
 
-  const loadAllClients = () => {
-    getAllClient().then((data) => {
-      setClients(data);
+  const loadAllProducts = () => {
+    getAllProduct().then((data) => {
+      setProducts(data);
     });
   };
 
   useEffect(() => {
-    loadAllClients();
+    loadAllProducts();
   }, []);
 
   const getData = (data) => {
@@ -27,10 +28,10 @@ const Clients = () => {
   };
 
   const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => getData(clients), [clients]);
+  const data = useMemo(() => getData(products), [products]);
 
-  const onEditClient = (client) => {
-    console.log(client);
+  const onEditProduct = (product) => {
+    console.log(product);
   };
 
   const {
@@ -56,10 +57,6 @@ const Clients = () => {
 
   const { globalFilter } = state;
 
-  const showMoreInfo = (data) => {
-    console.log('========>', data);
-  };
-
   const tableDesign = () => {
     return (
       <div className='container'>
@@ -67,9 +64,9 @@ const Clients = () => {
           filter={globalFilter}
           setFilter={setGlobalFilter}
         />
-        <h1>Client List</h1>
-        <table {...getTableProps()} className='table'>
-          <thead className='bg-primary text-light'>
+        <h1>Basic Table</h1>
+        <table {...getTableProps()}>
+          <thead>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()} className='bg-primary'>
                 {headerGroup.headers.map((column) => (
@@ -84,16 +81,10 @@ const Clients = () => {
             {rows.map((row) => {
               prepareRow(row);
               return (
-                <tr
-                  {...row.getRowProps()}
-                  onClick={() => showMoreInfo(row.original)}>
+                <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
                     return (
-                      <td
-                        {...cell.getCellProps()}
-                        onClick={() => console.log('Cell=====> ', cell.value)}>
-                        {cell.render('Cell')}
-                      </td>
+                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                     );
                   })}
                 </tr>
@@ -108,4 +99,4 @@ const Clients = () => {
   return <div className='container-fluid py-5'>{tableDesign()}</div>;
 };
 
-export default Clients;
+export default Products;

@@ -36,7 +36,12 @@ const Products = (props) => {
       <td>{product.productName}</td>
       <td>{product.dimension}</td>
       <td>
-        <FileViewer productUrl={product.productImageLink} />
+        {product.productImageLink === '' ||
+        product.productImageLink == undefined ? (
+          ''
+        ) : (
+          <FileViewer productUrl={product.productImageLink} />
+        )}
       </td>
       <td>{product.price}</td>
       <td>{product.actualPrice}</td>

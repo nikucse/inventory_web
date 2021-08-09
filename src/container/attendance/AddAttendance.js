@@ -93,7 +93,7 @@ const AddAttendance = () => {
               type='number'
               className='form-control'
               id='totalHours'
-              placeholder='Bill type'
+              placeholder='Total Hours'
               onChange={handleChange('totalHours')}
               value={totalHours}
             />
