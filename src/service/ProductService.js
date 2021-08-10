@@ -1,10 +1,19 @@
-import { authAxios } from "../util/interceptor";
+import { authAxios } from '../util/interceptor';
 
 export const addProduct = (product) => {
-  console.log("Product    -===========>  ", product);
-  alert(123)
+  console.log('Product    -===========>  ', product);
   return authAxios
     .post(`/product/add`, product)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.error(error));
+};
+
+export const updateProduct = (id, product) => {
+  console.log('Product    -===========>  ', product);
+  return authAxios
+    .post(`/product/update/${id}`, product)
     .then((res) => {
       return res.data;
     })

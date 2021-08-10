@@ -9,12 +9,10 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 function App() {
   return (
     <Router>
-      {/* <Navbar /> */}
       <Switch>
       <Route path="/app" component={Routes} />
       <Route exact path="/" component={Login} />
       </Switch>
-      {/* <Footer /> */}
 
     </Router>
   );

@@ -7,7 +7,7 @@ import "./NavbarList.css";
 const NavbarList = () => {
   return (
     <div>
-      <div className='container-fluid pt-4 text-dark '>
+      <div className='container-fluid pt-4'>
         <div className='row'>
           <div className='col bg-white mb-5'>
             <DailyStatusCount />

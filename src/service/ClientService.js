@@ -1,26 +1,27 @@
-import { authAxios as axios } from "../util/interceptor";
+import { authAxios as axios } from '../util/interceptor';
+import { API } from '../backend';
 
-export const addEmployee = (employee) => {
+export const addClient = (client) => {
   return axios
-    .post(`/employee/add`, employee)
+    .post(`${API}/client/add`, client)
     .then((res) => {
       return res.data;
     })
     .catch((error) => console.error(error));
 };
 
-export const getAllEmployee = () => {
+export const getAllClient = () => {
   return axios
-    .get(`/employee/list`)
+    .get(`${API}/client/list`)
     .then((res) => {
       return res.data;
     })
     .catch((error) => console.error(error));
 };
 
-export const getEmployeeById = (id) => {
+export const getClientById = (id) => {
   return axios
-    .get(`/employee/${id}`)
+    .get(`${API}/client/${id}`)
     .then((res) => {
       return res.data;
     })

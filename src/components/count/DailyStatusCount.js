@@ -1,6 +1,10 @@
-import React from "react";
+import React from 'react';
 
 const DailyStatusCount = () => {
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+
   return (
     <div>
       <h2></h2>
@@ -14,8 +18,13 @@ const DailyStatusCount = () => {
                 </div>
                 <h3 className='card-title mb-3'>Daily Expense</h3>
                 <p className='card-text'>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Ipsam, error.
+                  <span>
+                    {today.toDateString().substr(4)} :<span> ₹ 6000</span>
+                  </span>
+                  <br />
+                  <span>
+                    {yesterday.toDateString().substr(4)} :<span> ₹ 5000</span>
+                  </span>
                 </p>
               </div>
             </div>
@@ -26,10 +35,15 @@ const DailyStatusCount = () => {
                 <div className='h1 mb-3'>
                   <i className='bi bi-person-square'></i>
                 </div>
-                <h3 className='card-title mb-3'>Order Pending</h3>
+                <h3 className='card-title mb-3'>Orders</h3>
                 <p className='card-text'>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Ipsam, error.
+                  <span>
+                    Pending :<span> 6</span>
+                  </span>
+                  <br />
+                  <span>
+                    Completed :<span> 50</span>
+                  </span>
                 </p>
               </div>
             </div>
@@ -42,8 +56,13 @@ const DailyStatusCount = () => {
                 </div>
                 <h3 className='card-title mb-3'>Bill Count</h3>
                 <p className='card-text'>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Ipsam, error.
+                  <span>
+                    Pending Credit Bill :<span> 6</span>
+                  </span>
+                  <br />
+                  <span>
+                    pending Debit Bill :<span> 2</span>
+                  </span>
                 </p>
               </div>
             </div>
@@ -56,8 +75,13 @@ const DailyStatusCount = () => {
                 </div>
                 <h3 className='card-title mb-3'>Order given</h3>
                 <p className='card-text'>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Ipsam, error.
+                  <span>
+                    New Order Count :<span> 15</span>
+                  </span>
+                  <br />
+                  <span>
+                    Order Cancel :<span> 2</span>
+                  </span>
                 </p>
               </div>
             </div>

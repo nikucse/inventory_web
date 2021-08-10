@@ -1,16 +1,20 @@
-import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
-import { authenticate, login, isAuthenticated } from "../../service/auth";
+import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import {
+  authenticate,
+  login,
+  isAuthenticated,
+} from '../../service/AuthService';
 
-import "./Login.css";
+import './Login.css';
 
 const Login = () => {
   const [values, setValues] = useState({
-    email: "nikul@gmail.com",
-    password: "Nikul@123",
+    email: 'nikul@gmail.com',
+    password: 'Nikul@123',
     // email: "ajit@gmail.com",
     // password: "Ajit@123",
-    error: "",
+    error: '',
     loading: false,
     didRedirect: false,
   });
@@ -39,12 +43,12 @@ const Login = () => {
           });
         }
       })
-      .catch(console.log("Login request failed"));
+      .catch(console.log('Login request failed'));
   };
 
   const performRedirect = () => {
     if (didRedirect) {
-      if (user && user.role === "ROLE_ADMIN") {
+      if (user && user.role === 'ROLE_ADMIN') {
         return <Redirect to='/app/dashboard' />;
       } else {
         return <Redirect to='/app/dashboard' />;
@@ -71,7 +75,7 @@ const Login = () => {
         <div className='col-md-6 offset-sm-3 text-left'>
           <div
             className='alert alert-danger'
-            style={{ display: error ? "" : "none" }}>
+            style={{ display: error ? '' : 'none' }}>
             {error}
           </div>
         </div>
@@ -88,7 +92,7 @@ const Login = () => {
             <div className='form-group'>
               <label>Email Address</label>
               <input
-                onChange={handleChange("email")}
+                onChange={handleChange('email')}
                 value={email}
                 className='form-control'
                 type='email'
@@ -99,7 +103,7 @@ const Login = () => {
             <div className='form-group'>
               <label>Password</label>
               <input
-                onChange={handleChange("password")}
+                onChange={handleChange('password')}
                 value={password}
                 className='form-control'
                 type='password'

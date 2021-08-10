@@ -1,60 +1,77 @@
-import React, { useState } from "react";
-import { addProduct } from "../../service/ProductService";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router";
+import { addEmployee } from "../../service/EmployeeService";
 
 const AddEmployee = () => {
+
+  let history = useHistory();
   const [values, setValues] = useState({
     fullName: "",
     emailId: "",
-    organization: "",
+    designation: "",
+    perDayWages: "",
     address: "",
-    productId: "",
+    panCardNo: "",
+    adhaarCardNo: "",
     primaryContactNo: "",
     secondaryContactNo: "",
     country: "",
     state: "",
     city: "",
     zip: "",
-    other: "",
     error: "",
     loading: false,
     didRedirect: false,
+    isEdit: false
   });
 
   const {
     fullName,
     emailId,
-    organization,
+    designation,
+    perDayWages,
     address,
-    productId,
+    panCardNo,
+    adhaarCardNo,
     primaryContactNo,
     secondaryContactNo,
     country,
     state,
     city,
     zip,
-    other,
     error,
     loading,
     didRedirect,
+    isEdit
   } = values;
+
+
+  useEffect(() => {
+    if (history.location.state && history.location.state.fullName)
+      setValues({ ...values, ...history.location.state, isEdit: true })
+    history.push({
+      state: {}
+    })
+  }, [])
 
   const onSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, error: false, loading: true });
 
-    addProduct({
+    addEmployee({
       fullName,
       emailId,
-      organization,
+      designation,
+      perDayWages,
       address,
-      productId,
+      panCardNo,
+      adhaarCardNo,
       primaryContactNo,
       secondaryContactNo,
       country,
       state,
       city,
       zip,
-      other,
     })
       .then((data) => {
         if (data.error) {
@@ -76,7 +93,9 @@ const AddEmployee = () => {
 
   return (
     <div className='container'>
-      <h1 className=''>Add Customer</h1>
+      {
+        isEdit ? <h2 className=''>Update Employee</h2> : <h2 className=''>Add Employee</h2>
+      }
       <form className='row g-3'>
         <div className='col-md-6 mb-3'>
           <label htmlFor='fullName' className='form-label'>
@@ -86,7 +105,7 @@ const AddEmployee = () => {
             type='text'
             className='form-control'
             id='fullName'
-            placeholder='Enter Full Name'
+            placeholder='Full Name'
             onChange={handleChange("fullName")}
             value={fullName}
           />
@@ -99,37 +118,37 @@ const AddEmployee = () => {
             type='email'
             className='form-control'
             id='emailId'
-            placeholder='Enter Email Id'
-            onChange={handleChange("email")}
+            placeholder='Email Id'
+            onChange={handleChange("emailId")}
             value={emailId}
           />
         </div>
         <div className='col-md-6 mb-3'>
-          <label htmlFor='organization' className='form-label'>
-            Organization Name
+          <label htmlFor='designation' className='form-label'>
+            Designation
           </label>
           <input
             type='text'
             className='form-control'
-            id='organization'
+            id='designation'
             placeholder='Organization Name'
-            onChange={handleChange("organization")}
-            value={organization}
+            onChange={handleChange("designation")}
+            value={designation}
           />
         </div>
 
-        <div className='col-md-6 mb-3'>
-          <label htmlFor='productId' className='form-label'>
-            Product Item
+        <div className='col-6 mb-3'>
+          <label htmlFor='perDayWages' className='form-label'>
+            Per Day Wages
           </label>
-          <select
-            id='productId'
+          <input
+            type='Number'
             className='form-control'
-            onChange={handleChange("productId")}
-            value='test'>
-            <option>Choose...</option>
-            <option>...</option>
-          </select>
+            id='perDayWages'
+            placeholder='278'
+            onChange={handleChange("perDayWages")}
+            value={perDayWages}
+          />
         </div>
         <div className='col-md-6 mb-3'>
           <label htmlFor='primaryContactNo' className='form-label'>
@@ -157,32 +176,70 @@ const AddEmployee = () => {
             value={secondaryContactNo}
           />
         </div>
-        <div className='col-md-7 mb-3'>
-          <label htmlFor='other' className='form-label'>
-            Other
+        <div className='col-md-6 mb-3'>
+          <label htmlFor='panCardNo' className='form-label'>
+            Pancard
           </label>
-          <textarea
+          <input
             type='text'
             className='form-control'
-            id='other'
+            id='panCardNo'
             placeholder='Enter Some Extra Info'
-            onChange={handleChange("other")}
-            value={other}
+            onChange={handleChange("panCardNo")}
+            value={panCardNo}
           />
         </div>
-
+        <div className='col-md-6 mb-3'>
+          <label htmlFor='adhaarCardNo' className='form-label'>
+            Aadhaar
+          </label>
+          <input
+            type='text'
+            className='form-control'
+            id='adhaarCardNo'
+            placeholder='Enter Some Extra Info'
+            onChange={handleChange("adhaarCardNo")}
+            value={adhaarCardNo}
+          />
+        </div>
         <div className='col-7 mb-3'>
           <label htmlFor='address' className='form-label'>
             Address
           </label>
           <textarea
-            type='text'
+            // type='text'
             className='form-control'
             id='address'
             placeholder='Apartment, studio, or floor'
             onChange={handleChange("address")}
             value={address}
           />
+        </div>
+        <div className='col-md-6 mb-3'>
+          <label htmlFor='country' className='form-label'>
+            Country
+          </label>
+          <select
+            id='country'
+            className='form-control'
+            onChange={handleChange("country")}
+            value={country}>
+            <option selected>INDIA</option>
+            <option>...</option>
+          </select>
+        </div>
+        <div className='col-md-6 mb-3'>
+          <label htmlFor='state' className='form-label'>
+            State
+          </label>
+          <select
+            id='state'
+            className='form-control'
+            onChange={handleChange("state")}
+            value={state}>
+            <option selected>Choose...</option>
+            <option value='delhi'>Delhi</option>
+          </select>
         </div>
         <div className='col-md-6 mb-3'>
           <label htmlFor='city' className='form-label'>
@@ -208,35 +265,9 @@ const AddEmployee = () => {
             value={zip}
           />
         </div>
-        <div className='col-md-6 mb-3'>
-          <label htmlFor='country' className='form-label'>
-            Country
-          </label>
-          <select
-            id='country'
-            className='form-control'
-            onChange={handleChange("country")}
-            value='test'>
-            <option>INDIA</option>
-            <option>...</option>
-          </select>
-        </div>
-        <div className='col-md-6 mb-3'>
-          <label htmlFor='state' className='form-label'>
-            State
-          </label>
-          <select
-            id='state'
-            className='form-control'
-            onChange={handleChange("state")}
-            value='test'>
-            <option>Choose...</option>
-            <option>...</option>
-          </select>
-        </div>
-        <div className='col-12 center mb-3'>
-          <button type='submit' className='btn btn-primary'>
-            Add Customer
+        <div className='col-12 text-center'>
+          <button type='submit' className='btn btn-primary btn-lg col-md-6' onClick={onSubmit}>
+            Add Employee
           </button>
         </div>
       </form>

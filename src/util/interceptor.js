@@ -1,7 +1,7 @@
-import axios from "axios";
-import { API } from "../backend";
+import axios from 'axios';
+import { API } from '../backend';
 
-const token = JSON.parse(localStorage.getItem("jwt"));
+const token = JSON.parse(localStorage.getItem('jwt'));
 
 export const authAxios = axios.create({
   baseURL: API,

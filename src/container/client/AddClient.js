@@ -1,23 +1,21 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import { addProduct } from '../../service/ProductService';
 
-import { addEmployee } from "../../service/EmployeeService";
-
-const AddEmployee = () => {
+const AddClient = () => {
   const [values, setValues] = useState({
-    fullName: "",
-    emailId: "",
-    designation: "",
-    perDayWages: "",
-    address: "",
-    panCardNo: "",
-    adhaarCardNo: "",
-    primaryContactNo: "",
-    secondaryContactNo: "",
-    country: "",
-    state: "",
-    city: "",
-    zip: "",
-    error: "",
+    fullName: '',
+    emailId: '',
+    organization: '',
+    address: '',
+    productId: '',
+    primaryContactNo: '',
+    secondaryContactNo: '',
+    country: '',
+    state: '',
+    city: '',
+    zip: '',
+    other: '',
+    error: '',
     loading: false,
     didRedirect: false,
   });
@@ -25,17 +23,16 @@ const AddEmployee = () => {
   const {
     fullName,
     emailId,
-    designation,
-    perDayWages,
+    organization,
     address,
-    panCardNo,
-    adhaarCardNo,
+    productId,
     primaryContactNo,
     secondaryContactNo,
     country,
     state,
     city,
     zip,
+    other,
     error,
     loading,
     didRedirect,
@@ -45,20 +42,19 @@ const AddEmployee = () => {
     event.preventDefault();
     setValues({ ...values, error: false, loading: true });
 
-    addEmployee({
+    addProduct({
       fullName,
       emailId,
-      designation,
-      perDayWages,
+      organization,
       address,
-      panCardNo,
-      adhaarCardNo,
+      productId,
       primaryContactNo,
       secondaryContactNo,
       country,
       state,
       city,
       zip,
+      other,
     })
       .then((data) => {
         if (data.error) {
@@ -68,10 +64,10 @@ const AddEmployee = () => {
             ...values,
             didRedirect: true,
           });
-          console.log("Add Product Detail =====> ", data);
+          console.log('Add Product Detail =====> ', data);
         }
       })
-      .catch(console.log("Login request failed"));
+      .catch(console.log('Login request failed'));
   };
 
   const handleChange = (name) => (event) => {
@@ -80,7 +76,7 @@ const AddEmployee = () => {
 
   return (
     <div className='container'>
-      <h1 className=''>Add Employee</h1>
+      <h1 className=''>Add Client</h1>
       <form className='row g-3'>
         <div className='col-md-6 mb-3'>
           <label htmlFor='fullName' className='form-label'>
@@ -90,8 +86,8 @@ const AddEmployee = () => {
             type='text'
             className='form-control'
             id='fullName'
-            placeholder='Full Name'
-            onChange={handleChange("fullName")}
+            placeholder='Enter Full Name'
+            onChange={handleChange('fullName')}
             value={fullName}
           />
         </div>
@@ -103,37 +99,37 @@ const AddEmployee = () => {
             type='email'
             className='form-control'
             id='emailId'
-            placeholder='Email Id'
-            onChange={handleChange("email")}
+            placeholder='Enter Email Id'
+            onChange={handleChange('email')}
             value={emailId}
           />
         </div>
         <div className='col-md-6 mb-3'>
-          <label htmlFor='designation' className='form-label'>
-            Designation
+          <label htmlFor='organization' className='form-label'>
+            Organization Name
           </label>
           <input
             type='text'
             className='form-control'
-            id='designation'
+            id='organization'
             placeholder='Organization Name'
-            onChange={handleChange("designation")}
-            value={designation}
+            onChange={handleChange('organization')}
+            value={organization}
           />
         </div>
 
-        <div className='col-6 mb-3'>
-          <label htmlFor='perDayWages' className='form-label'>
-            Per Day Wages
+        <div className='col-md-6 mb-3'>
+          <label htmlFor='productId' className='form-label'>
+            Product Item
           </label>
-          <input
-            type='Number'
+          <select
+            id='productId'
             className='form-control'
-            id='perDayWages'
-            placeholder='278'
-            onChange={handleChange("perDayWages")}
-            value={perDayWages}
-          />
+            onChange={handleChange('productId')}
+            value='test'>
+            <option>Choose...</option>
+            <option>...</option>
+          </select>
         </div>
         <div className='col-md-6 mb-3'>
           <label htmlFor='primaryContactNo' className='form-label'>
@@ -144,7 +140,7 @@ const AddEmployee = () => {
             className='form-control'
             id='primaryContactNo'
             placeholder='999999999'
-            onChange={handleChange("primaryContactNo")}
+            onChange={handleChange('primaryContactNo')}
             value={primaryContactNo}
           />
         </div>
@@ -157,74 +153,36 @@ const AddEmployee = () => {
             className='form-control'
             id='secondaryContactNo'
             placeholder='999999999'
-            onChange={handleChange("secondaryContactNo")}
+            onChange={handleChange('secondaryContactNo')}
             value={secondaryContactNo}
           />
         </div>
-        <div className='col-md-6 mb-3'>
-          <label htmlFor='panCardNo' className='form-label'>
-            Pancard
+        <div className='col-md-7 mb-3'>
+          <label htmlFor='other' className='form-label'>
+            Other
           </label>
-          <input
+          <textarea
             type='text'
             className='form-control'
-            id='panCardNo'
+            id='other'
             placeholder='Enter Some Extra Info'
-            onChange={handleChange("panCardNo")}
-            value={panCardNo}
+            onChange={handleChange('other')}
+            value={other}
           />
         </div>
-        <div className='col-md-6 mb-3'>
-          <label htmlFor='adhaarCardNo' className='form-label'>
-            Aadhaar
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            id='adhaarCardNo'
-            placeholder='Enter Some Extra Info'
-            onChange={handleChange("adhaarCardNo")}
-            value={adhaarCardNo}
-          />
-        </div>
+
         <div className='col-7 mb-3'>
           <label htmlFor='address' className='form-label'>
             Address
           </label>
           <textarea
-            // type='text'
+            type='text'
             className='form-control'
             id='address'
             placeholder='Apartment, studio, or floor'
-            onChange={handleChange("address")}
+            onChange={handleChange('address')}
             value={address}
           />
-        </div>
-        <div className='col-md-6 mb-3'>
-          <label htmlFor='country' className='form-label'>
-            Country
-          </label>
-          <select
-            id='country'
-            className='form-control'
-            onChange={handleChange("country")}
-            value={country}>
-            <option selected>INDIA</option>
-            <option>...</option>
-          </select>
-        </div>
-        <div className='col-md-6 mb-3'>
-          <label htmlFor='state' className='form-label'>
-            State
-          </label>
-          <select
-            id='state'
-            className='form-control'
-            onChange={handleChange("state")}
-            value={state}>
-            <option selected>Choose...</option>
-            <option value='delhi'>Delhi</option>
-          </select>
         </div>
         <div className='col-md-6 mb-3'>
           <label htmlFor='city' className='form-label'>
@@ -234,7 +192,7 @@ const AddEmployee = () => {
             type='text'
             className='form-control'
             id='city'
-            onChange={handleChange("city")}
+            onChange={handleChange('city')}
             value={city}
           />
         </div>
@@ -246,13 +204,42 @@ const AddEmployee = () => {
             type='text'
             className='form-control'
             id='zip'
-            onChange={handleChange("zip")}
+            onChange={handleChange('zip')}
             value={zip}
           />
         </div>
-        <div className='col-12 center mb-3'>
-          <button type='submit' className='btn btn-primary'>
-            Add Employee
+        <div className='col-md-6 mb-3'>
+          <label htmlFor='country' className='form-label'>
+            Country
+          </label>
+          <select
+            id='country'
+            className='form-control'
+            onChange={handleChange('country')}
+            value='test'>
+            <option>INDIA</option>
+            <option>...</option>
+          </select>
+        </div>
+        <div className='col-md-6 mb-3'>
+          <label htmlFor='state' className='form-label'>
+            State
+          </label>
+          <select
+            id='state'
+            className='form-control'
+            onChange={handleChange('state')}
+            value='test'>
+            <option>Choose...</option>
+            <option>...</option>
+          </select>
+        </div>
+        <div className='col-md-12 text-center p-3'>
+          <button
+            type='submit'
+            className='btn btn-primary btn-lg col-md-6'
+            onClick={onSubmit}>
+            Submit
           </button>
         </div>
       </form>
@@ -260,4 +247,4 @@ const AddEmployee = () => {
   );
 };
 
-export default AddEmployee;
+export default AddClient;
