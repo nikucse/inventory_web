@@ -4,8 +4,11 @@ import './AddProduct.css';
 import { useHistory } from 'react-router-dom';
 import ImageUploader from '../../components/ImageUploader';
 import { convertBase64 } from '../../util/BasicUtils';
+import { getAllEmployee } from '../../service/EmployeeService';
+
 const AddProduct = () => {
   let history = useHistory();
+  const [employees, setEmployees] = useState([]);
 
   const [values, setValues] = useState({
     productName: '',
@@ -120,7 +123,15 @@ const AddProduct = () => {
     },
   ];
 
+  const loadAllEmployee = () => {
+    getAllEmployee().then((data) => {
+      setEmployees(data);
+      console.log(data);
+    });
+  };
+
   useEffect(() => {
+    loadAllEmployee();
     if (history.location.state && history.location.state.productName)
       setValues({ ...values, ...history.location.state, isEdit: true });
     history.push({
