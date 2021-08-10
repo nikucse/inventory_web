@@ -10,10 +10,10 @@ export const addProduct = (product) => {
     .catch((error) => console.error(error));
 };
 
-export const updateProduct = (id, product) => {
+export const updateProduct = (product) => {
   console.log('Product    -===========>  ', product);
   return authAxios
-    .post(`/product/update/${id}`, product)
+    .post(`/product/update/${product.id}`, product)
     .then((res) => {
       return res.data;
     })

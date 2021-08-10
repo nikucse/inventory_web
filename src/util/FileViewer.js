@@ -19,7 +19,7 @@ const FileViewer = ({ productUrl, width, height }) => {
     });
     const params = { Bucket: AWS_BUCKET_NAME, Key: path };
     s3.getSignedUrl('getObject', params, function (err, url) {
-      console.log('Your generated pre-signed URL is', url);
+      // console.log('Your generated pre-signed URL is', url);
       setS3FilePath(url);
     });
   };

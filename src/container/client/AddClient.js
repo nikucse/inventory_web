@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { addProduct } from '../../service/ProductService';
+import { addClient } from '../../service/ClientService';
 
 const AddClient = () => {
   const [values, setValues] = useState({
@@ -42,7 +42,7 @@ const AddClient = () => {
     event.preventDefault();
     setValues({ ...values, error: false, loading: true });
 
-    addProduct({
+    addClient({
       fullName,
       emailId,
       organization,
