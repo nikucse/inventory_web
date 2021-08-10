@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { addProduct } from '../../service/ProductService';
+import { addProduct, updateProduct } from '../../service/ProductService';
 import './AddProduct.css';
 import { useHistory } from 'react-router-dom';
 import ImageUploader from '../../components/ImageUploader';
 import { convertBase64 } from '../../util/BasicUtils';
+import FileViewer from '../../util/FileViewer';
 const AddProduct = () => {
   let history = useHistory();
 
@@ -130,21 +131,9 @@ const AddProduct = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    setValues({ ...values, error: false, loading: true });
-
-    addProduct({
-      productName,
-      category,
-      productImageLink,
-      dimension,
-      color,
-      price,
-      actualPrice,
-      buildBy,
-      location,
-      status,
-      message,
-    })
+    // setValues({ ...values, error: false, loading: true });
+    console.log("values", values)
+    addProduct(values)
       .then((data) => {
         if (data.error) {
           setValues({ ...values, error: data.error, loading: false });
@@ -153,19 +142,41 @@ const AddProduct = () => {
             ...values,
             didRedirect: true,
           });
+
+          history.push('/app/products');
           console.log('Add Product Detail =====> ', data);
         }
       })
       .catch((err) => console.log('Add Product request failed', err));
   };
 
+  const onUpdate = (event) => {
+    event.preventDefault();
+    // setValues({ ...values, error: false, loading: true });
+    console.log("values", values)
+    updateProduct(values)
+      .then((data) => {
+        if (data.error) {
+          setValues({ ...values, error: data.error, loading: false });
+        } else {
+          setValues({
+            ...values,
+            didRedirect: true,
+          });
+          history.push('/app/products');
+
+          console.log('Add Product Detail =====> ', data);
+        }
+      })
+      .catch((err) => console.log('Add Product request failed', err));
+  };
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value });
   };
 
   const setImageData = async (imageData) => {
     const base64 = await convertBase64(imageData);
-    console.log('base64 = ', base64);
+    // console.log('base64 = ', base64);
     setValues({ ...values, error: false, productImageLink: base64 });
   };
 
@@ -225,11 +236,17 @@ const AddProduct = () => {
               />
             </div>
           </div>
-          <ImageUploader
-            parentImageSet={setImageData}
-            fieldLabel='Upload Product Image'
-            field='productImageLink'
-          />
+          {isEdit ? <FileViewer
+            productUrl={productImageLink}
+            width={'450'}
+            height={'250'}
+          /> :
+            <ImageUploader
+              parentImageSet={setImageData}
+              fieldLabel='Upload Product Image'
+              field='productImageLink'
+            />}
+
         </div>
         <div className='row'>
           <div className='col-md-6 pl-0'>
@@ -324,12 +341,20 @@ const AddProduct = () => {
         </div>
 
         <div className='col-12 text-center'>
-          <button
-            type='submit'
-            className='btn btn-primary btn-lg col-md-6'
-            onClick={onSubmit}>
-            Submit
-          </button>
+          {
+            isEdit ? <button
+              type='submit'
+              className='btn btn-primary btn-lg col-md-6'
+              onClick={onUpdate}>
+              Update
+            </button> :
+              <button
+                type='submit'
+                className='btn btn-primary btn-lg col-md-6'
+                onClick={onSubmit}>
+                Add Product
+              </button>
+          }
         </div>
       </form>
     </div>
@@ -337,3 +362,4 @@ const AddProduct = () => {
 };
 
 export default AddProduct;
+
