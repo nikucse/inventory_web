@@ -1,8 +1,9 @@
-import { authAxios as axios } from "../util/interceptor";
+import { authAxios as axios } from '../util/interceptor';
 
 export const addBill = (bill) => {
+  console.log('Request ====> ', bill);
   return axios
-    .post(`${API}/bill`, bill)
+    .post(`/bill/add`, bill)
     .then((res) => {
       return res.data;
     })
@@ -11,7 +12,7 @@ export const addBill = (bill) => {
 
 export const getAllBill = () => {
   return axios
-    .get(`${API}/bill`)
+    .get(`/bill/list`)
     .then((res) => {
       return res.data;
     })
@@ -20,7 +21,7 @@ export const getAllBill = () => {
 
 export const getBillByDate = (date) => {
   return axios
-    .get(`${API}/bill/${date}`)
+    .get(`/bill/date/${date}`)
     .then((res) => {
       return res.data;
     })

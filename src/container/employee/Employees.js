@@ -37,7 +37,7 @@ const Employees = () => {
       <td>{employee.joiningDate.substring(0, 10)}</td>
       <td>{employee.totalAmount}</td>
       <td>{employee.state}</td>
-      <td>{employee.adhaarCardNo}</td>
+      <td>{employee.aadhaarCardNo}</td>
       <td className='text-primary' onClick={() => onEditEmployee(employee)}>
         <FaEdit />
       </td>

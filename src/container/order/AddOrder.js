@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useHistory } from 'react-router-dom';
 import { addOrder } from '../../service/OrderService';
+import { getAllProduct } from '../../service/ProductService';
+import { getAllClient } from '../../service/ClientService';
+import { paymentModeOptions } from '../../util/billUtils';
 
 const AddOrder = () => {
+  const history = useHistory();
   const [selectedDate, setSelectedDate] = useState('');
+  const [products, setProducts] = useState([]);
+  const [clients, setClients] = useState([]);
 
   const [values, setValues] = useState({
     productId: '',
@@ -13,6 +20,7 @@ const AddOrder = () => {
     deliveryDate: '',
     advance: '',
     amount: '',
+    paymentMode,
     deliveredBy: '',
     paymentStatus: '',
     error: '',
@@ -28,11 +36,27 @@ const AddOrder = () => {
     advance,
     amount,
     deliveredBy,
+    paymentMode,
     paymentStatus,
     error,
     loading,
     didRedirect,
   } = values;
+
+  const loadData = () => {
+    getAllProduct().then((data) => {
+      setProducts(data);
+      console.log(data);
+    });
+    getAllClient().then((data) => {
+      setClients(data);
+      console.log(data);
+    });
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -46,6 +70,7 @@ const AddOrder = () => {
       advance,
       amount,
       deliveredBy,
+      paymentMode,
       paymentStatus,
     })
       .then((data) => {
@@ -57,10 +82,14 @@ const AddOrder = () => {
             ...values,
             didRedirect: true,
           });
+          history.push('/app/orders');
           console.log('Add Order Detail =====> ', data);
         }
       })
-      .catch(console.log('Failed to Add Order '));
+      .catch((err) => {
+        console.log('Failed to Add Order ', err);
+        history.push('/app/orders');
+      });
   };
 
   const handleChange = (name) => (event) => {
@@ -76,33 +105,39 @@ const AddOrder = () => {
         <br />
         <form>
           <div className='row g-4 justify-content-center'>
-            <div className='col-md-4 p-2'>
+            <div className='col-md-5 p-2'>
               <label htmlFor='productId' className='form-label'>
                 Product Name
               </label>
-              <input
-                type='text'
-                className='form-control'
+              <select
                 id='productId'
-                placeholder='Product Name'
+                className='form-control'
                 onChange={handleChange('productId')}
-                value={productId}
-              />
+                value={productId}>
+                {products.map((product) => (
+                  <option key={product.id} value={product.id}>
+                    {product.productName}
+                  </option>
+                ))}
+              </select>
             </div>
-            <div className='col-md-4 p-2'>
+            <div className='col-md-5 p-2'>
               <label htmlFor='clientId' className='form-label'>
                 Client Name
               </label>
-              <input
-                type='text'
-                className='form-control'
+              <select
                 id='clientId'
-                placeholder='Client Name'
+                className='form-control'
                 onChange={handleChange('clientId')}
-                value={clientId}
-              />
+                value={clientId}>
+                {clients.map((client) => (
+                  <option key={client.id} value={client.id}>
+                    {client.fullName}
+                  </option>
+                ))}
+              </select>
             </div>
-            <div className='col-md-4 p-2'>
+            <div className='col-md-5 p-2'>
               <label htmlFor='quantity' className='form-label'>
                 Quantity
               </label>
@@ -115,7 +150,7 @@ const AddOrder = () => {
                 value={quantity}
               />
             </div>
-            <div className='col-md-4 p-2'>
+            <div className='col-md-5 p-2'>
               <label htmlFor='selectedDate' className='form-label'>
                 Delivery Date
               </label>
@@ -132,7 +167,7 @@ const AddOrder = () => {
                 placeholderText='Delivery Date'
               />
             </div>
-            <div className='col-md-4 p-2'>
+            <div className='col-md-5 p-2'>
               <label htmlFor='advance' className='form-label'>
                 Advance Amount
               </label>
@@ -146,7 +181,24 @@ const AddOrder = () => {
               />
             </div>
 
-            <div className='col-md-4 p-2'>
+            <div className='col-md-5 p-2'>
+              <label htmlFor='paymentMode' className='form-label'>
+                Mode Of Payment
+              </label>
+              <select
+                id='paymentMode'
+                className='form-control'
+                onChange={handleChange('paymentMode')}
+                value={paymentMode}>
+                {paymentModeOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className='col-md-5 p-2'>
               <label htmlFor='paymentStatus' className='form-label'>
                 Payment Status
               </label>
@@ -159,6 +211,7 @@ const AddOrder = () => {
                 value={paymentStatus}
               />
             </div>
+            <div className='col-md-5 p-2'></div>
             <div className='col-md-7 text-center p-3'>
               <button
                 type='submit'

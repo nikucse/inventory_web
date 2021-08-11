@@ -5,8 +5,11 @@ import { COLUMNS } from '../../util/react-table-util/ClientColumns';
 import GlobalFilterOnReactTable from '../../components/filter/GlobalFilterOnReactTable';
 
 import '../product/products.css';
+import { useHistory } from 'react-router';
 
 const Clients = () => {
+  const history = useHistory();
+
   const [clients, setClients] = useState([]);
 
   const loadAllClients = () => {
@@ -19,6 +22,22 @@ const Clients = () => {
     loadAllClients();
   }, []);
 
+  const onEditClient = (client) => {
+    console.log('onEditClient = ', client);
+    history.push({
+      pathname: '/app/add-client',
+      state: client,
+    });
+  };
+
+  const onAssignProductToClient = (client) => {
+    console.log(client);
+    history.push({
+      pathname: '/app/assign-product-to-client',
+      state: client,
+    });
+  };
+
   const getData = (data) => {
     if (data) return data;
     else return [];
@@ -26,10 +45,6 @@ const Clients = () => {
 
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => getData(clients), [clients]);
-
-  const onEditClient = (client) => {
-    console.log(client);
-  };
 
   const {
     getTableProps,
@@ -54,18 +69,18 @@ const Clients = () => {
 
   const { globalFilter } = state;
 
-  const showMoreInfo = (data) => {
-    console.log('========>', data);
-  };
-
   const tableDesign = () => {
     return (
       <div className='container-fluid'>
-        <GlobalFilterOnReactTable
-          filter={globalFilter}
-          setFilter={setGlobalFilter}
-        />
-        <h1 className='text-center'>Client List</h1>
+        <div className='row'>
+          <div className='col-md-6 m-2'>
+            <h2 className='heading-section'>Client List</h2>
+          </div>
+          <GlobalFilterOnReactTable
+            filter={globalFilter}
+            setFilter={setGlobalFilter}
+          />
+        </div>
         <table {...getTableProps()} className='table'>
           <thead className='bg-primary text-light'>
             {headerGroups.map((headerGroup) => (
@@ -75,6 +90,7 @@ const Clients = () => {
                     {column.render('Header')}
                   </th>
                 ))}
+                <th className='bg-primary px-4'>Assign Product</th>
               </tr>
             ))}
           </thead>
@@ -82,18 +98,22 @@ const Clients = () => {
             {rows.map((row) => {
               prepareRow(row);
               return (
-                <tr
-                  {...row.getRowProps()}
-                  onClick={() => showMoreInfo(row.original)}>
+                <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
                     return (
                       <td
                         {...cell.getCellProps()}
-                        onClick={() => console.log('Cell=====> ', cell.value)}>
+                        onClick={() => onEditClient(row.original)}>
                         {cell.render('Cell')}
                       </td>
                     );
                   })}
+                  <td
+                    className='btn btn-success'
+                    {...row.getRowProps()}
+                    onClick={() => onAssignProductToClient(row.original)}>
+                    Assign
+                  </td>
                 </tr>
               );
             })}

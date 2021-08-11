@@ -1,26 +1,33 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { getAllOrder } from '../../service/OrderService';
+import { getAllExpense } from '../../service/ExpenseService';
 import { useTable, useGlobalFilter } from 'react-table';
-import { COLUMNS } from '../../util/react-table-util/OrderColumns';
+import { COLUMNS } from '../../util/react-table-util/ExpenseColumns';
 import GlobalFilterOnReactTable from '../../components/filter/GlobalFilterOnReactTable';
 
 import '../product/products.css';
 import { useHistory } from 'react-router';
 
-const Orders = () => {
+const Expenses = () => {
   const history = useHistory();
 
-  const [orders, setOrders] = useState([]);
+  const [expenses, setExpenses] = useState([]);
 
-  const loadAllOrders = () => {
-    getAllOrder().then((data) => {
-      setOrders(data);
+  const loadAllExpenses = () => {
+    getAllExpense().then((data) => {
+      setExpenses(data);
     });
   };
 
   useEffect(() => {
-    loadAllOrders();
+    loadAllExpenses();
   }, []);
+
+  const onEditExpense = (expense) => {
+    history.push({
+      pathname: '/app/add-expense',
+      state: expense,
+    });
+  };
 
   const getData = (data) => {
     if (data) return data;
@@ -28,11 +35,7 @@ const Orders = () => {
   };
 
   const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => getData(orders), [orders]);
-
-  const onEditOrder = (client) => {
-    console.log(client);
-  };
+  const data = useMemo(() => getData(expenses), [expenses]);
 
   const {
     getTableProps,
@@ -57,16 +60,12 @@ const Orders = () => {
 
   const { globalFilter } = state;
 
-  const showMoreInfo = (data) => {
-    console.log('========>', data);
-  };
-
   const tableDesign = () => {
     return (
-      <div className='container'>
-        <div className='row justify-content-center'>
+      <div className='container-fluid'>
+        <div className='row'>
           <div className='col-md-6 m-2'>
-            <h2 className='heading-section'>Orders</h2>
+            <h2 className='heading-section'>Daily Expense List</h2>
           </div>
           <GlobalFilterOnReactTable
             filter={globalFilter}
@@ -91,14 +90,10 @@ const Orders = () => {
               return (
                 <tr
                   {...row.getRowProps()}
-                  onClick={() => showMoreInfo(row.original)}>
+                  onClick={() => onEditExpense(row.original)}>
                   {row.cells.map((cell) => {
                     return (
-                      <td
-                        {...cell.getCellProps()}
-                        onClick={() => console.log('Cell=====> ', cell.value)}>
-                        {cell.render('Cell')}
-                      </td>
+                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                     );
                   })}
                 </tr>
@@ -113,4 +108,4 @@ const Orders = () => {
   return <div className='container-fluid py-5'>{tableDesign()}</div>;
 };
 
-export default Orders;
+export default Expenses;

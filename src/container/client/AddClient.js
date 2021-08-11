@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import { addClient } from '../../service/ClientService';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
+import { addClient, updateClient } from '../../service/ClientService';
 
 const AddClient = () => {
+  let history = useHistory();
+
   const [values, setValues] = useState({
     fullName: '',
     emailId: '',
     organization: '',
     address: '',
-    productId: '',
     primaryContactNo: '',
     secondaryContactNo: '',
     country: '',
@@ -18,6 +20,7 @@ const AddClient = () => {
     error: '',
     loading: false,
     didRedirect: false,
+    isEdit: false,
   });
 
   const {
@@ -25,7 +28,6 @@ const AddClient = () => {
     emailId,
     organization,
     address,
-    productId,
     primaryContactNo,
     secondaryContactNo,
     country,
@@ -36,7 +38,16 @@ const AddClient = () => {
     error,
     loading,
     didRedirect,
+    isEdit,
   } = values;
+
+  useEffect(() => {
+    if (history.location.state && history.location.state.fullName)
+      setValues({ ...values, ...history.location.state, isEdit: true });
+    history.push({
+      state: {},
+    });
+  }, []);
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -47,7 +58,6 @@ const AddClient = () => {
       emailId,
       organization,
       address,
-      productId,
       primaryContactNo,
       secondaryContactNo,
       country,
@@ -64,10 +74,31 @@ const AddClient = () => {
             ...values,
             didRedirect: true,
           });
-          console.log('Add Product Detail =====> ', data);
+          history.push('/app/clients');
+          console.log('Add Client Detail =====> ', data);
         }
       })
       .catch(console.log('Login request failed'));
+  };
+
+  const onUpdate = (event) => {
+    event.preventDefault();
+    console.log('values', values);
+    updateClient(values)
+      .then((data) => {
+        if (data.error) {
+          setValues({ ...values, error: data.error, loading: false });
+        } else {
+          setValues({
+            ...values,
+            didRedirect: true,
+          });
+          history.push('/app/clients');
+
+          console.log('Edit Client Detail =====> ', data);
+        }
+      })
+      .catch((err) => console.log('Add Product request failed', err));
   };
 
   const handleChange = (name) => (event) => {
@@ -76,9 +107,14 @@ const AddClient = () => {
 
   return (
     <div className='container'>
-      <h1 className=''>Add Client</h1>
+      <br />
+      {isEdit ? (
+        <h2 className='text-center'>Edit Client</h2>
+      ) : (
+        <h2 className='text-center'>Add Client</h2>
+      )}
       <form className='row g-3'>
-        <div className='col-md-6 mb-3'>
+        <div className='col-md-5 mb-3'>
           <label htmlFor='fullName' className='form-label'>
             Full Name
           </label>
@@ -91,7 +127,7 @@ const AddClient = () => {
             value={fullName}
           />
         </div>
-        <div className='col-md-6 mb-3'>
+        <div className='col-md-5 mb-3'>
           <label htmlFor='emailId' className='form-label'>
             Email
           </label>
@@ -100,11 +136,11 @@ const AddClient = () => {
             className='form-control'
             id='emailId'
             placeholder='Enter Email Id'
-            onChange={handleChange('email')}
+            onChange={handleChange('emailId')}
             value={emailId}
           />
         </div>
-        <div className='col-md-6 mb-3'>
+        <div className='col-md-5 mb-3'>
           <label htmlFor='organization' className='form-label'>
             Organization Name
           </label>
@@ -117,21 +153,7 @@ const AddClient = () => {
             value={organization}
           />
         </div>
-
-        <div className='col-md-6 mb-3'>
-          <label htmlFor='productId' className='form-label'>
-            Product Item
-          </label>
-          <select
-            id='productId'
-            className='form-control'
-            onChange={handleChange('productId')}
-            value='test'>
-            <option>Choose...</option>
-            <option>...</option>
-          </select>
-        </div>
-        <div className='col-md-6 mb-3'>
+        <div className='col-md-5 mb-3'>
           <label htmlFor='primaryContactNo' className='form-label'>
             Primary Contact No
           </label>
@@ -144,7 +166,7 @@ const AddClient = () => {
             value={primaryContactNo}
           />
         </div>
-        <div className='col-md-6 mb-3'>
+        <div className='col-md-5 mb-3'>
           <label htmlFor='secondaryContactNo' className='form-label'>
             Secondary Contact No
           </label>
@@ -157,9 +179,21 @@ const AddClient = () => {
             value={secondaryContactNo}
           />
         </div>
-        <div className='col-md-7 mb-3'>
+        <div className='col-md-5 mb-3'>
+          <label htmlFor='city' className='form-label'>
+            City
+          </label>
+          <input
+            type='text'
+            className='form-control'
+            id='city'
+            onChange={handleChange('city')}
+            value={city}
+          />
+        </div>
+        <div className='col-md-5 mb-3'>
           <label htmlFor='other' className='form-label'>
-            Other
+            Message
           </label>
           <textarea
             type='text'
@@ -171,7 +205,7 @@ const AddClient = () => {
           />
         </div>
 
-        <div className='col-7 mb-3'>
+        <div className='col-5 mb-3'>
           <label htmlFor='address' className='form-label'>
             Address
           </label>
@@ -184,19 +218,7 @@ const AddClient = () => {
             value={address}
           />
         </div>
-        <div className='col-md-6 mb-3'>
-          <label htmlFor='city' className='form-label'>
-            City
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            id='city'
-            onChange={handleChange('city')}
-            value={city}
-          />
-        </div>
-        <div className='col-md-6 mb-3'>
+        <div className='col-md-5 mb-3'>
           <label htmlFor='zip' className='form-label'>
             Zip Code
           </label>
@@ -208,7 +230,7 @@ const AddClient = () => {
             value={zip}
           />
         </div>
-        <div className='col-md-6 mb-3'>
+        <div className='col-md-5 mb-3'>
           <label htmlFor='country' className='form-label'>
             Country
           </label>
@@ -221,7 +243,7 @@ const AddClient = () => {
             <option>...</option>
           </select>
         </div>
-        <div className='col-md-6 mb-3'>
+        <div className='col-md-5 mb-3'>
           <label htmlFor='state' className='form-label'>
             State
           </label>
@@ -235,12 +257,21 @@ const AddClient = () => {
           </select>
         </div>
         <div className='col-md-12 text-center p-3'>
-          <button
-            type='submit'
-            className='btn btn-primary btn-lg col-md-6'
-            onClick={onSubmit}>
-            Submit
-          </button>
+          {isEdit ? (
+            <button
+              type='submit'
+              className='btn btn-primary btn-lg col-md-6'
+              onClick={onUpdate}>
+              Update
+            </button>
+          ) : (
+            <button
+              type='submit'
+              className='btn btn-primary btn-lg col-md-6'
+              onClick={onSubmit}>
+              Submit
+            </button>
+          )}
         </div>
       </form>
     </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaEdit } from 'react-icons/fa';
 import { getAllProduct } from '../../service/ProductService';
 import { useHistory } from 'react-router-dom';
-import MonthList from '../../components/common/MonthList';
+import MonthList from '../../constant/MonthList';
 import './products.css';
 import FileViewer from '../../util/FileViewer';
 
@@ -24,7 +24,7 @@ const Products = (props) => {
   }, []);
 
   const onEditProduct = (product) => {
-    console.log("onEditProduct = ", product);
+    console.log('onEditProduct = ', product);
     history.push({
       pathname: '/app/add-product',
       state: product,

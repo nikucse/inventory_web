@@ -1,8 +1,17 @@
-import { authAxios as axios } from "../util/interceptor";
+import { authAxios as axios } from '../util/interceptor';
 
 export const addEmployee = (employee) => {
   return axios
     .post(`/employee/add`, employee)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.error(error));
+};
+
+export const updateEmployee = (employee) => {
+  return axios
+    .put(`/employee/update/${employee.id}`, employee)
     .then((res) => {
       return res.data;
     })

@@ -24,4 +24,12 @@ export const COLUMNS = [
     Header: 'Contact No-2',
     accessor: 'secondaryContactNo',
   },
+  {
+    Header: 'State',
+    accessor: 'state',
+  },
+  {
+    Header: 'Address',
+    accessor: 'address',
+  },
 ];

@@ -5,6 +5,7 @@ import ImageUploader from '../../components/ImageUploader';
 import { convertBase64 } from '../../util/BasicUtils';
 import { getAllEmployee } from '../../service/EmployeeService';
 import FileViewer from '../../util/FileViewer';
+import { categoryOptionData, statusOptionData } from '../../util/productUtils';
 import './AddProduct.css';
 
 const AddProduct = () => {
@@ -13,19 +14,19 @@ const AddProduct = () => {
 
   const [values, setValues] = useState({
     productName: '',
-    category: 'sofa',
+    category: '',
     productImageLink,
     dimension: '',
     color: '',
     price: '',
     actualPrice: '',
-    buildBy: 'Rajesh Shrama',
+    buildBy: '',
     location: '',
-    status: 'Initiated',
+    status: '',
     message: '',
-    error,
-    loading,
-    didRedirect,
+    error: false,
+    loading: false,
+    didRedirect: false,
     isEdit: false,
   });
 
@@ -46,83 +47,6 @@ const AddProduct = () => {
     didRedirect,
     isEdit,
   } = values;
-  const categoryOptionData = [
-    {
-      value: 'sofa',
-      lable: 'SOFA',
-      selected: 'true',
-    },
-    {
-      value: 'table',
-      lable: 'TABLE',
-      selected: 'false',
-    },
-    {
-      value: 'chair',
-      lable: 'CHAIR',
-      selected: 'true',
-    },
-    {
-      value: 'bed',
-      lable: 'BED',
-      selected: 'false',
-    },
-    {
-      value: 'cupboard',
-      lable: 'CUPBOARD',
-      selected: 'false',
-    },
-  ];
-  const buildByOptionData = [
-    {
-      value: 'Rajesh Shrama',
-      lable: 'Rajesh Shrama',
-      selected: 'true',
-    },
-    {
-      value: 'Monoj Shrama',
-      lable: 'Manoj Shrama',
-      selected: 'false',
-    },
-    {
-      value: 'Rahool Patil',
-      lable: 'Rahool Patil',
-      selected: 'false',
-    },
-  ];
-
-  const statusOptionData = [
-    {
-      value: 'Initiated',
-      lable: 'Initiated',
-      selected: 'true',
-    },
-    {
-      value: 'InProgress',
-      lable: 'InProgress',
-      selected: 'false',
-    },
-    {
-      value: 'Polish',
-      lable: 'Polish',
-      selected: 'false',
-    },
-    {
-      value: 'Kushan',
-      lable: 'Kushan',
-      selected: 'false',
-    },
-    {
-      value: 'Dispatched',
-      lable: 'Dispatched',
-      selected: 'false',
-    },
-    {
-      value: 'Dilevered',
-      lable: 'Dilevered',
-      selected: 'false',
-    },
-  ];
 
   const loadAllEmployee = () => {
     getAllEmployee().then((data) => {
@@ -142,7 +66,6 @@ const AddProduct = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    // setValues({ ...values, error: false, loading: true });
     console.log('values', values);
     addProduct(values)
       .then((data) => {
@@ -163,7 +86,6 @@ const AddProduct = () => {
 
   const onUpdate = (event) => {
     event.preventDefault();
-    // setValues({ ...values, error: false, loading: true });
     console.log('values', values);
     updateProduct(values)
       .then((data) => {
@@ -187,7 +109,6 @@ const AddProduct = () => {
 
   const setImageData = async (imageData) => {
     const base64 = await convertBase64(imageData);
-    // console.log('base64 = ', base64);
     setValues({ ...values, error: false, productImageLink: base64 });
   };
 
@@ -220,9 +141,8 @@ const AddProduct = () => {
                 Category
               </label>
               <select
-                className='form-control'
                 id='category'
-                className='form-control form-control'
+                className='form-control'
                 onChange={handleChange('category')}
                 value={category}>
                 {categoryOptionData.map((option) => (
@@ -310,12 +230,12 @@ const AddProduct = () => {
               </label>
               <select
                 id='buildBy'
-                className='form-control form-control'
+                className='form-control'
                 onChange={handleChange('buildBy')}
                 value={buildBy}>
-                {buildByOptionData.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.lable}
+                {employees.map((employee) => (
+                  <option key={employee.id} value={employee.id}>
+                    {employee.fullName}
                   </option>
                 ))}
               </select>
@@ -337,6 +257,7 @@ const AddProduct = () => {
                 ))}
               </select>
             </div>
+
             <div className='col-md-12 mb-3'>
               <label htmlFor='message' className='form-label'>
                 Message

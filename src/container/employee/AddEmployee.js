@@ -1,28 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router";
-import { addEmployee } from "../../service/EmployeeService";
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
+import { addEmployee, updateEmployee } from '../../service/EmployeeService';
 
 const AddEmployee = () => {
-
   let history = useHistory();
   const [values, setValues] = useState({
-    fullName: "",
-    emailId: "",
-    designation: "",
-    perDayWages: "",
-    address: "",
-    panCardNo: "",
-    adhaarCardNo: "",
-    primaryContactNo: "",
-    secondaryContactNo: "",
-    country: "",
-    state: "",
-    city: "",
-    zip: "",
-    error: "",
+    fullName: '',
+    emailId: '',
+    designation: '',
+    perDayWages: '',
+    address: '',
+    panCardNo: '',
+    adhaarCardNo: '',
+    primaryContactNo: '',
+    secondaryContactNo: '',
+    country: '',
+    state: '',
+    city: '',
+    zip: '',
+    error: '',
     loading: false,
     didRedirect: false,
-    isEdit: false
+    isEdit: false,
   });
 
   const {
@@ -42,17 +41,16 @@ const AddEmployee = () => {
     error,
     loading,
     didRedirect,
-    isEdit
+    isEdit,
   } = values;
-
 
   useEffect(() => {
     if (history.location.state && history.location.state.fullName)
-      setValues({ ...values, ...history.location.state, isEdit: true })
+      setValues({ ...values, ...history.location.state, isEdit: true });
     history.push({
-      state: {}
-    })
-  }, [])
+      state: {},
+    });
+  }, []);
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -81,10 +79,34 @@ const AddEmployee = () => {
             ...values,
             didRedirect: true,
           });
-          console.log("Add Product Detail =====> ", data);
+          history.push('/app/employees');
+          console.log('Add Employee Detail =====> ', data);
         }
       })
-      .catch(console.log("Login request failed"));
+      .catch((err) => {
+        console.log('Login request failed');
+        history.push('/app/employees');
+      });
+  };
+
+  const onUpdate = (event) => {
+    event.preventDefault();
+    console.log('values', values);
+    updateEmployee(values)
+      .then((data) => {
+        if (data.error) {
+          setValues({ ...values, error: data.error, loading: false });
+        } else {
+          setValues({
+            ...values,
+            didRedirect: true,
+          });
+          history.push('/app/employees');
+
+          console.log('Edit Employee Detail =====> ', data);
+        }
+      })
+      .catch((err) => console.log('Add Product request failed', err));
   };
 
   const handleChange = (name) => (event) => {
@@ -93,9 +115,11 @@ const AddEmployee = () => {
 
   return (
     <div className='container'>
-      {
-        isEdit ? <h2 className=''>Update Employee</h2> : <h2 className=''>Add Employee</h2>
-      }
+      {isEdit ? (
+        <h2 className='text-center'>Update Employee</h2>
+      ) : (
+        <h2 className='text-center'>Add Employee</h2>
+      )}
       <form className='row g-3'>
         <div className='col-md-6 mb-3'>
           <label htmlFor='fullName' className='form-label'>
@@ -106,7 +130,7 @@ const AddEmployee = () => {
             className='form-control'
             id='fullName'
             placeholder='Full Name'
-            onChange={handleChange("fullName")}
+            onChange={handleChange('fullName')}
             value={fullName}
           />
         </div>
@@ -119,7 +143,7 @@ const AddEmployee = () => {
             className='form-control'
             id='emailId'
             placeholder='Email Id'
-            onChange={handleChange("emailId")}
+            onChange={handleChange('emailId')}
             value={emailId}
           />
         </div>
@@ -132,7 +156,7 @@ const AddEmployee = () => {
             className='form-control'
             id='designation'
             placeholder='Organization Name'
-            onChange={handleChange("designation")}
+            onChange={handleChange('designation')}
             value={designation}
           />
         </div>
@@ -146,7 +170,7 @@ const AddEmployee = () => {
             className='form-control'
             id='perDayWages'
             placeholder='278'
-            onChange={handleChange("perDayWages")}
+            onChange={handleChange('perDayWages')}
             value={perDayWages}
           />
         </div>
@@ -159,7 +183,7 @@ const AddEmployee = () => {
             className='form-control'
             id='primaryContactNo'
             placeholder='999999999'
-            onChange={handleChange("primaryContactNo")}
+            onChange={handleChange('primaryContactNo')}
             value={primaryContactNo}
           />
         </div>
@@ -172,7 +196,7 @@ const AddEmployee = () => {
             className='form-control'
             id='secondaryContactNo'
             placeholder='999999999'
-            onChange={handleChange("secondaryContactNo")}
+            onChange={handleChange('secondaryContactNo')}
             value={secondaryContactNo}
           />
         </div>
@@ -185,7 +209,7 @@ const AddEmployee = () => {
             className='form-control'
             id='panCardNo'
             placeholder='Enter Some Extra Info'
-            onChange={handleChange("panCardNo")}
+            onChange={handleChange('panCardNo')}
             value={panCardNo}
           />
         </div>
@@ -198,7 +222,7 @@ const AddEmployee = () => {
             className='form-control'
             id='adhaarCardNo'
             placeholder='Enter Some Extra Info'
-            onChange={handleChange("adhaarCardNo")}
+            onChange={handleChange('adhaarCardNo')}
             value={adhaarCardNo}
           />
         </div>
@@ -211,7 +235,7 @@ const AddEmployee = () => {
             className='form-control'
             id='address'
             placeholder='Apartment, studio, or floor'
-            onChange={handleChange("address")}
+            onChange={handleChange('address')}
             value={address}
           />
         </div>
@@ -222,7 +246,7 @@ const AddEmployee = () => {
           <select
             id='country'
             className='form-control'
-            onChange={handleChange("country")}
+            onChange={handleChange('country')}
             value={country}>
             <option selected>INDIA</option>
             <option>...</option>
@@ -235,7 +259,7 @@ const AddEmployee = () => {
           <select
             id='state'
             className='form-control'
-            onChange={handleChange("state")}
+            onChange={handleChange('state')}
             value={state}>
             <option selected>Choose...</option>
             <option value='delhi'>Delhi</option>
@@ -249,7 +273,7 @@ const AddEmployee = () => {
             type='text'
             className='form-control'
             id='city'
-            onChange={handleChange("city")}
+            onChange={handleChange('city')}
             value={city}
           />
         </div>
@@ -261,14 +285,26 @@ const AddEmployee = () => {
             type='text'
             className='form-control'
             id='zip'
-            onChange={handleChange("zip")}
+            onChange={handleChange('zip')}
             value={zip}
           />
         </div>
         <div className='col-12 text-center'>
-          <button type='submit' className='btn btn-primary btn-lg col-md-6' onClick={onSubmit}>
-            Add Employee
-          </button>
+          {isEdit ? (
+            <button
+              type='submit'
+              className='btn btn-primary btn-lg col-md-6'
+              onClick={onUpdate}>
+              Update
+            </button>
+          ) : (
+            <button
+              type='submit'
+              className='btn btn-primary btn-lg col-md-6'
+              onClick={onSubmit}>
+              Submit
+            </button>
+          )}
         </div>
       </form>
     </div>

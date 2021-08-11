@@ -23,6 +23,30 @@ export const SidebarData = [
     icon: <FaIcons.FaCartPlus />,
     cName: 'nav-text',
   },
+  {
+    title: 'Add Purchasing Product',
+    path: '/app/add-purchasing-product',
+    icon: <FaIcons.FaCartPlus />,
+    cName: 'nav-text',
+  },
+  {
+    title: 'Purchasing Products',
+    path: '/app/purchasing-product-list',
+    icon: <FaIcons.FaCartPlus />,
+    cName: 'nav-text',
+  },
+  {
+    title: 'Expenses',
+    path: '/app/expenses',
+    icon: <FaIcons.FaCartPlus />,
+    cName: 'nav-text',
+  },
+  {
+    title: 'Add Expense',
+    path: '/app/add-expense',
+    icon: <FaIcons.FaCartPlus />,
+    cName: 'nav-text',
+  },
   // {
   //   title: 'Report',
   //   path: '/app/reports',
@@ -30,12 +54,12 @@ export const SidebarData = [
   //   cName: 'nav-text',
   // },
 
-  {
-    title: 'Material',
-    path: '/app/material',
-    icon: <FaIcons.FaEnvelopeOpenText />,
-    cName: 'nav-text',
-  },
+  // {
+  //   title: 'Material',
+  //   path: '/app/material',
+  //   icon: <FaIcons.FaEnvelopeOpenText />,
+  //   cName: 'nav-text',
+  // },
   {
     title: 'Employees',
     path: '/app/employees',
@@ -61,8 +85,14 @@ export const SidebarData = [
     cName: 'nav-text',
   },
   {
-    title: 'Bill Detail',
-    path: '/app/bill',
+    title: 'Upload Bill',
+    path: '/app/add-bill',
+    icon: <IoIcons.IoMdHelpCircle />,
+    cName: 'nav-text',
+  },
+  {
+    title: 'Bills',
+    path: '/app/bills',
     icon: <IoIcons.IoMdHelpCircle />,
     cName: 'nav-text',
   },
@@ -84,10 +114,10 @@ export const SidebarData = [
     icon: <IoIcons.IoMdHelpCircle />,
     cName: 'nav-text',
   },
-  {
-    title: 'Account Detail',
-    path: '/app/account',
-    icon: <IoIcons.IoMdHelpCircle />,
-    cName: 'nav-text',
-  },
+  // {
+  //   title: 'Account Detail',
+  //   path: '/app/account',
+  //   icon: <IoIcons.IoMdHelpCircle />,
+  //   cName: 'nav-text',
+  // },
 ];
