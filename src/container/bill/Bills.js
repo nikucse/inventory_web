@@ -56,7 +56,7 @@ const Bills = () => {
       <div className='container-fluid'>
         <div className='row'>
           <div className='col-md-6 m-2'>
-            <h2 className='heading-section'>Client List</h2>
+            <h2 className='heading-section'>Bill Details</h2>
           </div>
           <GlobalFilterOnReactTable
             filter={globalFilter}

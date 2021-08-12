@@ -1,6 +1,6 @@
 import { authAxios as axios } from '../util/interceptor';
 
-export const addBill = (bill) => {
+export const uploadBill = (bill) => {
   console.log('Request ====> ', bill);
   return axios
     .post(`/bill/add`, bill)

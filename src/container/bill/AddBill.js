@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
+import { uploadBill } from '../../service/BillService';
 import { useHistory } from 'react-router-dom';
-import ImageUploader from '../../components/ImageUploader';
-import { addBill } from '../../service/BillService';
 import { convertBase64 } from '../../util/BasicUtils';
 import {
-  billTypeOptions,
   billStatusOptions,
+  billTypeOptions,
   paymentModeOptions,
 } from '../../util/billUtils';
+import ImageUploader from '../../components/ImageUploader';
 
 const AddBill = () => {
-  const history = useHistory();
+  let history = useHistory();
+
   const [values, setValues] = useState({
     billType: '',
-    billImageLink: '',
-    message: '',
     paymentMode: '',
+    billImageLink,
     amount: '',
     status: '',
+    message: '',
     error: false,
     loading: false,
     didRedirect: false,
@@ -25,9 +26,9 @@ const AddBill = () => {
 
   const {
     billType,
-    amount,
     paymentMode,
     billImageLink,
+    amount,
     status,
     message,
     error,
@@ -37,16 +38,8 @@ const AddBill = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    setValues({ ...values, error: false, loading: true });
-    console.log(billType, paymentMode, billImageLink, message, status, amount);
-    addBill({
-      billType,
-      paymentMode,
-      billImageLink,
-      message,
-      status,
-      amount,
-    })
+    console.log('values', values);
+    uploadBill(values)
       .then((data) => {
         if (data.error) {
           setValues({ ...values, error: data.error, loading: false });
@@ -55,112 +48,75 @@ const AddBill = () => {
             ...values,
             didRedirect: true,
           });
-          console.log('Upload Bill Detail =====> ', data);
+
           history.push('/app/bills');
+          console.log('Upload bill =====> ', data);
         }
       })
       .catch((err) => {
-        console.log('Failed to Upload bill', err);
+        console.log('Add Product request failed', err);
         history.push('/app/bills');
       });
   };
 
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      error: false,
-      [event.target.name]: event.target.value,
-    });
-    console.log(values);
+  const handleChange = (name) => (event) => {
+    console.log(event.target.value);
+    setValues({ ...values, error: false, [name]: event.target.value });
   };
 
   const setImageData = async (imageData) => {
     const base64 = await convertBase64(imageData);
-    console.log('base64 = ', base64);
     setValues({ ...values, error: false, billImageLink: base64 });
   };
 
-  const getBillTemplate = () => (
-    <div className='container p-5'>
-      <h2 className='text-center'>Upload Bill</h2>
-      <br />
+  return (
+    <div className='container pt-3'>
+      <h2 className='text-center p-3'>Upload Bill</h2>
       <form className='row g-3'>
-        <div className='col-md-6 mb-3'>
+        <div className='col-md-6'>
           <label htmlFor='billType' className='form-label'>
             Bill Type
           </label>
           <select
             id='billType'
             className='form-control'
-            name='billType'
-            onChange={handleChange}
+            onChange={handleChange('billType')}
             value={billType}>
-            {billTypeOptions.map((billType) => (
-              <option key={billType.value} value={billType.value}>
-                {billType.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        <ImageUploader
-          parentImageSet={setImageData}
-          fieldLabel='Bill Upload'
-          field='billImageLink'
-        />
-        <div className='form-floating col-md-6'>
-          <label htmlFor='amount' className='form-label'>
-            Amount
-          </label>
-          <input
-            type='number'
-            className='form-control'
-            name='amount'
-            id='amount'
-            placeholder='Amount'
-            onChange={handleChange}
-            value={amount}
-          />
-        </div>
-        <div className='col-md-6 p-2'>
-          <label htmlFor='paymentMode' className='form-label'>
-            Mode Of Payment
-          </label>
-          <select
-            id='paymentMode'
-            className='form-control'
-            name='paymentMode'
-            onChange={handleChange}
-            value={paymentMode}>
-            {paymentModeOptions.map((option) => (
+            {billTypeOptions.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>
             ))}
           </select>
         </div>
-        <div className='col-md-6'>
-          <label htmlFor='message' className='form-label'>
-            Message
+
+        <ImageUploader
+          parentImageSet={setImageData}
+          fieldLabel='Upload Bill Image'
+          field='billImageLink'
+        />
+        <div className='col-md-6 pt-3'>
+          <label htmlFor='amount' className='form-label'>
+            Amount
           </label>
-          <textarea
-            type='text'
+          <input
+            type='Number'
             className='form-control'
-            id='message'
-            name='message'
-            placeholder='Message'
-            onChange={handleChange}
-            value={message}
+            id='amount'
+            placeholder='24800'
+            onChange={handleChange('amount')}
+            value={amount}
           />
         </div>
-        <div className='col-md-6 mb-3'>
+
+        <div className='col-md-6 pt-3'>
           <label htmlFor='status' className='form-label'>
             Status
           </label>
           <select
-            className='form-control'
             id='status'
-            name='status'
-            onChange={handleChange}
+            className='form-control form-control'
+            onChange={handleChange('status')}
             value={status}>
             {billStatusOptions.map((option) => (
               <option key={option.value} value={option.value}>
@@ -169,7 +125,38 @@ const AddBill = () => {
             ))}
           </select>
         </div>
-        <div className='col-12 text-center p-3'>
+
+        <div className='col-md-6 pt-3'>
+          <label htmlFor='paymentMode' className='form-label'>
+            Payment Mode
+          </label>
+          <select
+            id='paymentMode'
+            className='form-control'
+            onChange={handleChange('paymentMode')}
+            value={paymentMode}>
+            {paymentModeOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className='col-md-6 p-3'>
+          <label htmlFor='message' className='form-label'>
+            Message
+          </label>
+          <textarea
+            className='form-control'
+            id='message'
+            placeholder='Enter Some Extra Info'
+            onChange={handleChange('message')}
+            value={message}
+          />
+        </div>
+
+        <div className='col-12 text-center'>
           <button
             type='submit'
             className='btn btn-primary btn-lg col-md-6'
@@ -180,8 +167,6 @@ const AddBill = () => {
       </form>
     </div>
   );
-
-  return <div>{getBillTemplate()}</div>;
 };
 
 export default AddBill;
