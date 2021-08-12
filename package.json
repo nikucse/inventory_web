@@ -12,6 +12,7 @@
     "custom-error": "^0.2.1",
     "dotenv": "^8.2.0",
     "history": "^4.10.1",
+    "moment": "^2.29.1",
     "node-sass": "^6.0.0",
     "query-string": "^4.3.4",
     "react": "^17.0.2",

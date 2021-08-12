@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { addExpense, updateExpense } from '../../service/ExpenseService';
+import moment from 'moment';
 
 const AddExpense = () => {
   const history = useHistory();
+  const [selectedDate, setSelectedDate] = useState('');
   const [values, setValues] = useState({
     purpose: '',
     category: '',
@@ -40,6 +44,12 @@ const AddExpense = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
+    let expenseDate = '';
+    if (selectedDate) {
+      expenseDate = moment(new Date(selectedDate))
+        .format('DD-MM-YYYY')
+        .toString();
+    }
     setValues({ ...values, error: false, loading: true });
     addExpense({
       purpose,
@@ -47,6 +57,7 @@ const AddExpense = () => {
       amount,
       paymentStatus,
       message,
+      expenseDate,
     })
       .then((data) => {
         if (data.error) {
@@ -76,8 +87,6 @@ const AddExpense = () => {
             didRedirect: true,
           });
           history.push('/app/expenses');
-
-          console.log('Edit Expense Detail =====> ', data);
         }
       })
       .catch((err) => console.log('Edit Exense request failed', err));
@@ -95,6 +104,24 @@ const AddExpense = () => {
         <h2 className='text-center'>Add Daily expense</h2>
       )}
       <form className='row'>
+        <div className='col-md-5 pt-3'>
+          <label htmlFor='selectedDate' className='form-label'>
+            Expense Date
+          </label>
+          <br />
+          <DatePicker
+            id='selectedDate'
+            className='form-control'
+            selected={selectedDate}
+            dateFormat='dd/MM/yyyy'
+            maxDate={new Date()}
+            isClearable
+            showYearDropdown
+            scrollableMonthYearDropdown
+            placeholderText='Expense Date'
+            onChange={(date) => setSelectedDate(date)}
+          />
+        </div>
         <div className='col-md-5 p-3'>
           <label htmlFor='purpose' className='form-label'>
             Purpose
@@ -125,7 +152,7 @@ const AddExpense = () => {
           </select>
         </div>
 
-        <div className='col-md-5'>
+        <div className='col-md-5 p-3'>
           <label htmlFor='amount' className='form-label'>
             Amount
           </label>
@@ -139,7 +166,7 @@ const AddExpense = () => {
           />
         </div>
 
-        <div className='col-md-5'>
+        <div className='col-md-5 p-3'>
           <label htmlFor='paymentStatus' className='form-label'>
             Payment Status
           </label>

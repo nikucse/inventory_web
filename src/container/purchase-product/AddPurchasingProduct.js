@@ -5,11 +5,14 @@ import {
   billTypeOptions,
   paymentModeOptions,
 } from '../../util/billUtils';
-import ImageUploader from '../../components/ImageUploader';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { addPurchasingProduct } from '../../service/PurchasingService';
+import moment from 'moment';
 
 const AddPurchasingProduct = () => {
   let history = useHistory();
+  const [selectedDate, setSelectedDate] = useState('');
 
   const [values, setValues] = useState({
     productName: '',
@@ -42,7 +45,15 @@ const AddPurchasingProduct = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     console.log('values', values);
-    addPurchasingProduct(values)
+    let purchaseDate = '';
+
+    if (selectedDate) {
+      purchaseDate = moment(new Date(selectedDate))
+        .format('DD-MM-YYYY')
+        .toString();
+    }
+
+    addPurchasingProduct({ ...values, purchaseDate })
       .then((data) => {
         if (data.error) {
           setValues({ ...values, error: data.error, loading: false });
@@ -99,7 +110,7 @@ const AddPurchasingProduct = () => {
           />
         </div>
 
-        <div className='col-md-6 pt-3'>
+        <div className='col-md-4 pt-3'>
           <label htmlFor='category' className='form-label'>
             Category
           </label>
@@ -116,7 +127,25 @@ const AddPurchasingProduct = () => {
           </select>
         </div>
 
-        <div className='col-md-6 pt-3'>
+        <div className='col-md-4 pt-3'>
+          <label htmlFor='selectedDate' className='form-label'>
+            Purchasing Date
+          </label>
+          <br />
+          <DatePicker
+            id='selectedDate'
+            className='form-control'
+            selected={selectedDate}
+            dateFormat='dd/MM/yyyy'
+            maxDate={new Date()}
+            showYearDropdown
+            scrollableMonthYearDropdown
+            placeholderText='Purchasing Date'
+            onChange={(date) => setSelectedDate(date)}
+          />
+        </div>
+
+        <div className='col-md-4 pt-3'>
           <label htmlFor='amount' className='form-label'>
             Amount
           </label>
