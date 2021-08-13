@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import {
   authenticate,
   login,
@@ -9,6 +9,7 @@ import {
 import './Login.css';
 
 const Login = () => {
+  const history = useHistory();
   const [values, setValues] = useState({
     email: 'nikul@gmail.com',
     password: 'Nikul@123',
@@ -49,13 +50,13 @@ const Login = () => {
   const performRedirect = () => {
     if (didRedirect) {
       if (user && user.role === 'ROLE_ADMIN') {
-        return <Redirect to='/app/dashboard' />;
+        history.push('/app/dashboard');
       } else {
-        return <Redirect to='/app/dashboard' />;
+        history.push('/app/dashboard');
       }
     }
     if (isAuthenticated()) {
-      return <Redirect to='/' />;
+      history.push('/app/dashboard');
     }
   };
 

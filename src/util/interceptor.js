@@ -5,9 +5,9 @@ const token = JSON.parse(localStorage.getItem('jwt'));
 
 export const authAxios = axios.create({
   baseURL: API,
-  // headers: {
-  //   Authorization: `Bearer ${token}`,
-  // },
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
 });
 
 // Add a request interceptor

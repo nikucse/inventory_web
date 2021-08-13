@@ -1,7 +1,16 @@
 import React from 'react';
 import * as FaIcons from 'react-icons/fa';
+import { useHistory } from 'react-router-dom';
+import { logoutUser } from '../../service/AuthService';
 
 const Header = ({ showSidebar }) => {
+  const history = useHistory();
+
+  const logout = () => {
+    logoutUser();
+    history.push('/');
+  };
+
   return (
     <nav className='navbar navbar-expand-md bg-dark navbar-dark pb-2 fixed-top'>
       <div className='container-fluid ml-0 mr-0'>
@@ -34,12 +43,10 @@ const Header = ({ showSidebar }) => {
               </div>
             </li>
             <li className='nav-item my-2 mx-3'>
-              <button href='#questions ' className='btn btn-primary'>
-                Register
-              </button>
+              <button className='btn btn-primary'>Register</button>
             </li>
             <li className='nav-item my-2'>
-              <button href='#questions ' className='btn btn-primary'>
+              <button className='btn btn-primary' onClick={() => logout()}>
                 Logout
               </button>
             </li>
