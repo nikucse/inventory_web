@@ -14,15 +14,15 @@ const AddProduct = () => {
 
   const [values, setValues] = useState({
     productName: '',
-    category: '',
+    category: '0',
     productImageLink,
     dimension: '',
     color: '',
     price: '',
     actualPrice: '',
-    buildBy: '',
+    buildBy: '0',
     location: '',
-    status: '',
+    status: '0',
     message: '',
     error: false,
     loading: false,
@@ -134,6 +134,7 @@ const AddProduct = () => {
                 placeholder='Product Name'
                 onChange={handleChange('productName')}
                 value={productName}
+                required
               />
             </div>
 
@@ -165,6 +166,7 @@ const AddProduct = () => {
                 placeholder='6X6*4'
                 onChange={handleChange('dimension')}
                 value={dimension}
+                required
               />
             </div>
           </div>
@@ -234,8 +236,11 @@ const AddProduct = () => {
                 className='form-control'
                 onChange={handleChange('buildBy')}
                 value={buildBy}>
+                <option key='0' value='0'>
+                  Select
+                </option>
                 {employees.map((employee) => (
-                  <option key={employee.id} value={employee.id}>
+                  <option key={employee.id} value={employee.fullName}>
                     {employee.fullName}
                   </option>
                 ))}

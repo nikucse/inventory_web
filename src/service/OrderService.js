@@ -3,7 +3,7 @@ import { API } from '../backend';
 
 export const addOrder = (client) => {
   return axios
-    .post(`${API}/order/add`, client)
+    .post(`/order/add`, client)
     .then((res) => {
       return res.data;
     })
@@ -12,7 +12,16 @@ export const addOrder = (client) => {
 
 export const getAllOrder = () => {
   return axios
-    .get(`${API}/order/list`)
+    .get(`/order/list`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.error(error));
+};
+
+export const getPendingOrCompletedOrders = () => {
+  return axios
+    .get(`/order/list/pending-completed`)
     .then((res) => {
       return res.data;
     })
@@ -21,7 +30,7 @@ export const getAllOrder = () => {
 
 export const getOrderById = (id) => {
   return axios
-    .get(`${API}/order/${id}`)
+    .get(`/order/${id}`)
     .then((res) => {
       return res.data;
     })

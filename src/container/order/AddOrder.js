@@ -6,6 +6,7 @@ import { addOrder } from '../../service/OrderService';
 import { getAllProduct } from '../../service/ProductService';
 import { getAllClient } from '../../service/ClientService';
 import { paymentModeOptions } from '../../util/billUtils';
+import moment from 'moment';
 
 const AddOrder = () => {
   const history = useHistory();
@@ -15,14 +16,13 @@ const AddOrder = () => {
 
   const [values, setValues] = useState({
     productId: '',
-    clientId: '',
+    clientId: '0',
     quantity: '',
-    deliveryDate: '',
     advance: '',
     amount: '',
-    paymentMode,
+    paymentMode: '0',
     deliveredBy: '',
-    paymentStatus: '',
+    paymentStatus: '0',
     error: '',
     loading: false,
     didRedirect: false,
@@ -32,7 +32,6 @@ const AddOrder = () => {
     productId,
     clientId,
     quantity,
-    deliveryDate,
     advance,
     amount,
     deliveredBy,
@@ -60,13 +59,21 @@ const AddOrder = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
+
+    let deliveryDate = '';
+    if (selectedDate) {
+      deliveryDate = moment(new Date(selectedDate))
+        .format('DD-MM-YYYY')
+        .toString();
+    }
     setValues({ ...values, error: false, loading: true });
 
+    alert(selectedDate);
     addOrder({
       productId,
       clientId,
       quantity,
-      deliveryDate: selectedDate,
+      deliveryDate,
       advance,
       amount,
       deliveredBy,
@@ -114,8 +121,11 @@ const AddOrder = () => {
                 className='form-control'
                 onChange={handleChange('productId')}
                 value={productId}>
+                <option value={clientId}>Select</option>
                 {products.map((product) => (
-                  <option key={product.id} value={product.id}>
+                  <option
+                    key={product.id}
+                    value={`${product.id}:${product.productName}`}>
                     {product.productName}
                   </option>
                 ))}
@@ -130,8 +140,11 @@ const AddOrder = () => {
                 className='form-control'
                 onChange={handleChange('clientId')}
                 value={clientId}>
+                <option value={clientId}>Select</option>
                 {clients.map((client) => (
-                  <option key={client.id} value={client.id}>
+                  <option
+                    key={client.id}
+                    value={`${client.id}:${client.fullName}`}>
                     {client.fullName}
                   </option>
                 ))}
@@ -198,18 +211,20 @@ const AddOrder = () => {
               </select>
             </div>
 
-            <div className='col-md-5 p-2'>
+            <div className='col-md-5 p-3'>
               <label htmlFor='paymentStatus' className='form-label'>
                 Payment Status
               </label>
-              <input
-                type='text'
-                className='form-control'
+              <select
                 id='paymentStatus'
-                placeholder='Payment Status'
+                className='form-control'
                 onChange={handleChange('paymentStatus')}
-                value={paymentStatus}
-              />
+                value={paymentStatus}>
+                <option value='0'>SELECT</option>
+                <option value='Paid'>Paid</option>
+                <option value='Pending'>Pending</option>
+                <option value='Partial'>Partial</option>
+              </select>
             </div>
             <div className='col-md-5 p-2'></div>
             <div className='col-md-7 text-center p-3'>

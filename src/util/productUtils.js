@@ -1,9 +1,14 @@
 // ================>  Category Options
 export const categoryOptionData = [
   {
+    value: '0',
+    lable: 'Select',
+    selected: 'true',
+  },
+  {
     value: 'Sofa',
     lable: 'Sofa',
-    selected: 'true',
+    selected: 'false',
   },
   {
     value: 'Table',
@@ -35,18 +40,18 @@ export const categoryOptionData = [
 // ================================>  Product Status Option
 export const statusOptionData = [
   {
-    value: 'NotStarted',
-    lable: 'NotStarted',
+    value: '0',
+    lable: 'Select',
     selected: 'true',
   },
   {
-    value: 'Initiated',
-    lable: 'Initiated',
+    value: 'Not Started',
+    lable: 'NotStarted',
     selected: 'false',
   },
   {
-    value: 'InProgress',
-    lable: 'InProgress',
+    value: 'Carpentry',
+    lable: 'Carpentry',
     selected: 'false',
   },
   {
@@ -55,8 +60,8 @@ export const statusOptionData = [
     selected: 'false',
   },
   {
-    value: 'Kushan',
-    lable: 'Kushan',
+    value: 'Completed',
+    lable: 'Completed',
     selected: 'false',
   },
   {
@@ -70,3 +75,10 @@ export const statusOptionData = [
     selected: 'false',
   },
 ];
+
+// NOT_STARTED("Not Started"),
+// CARPENTRY("Carpentry"),
+// POLISH("Polish"),
+// COMPLETED("Completed"),
+// DISPATCHED("Dispatched"),
+// DELIVERED("Delivered");

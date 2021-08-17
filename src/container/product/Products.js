@@ -54,11 +54,11 @@ const Products = (props) => {
       <td>{product.price}</td>
       <td>{product.actualPrice}</td>
       <td>{product.buildBy}</td>
-      <td>{product.location}</td>
+      {/* <td>{product.location}</td> */}
       <td>{product.status}</td>
       <td>{product.message}</td>
       <td>{product.date.substring(0, 10)}</td>
-      <td>{product.completedDate}</td>
+      {/* <td>{product.completedDate}</td> */}
       <td className='text-primary' onClick={() => onEditProduct(product)}>
         <FaEdit />
       </td>
@@ -84,11 +84,11 @@ const Products = (props) => {
                 <th>Price</th>
                 <th>Actual Price</th>
                 <th>Build By</th>
-                <th>Location</th>
+                {/* <th>Location</th> */}
                 <th>Status</th>
                 <th>Message</th>
                 <th>Order Date</th>
-                <th>Completed Date</th>
+                {/* <th>Completed Date</th> */}
                 <th>Edit</th>
               </tr>
             </thead>

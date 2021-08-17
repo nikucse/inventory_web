@@ -19,6 +19,15 @@ export const getAllBill = () => {
     .catch((error) => console.error(error));
 };
 
+export const getPendingBillCount = () => {
+  return axios
+    .get(`/bill/pending/count`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.error(error));
+};
+
 export const getBillByDate = (date) => {
   return axios
     .get(`/bill/date/${date}`)

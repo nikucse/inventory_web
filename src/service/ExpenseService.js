@@ -29,6 +29,15 @@ export const getAllExpense = () => {
     .catch((error) => console.error(error));
 };
 
+export const getlatestExpense = () => {
+  return axios
+    .get(`/expense/list/latest`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.error(error));
+};
+
 export const getExpenseByDate = (date) => {
   return axios
     .get(`/expense/${date}`)

@@ -11,16 +11,28 @@ import './Login.css';
 const Login = () => {
   const history = useHistory();
   const [values, setValues] = useState({
-    email: 'nikul@gmail.com',
-    password: 'Nikul@123',
+    //email: 'nikul@gmail.com',
+    //password: 'Nikul@123',
     // email: "ajit@gmail.com",
     // password: "Ajit@123",
+    email: '',
+    password: '',
+    emailError: '',
+    passwordError: '',
     error: '',
     loading: false,
     didRedirect: false,
   });
 
-  const { email, password, error, loading, didRedirect } = values;
+  const {
+    email,
+    password,
+    error,
+    loading,
+    didRedirect,
+    emailError,
+    passwordError,
+  } = values;
   const { user } = isAuthenticated();
 
   const handleChange = (name) => (event) => {
@@ -29,12 +41,12 @@ const Login = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    setValues({ ...values, error: false, loading: true });
 
-    login({ emailId: email, password })
-      .then((data) => {
-        if (data.error) {
-          setValues({ ...values, error: data.error, loading: false });
+    const isValid = validate();
+    if (isValid) {
+      login({ emailId: email, password }).then((data) => {
+        if (data.reason) {
+          setValues({ ...values, error: data.message, loading: false });
         } else {
           authenticate(data, () => {
             setValues({
@@ -43,8 +55,8 @@ const Login = () => {
             });
           });
         }
-      })
-      .catch(console.log('Login request failed'));
+      });
+    }
   };
 
   const performRedirect = () => {
@@ -84,6 +96,26 @@ const Login = () => {
     );
   };
 
+  const validate = () => {
+    let emailErrorMessage = '';
+    let passwordErrorMessage = '';
+
+    if (email) {
+      if (!email.includes('@')) emailErrorMessage = 'Invalid Email id';
+    } else emailErrorMessage = 'Please Enter Email-Id';
+    if (!password) passwordErrorMessage = 'Please Enter Password';
+
+    if (emailErrorMessage || passwordErrorMessage) {
+      setValues({
+        ...values,
+        emailError: emailErrorMessage,
+        passwordError: passwordErrorMessage,
+      });
+      return false;
+    }
+    return true;
+  };
+
   const logInForm = () => {
     return (
       <div className='row justify-content-center'>
@@ -91,6 +123,7 @@ const Login = () => {
           <h1 className='pb-4'>Sign in</h1>
           <form>
             <div className='form-group'>
+              <div className='text-danger'>{emailError}</div>
               <label>Email Address</label>
               <input
                 onChange={handleChange('email')}
@@ -100,7 +133,7 @@ const Login = () => {
                 autoFocus
               />
             </div>
-            <br />
+            <div className='text-danger'>{passwordError}</div>
             <div className='form-group'>
               <label>Password</label>
               <input
@@ -110,7 +143,6 @@ const Login = () => {
                 type='password'
               />
             </div>
-            <br />
             <button
               onClick={onSubmit}
               className='btn btn-primary btn-lg btn-center btn-block rounded'>

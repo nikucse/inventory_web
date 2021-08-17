@@ -5,12 +5,12 @@ export const COLUMNS = [
     show: false,
   },
   {
-    Header: 'Product Id',
-    accessor: 'productId',
+    Header: 'Product Name',
+    accessor: 'productName',
   },
   {
     Header: 'Client Name',
-    accessor: 'clientId',
+    accessor: 'clientName',
   },
   {
     Header: 'Quantity',

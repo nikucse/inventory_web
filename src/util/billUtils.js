@@ -1,8 +1,13 @@
 export const billTypeOptions = [
   {
+    value: '0',
+    label: 'Select',
+    selected: 'true',
+  },
+  {
     value: 'CR',
     label: 'Credit',
-    selected: 'true',
+    selected: 'false',
   },
   {
     value: 'DR',
@@ -13,9 +18,14 @@ export const billTypeOptions = [
 
 export const paymentModeOptions = [
   {
+    value: '0',
+    label: 'Select',
+    selected: 'true',
+  },
+  {
     value: 'No',
     label: 'No',
-    selected: 'true',
+    selected: 'false',
   },
   {
     value: 'Cash',
