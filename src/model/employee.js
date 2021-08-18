@@ -1,0 +1,18 @@
+const employee = {
+  emilId,
+  fullName,
+  totalAmount,
+  designation,
+  perDayWages,
+  primaryContactNo,
+  ImageLink,
+  status,
+  address,
+  secondaryContactNo,
+  panCardNo,
+  aadhaarCardNo,
+  country,
+  state,
+  city,
+  zip,
+};

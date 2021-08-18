@@ -1,106 +1,59 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
+import { getAllProduct } from '../../service/ProductService';
+import FileViewer from '../../util/FileViewer';
 
 const ProductTable = () => {
+  const [products, setProducts] = useState([]);
+
+  const loadAllProducts = () => {
+    getAllProduct().then((data) => {
+      setProducts(data);
+      console.log(data);
+    });
+  };
+
+  useEffect(() => {
+    loadAllProducts();
+  }, []);
+
+  const productList = products.map((product) => (
+    <tr scope='row' key={product.id}>
+      <td>{product.productName}</td>
+      <td>
+        {product.productImageLink == undefined ||
+        product.productImageLink == '' ? (
+          ''
+        ) : (
+          <FileViewer
+            productUrl={product.productImageLink}
+            width={'96'}
+            height={'65'}
+          />
+        )}
+      </td>
+      <td>{product.dimension}</td>
+      <td>{product.status}</td>
+      <td>{product.date.substring(0, 10)}</td>
+      <td>
+        {product.completedDate ? product.completedDate.substring(0, 10) : ''}
+      </td>
+    </tr>
+  ));
+
   return (
     <div>
       <table className='table'>
         <thead>
-          <tr>
-            <th scope='col'>Emp Name</th>
-            <th scope='col'>Size</th>
-            <th scope='col'>Photo</th>
-            <th scope='col'>Destination</th>
-            <th scope='col'>Date</th>
+          <tr className='bg-primary'>
+            <th scope='col'>Name</th>
+            <th scope='col'>Image</th>
+            <th scope='col'>Dimension</th>
             <th scope='col'>Status</th>
+            <th scope='col'>Order Date</th>
+            <th scope='col'>Last Date</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <th scope='row'>Rajesh Sharma</th>
-            <td>
-              <image>25”,78”,39”,15.5”.</image>
-            </td>
-            <td>
-              <td>
-                <img
-                  src='https://www.pngfind.com/pngs/m/8-82179_sofa-png-download-image-sofa-png-transparent-png.png'
-                  height={100}
-                  width={100}></img>
-              </td>
-            </td>
-            <td>P.M House</td>
-            <td>15-07-2021</td>
-            <td>Polish</td>
-          </tr>
-          <tr>
-            <th scope='row'>Madan Sharma</th>
-            <td>
-              <image>25”,78”,39”,15.5”.</image>
-            </td>
-            <td>
-              <td>
-                <img
-                  src='https://www.pngfind.com/pngs/m/8-82179_sofa-png-download-image-sofa-png-transparent-png.png'
-                  height={100}
-                  width={100}></img>
-              </td>
-            </td>
-            <td>P.M House</td>
-            <td>15-07-2021</td>
-            <td>Carpanter</td>
-          </tr>
-          <tr>
-            <th scope='row'>Krishna Sharma</th>
-            <td>
-              <image>25”,78”,39”,15.5”.</image>
-            </td>
-            <td>
-              <td>
-                <img
-                  src='https://www.pngfind.com/pngs/m/8-82179_sofa-png-download-image-sofa-png-transparent-png.png'
-                  height={100}
-                  width={100}></img>
-              </td>
-            </td>
-            <td>P.M House</td>
-            <td>15-07-2021</td>
-            <td>Carbin</td>
-          </tr>
-          <tr>
-            <th scope='row'>Baban Sharma</th>
-            <td>
-              <image>25”,78”,39”,15.5”.</image>
-            </td>
-            <td>
-              <td>
-                <img
-                  src='https://www.pngfind.com/pngs/m/8-82179_sofa-png-download-image-sofa-png-transparent-png.png'
-                  height={100}
-                  width={100}></img>
-              </td>
-            </td>
-            <td>P.M House</td>
-            <td>15-07-2021</td>
-            <td>Polish</td>
-          </tr>
-          <tr>
-            <th scope='row'>Manoj Sharma</th>
-            <td>
-              <image>25”,78”,39”,15.5”.</image>
-            </td>
-            <td>
-              <td>
-                <img
-                  src='https://www.pngfind.com/pngs/m/8-82179_sofa-png-download-image-sofa-png-transparent-png.png'
-                  height={100}
-                  width={100}></img>
-              </td>
-            </td>
-            <td>P.M House</td>
-            <td>15-07-2021</td>
-            <td>Kushan</td>
-          </tr>
-        </tbody>
+        <tbody>{productList}</tbody>
       </table>
     </div>
   );
