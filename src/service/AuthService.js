@@ -19,7 +19,6 @@ export const login = (user) => {
     })
     .catch((error) => {
       if (error.response) {
-        console.log('response');
         return error.response.data;
       } else if (error.request) {
         console.log(error.request);
@@ -32,8 +31,6 @@ export const login = (user) => {
 };
 
 export const authenticate = (data, next) => {
-  console.log('auth.authenticate  : ', data);
-
   if (typeof window !== undefined) {
     localStorage.setItem('jwt', JSON.stringify(data.jwtToken));
     localStorage.setItem('user', JSON.stringify(data));
