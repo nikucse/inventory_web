@@ -30,10 +30,6 @@ const Orders = () => {
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => getData(orders), [orders]);
 
-  const onEditOrder = (client) => {
-    console.log(client);
-  };
-
   const {
     getTableProps,
     getTableBodyProps,
