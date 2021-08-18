@@ -18,7 +18,6 @@ export const login = (user) => {
       return res.data;
     })
     .catch((error) => {
-      alert(error);
       if (error.response) {
         console.log('response');
         return error.response.data;

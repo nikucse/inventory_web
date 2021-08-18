@@ -68,7 +68,6 @@ const AddOrder = () => {
     }
     setValues({ ...values, error: false, loading: true });
 
-    alert(selectedDate);
     addOrder({
       productId,
       clientId,
