@@ -16,13 +16,13 @@ const AddOrder = () => {
 
   const [values, setValues] = useState({
     productId: '',
-    clientId: '0',
+    clientId: '',
     quantity: '',
     advance: '',
     amount: '',
-    paymentMode: '0',
+    paymentMode: '',
     deliveredBy: '',
-    paymentStatus: '0',
+    paymentStatus: '',
     error: '',
     loading: false,
     didRedirect: false,
@@ -121,7 +121,7 @@ const AddOrder = () => {
                 className='form-control'
                 onChange={handleChange('productId')}
                 value={productId}>
-                <option value={clientId}>Select</option>
+                <option value='0'>Select</option>
                 {products.map((product) => (
                   <option
                     key={product.id}
@@ -140,7 +140,7 @@ const AddOrder = () => {
                 className='form-control'
                 onChange={handleChange('clientId')}
                 value={clientId}>
-                <option value={clientId}>Select</option>
+                <option value='0'>Select</option>
                 {clients.map((client) => (
                   <option
                     key={client.id}
