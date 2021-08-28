@@ -108,11 +108,11 @@ const DailyStatusCount = () => {
                 <h3 className='card-title mb-3'>Pending Bill</h3>
                 <p className='card-text'>
                   <span>
-                    Credit Bill :<span> {billCount[0]}</span>
+                    Credit Bill :<span> {billCount && billCount[0]}</span>
                   </span>
                   <br />
                   <span>
-                    Debit Bill :<span> {billCount[1]}</span>
+                    Debit Bill :<span> {billCount && billCount[1]}</span>
                   </span>
                 </p>
               </div>

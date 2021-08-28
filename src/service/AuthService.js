@@ -1,33 +1,12 @@
-import { API } from '../backend';
-import axios from 'axios';
+import { authAxios as axios } from '../util/interceptor';
 
 export const register = (user) => {
   return axios
-    .post(`${API}/user/register`, user)
+    .post(`/user/register`, user)
     .then((response) => {
-      return response.data.json();
+      return response.data;
     })
     .catch((err) => console.log(err));
-};
-
-export const login = (user) => {
-  return axios
-    .post(`${API}/public/login`, user)
-    .then((res) => {
-      console.log(res);
-      return res.data;
-    })
-    .catch((error) => {
-      if (error.response) {
-        return error.response.data;
-      } else if (error.request) {
-        console.log(error.request);
-      } else {
-        console.log(error.message);
-      }
-
-      return error.data;
-    });
 };
 
 export const authenticate = (data, next) => {
