@@ -46,6 +46,11 @@ export const paymentModeOptions = [
 
 export const billStatusOptions = [
   {
+    value: '0',
+    label: 'Select',
+    selected: 'true',
+  },
+  {
     value: 'Pending',
     label: 'Pending',
     selected: 'false',
