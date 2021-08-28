@@ -1,62 +1,52 @@
 import React, { useState } from 'react';
+import { Form, Formik } from 'formik';
+import FormikControl from '../formik/FormikControl';
 import { useHistory } from 'react-router-dom';
-import {
-  authenticate,
-  login,
-  isAuthenticated,
-} from '../../service/AuthService';
+import { authenticate, isAuthenticated } from '../../service/AuthService';
+import { login } from '../../service/PublicService';
+import * as Yup from 'yup';
 
 import './Login.css';
 
 const Login = () => {
   const history = useHistory();
-  const [values, setValues] = useState({
-    //email: 'nikul@gmail.com',
-    //password: 'Nikul@123',
-    // email: "ajit@gmail.com",
-    // password: "Ajit@123",
-    email: '',
+  const initialValues = {
+    emailId: '',
     password: '',
-    emailError: '',
-    passwordError: '',
+    //emailId: 'nikul@gmail.com',
+    //password: 'Nikul@123',
+    // emailId: "ajit@gmail.com",
+    // password: "Ajit@123",
+  };
+
+  const validationSchema = Yup.object({
+    emailId: Yup.string().email('Invalid Email format').required('Required'),
+    password: Yup.string().required('Required'),
+  });
+
+  const [errors, setErrors] = useState({
     error: '',
     loading: false,
     didRedirect: false,
   });
 
-  const {
-    email,
-    password,
-    error,
-    loading,
-    didRedirect,
-    emailError,
-    passwordError,
-  } = values;
+  const { error, loading, didRedirect } = errors;
   const { user } = isAuthenticated();
 
-  const handleChange = (name) => (event) => {
-    setValues({ ...values, error: false, [name]: event.target.value });
-  };
-
-  const onSubmit = (event) => {
-    event.preventDefault();
-
-    const isValid = validate();
-    if (isValid) {
-      login({ emailId: email, password }).then((data) => {
-        if (data.reason) {
-          setValues({ ...values, error: data.message, loading: false });
-        } else {
-          authenticate(data, () => {
-            setValues({
-              ...values,
-              didRedirect: true,
-            });
+  const onSubmit = (values) => {
+    console.log(values);
+    login(values).then((data) => {
+      if (data.reason) {
+        setErrors({ ...errors, error: data.message, loading: false });
+      } else {
+        authenticate(data, () => {
+          setErrors({
+            ...errors,
+            didRedirect: true,
           });
-        }
-      });
-    }
+        });
+      }
+    });
   };
 
   const performRedirect = () => {
@@ -66,9 +56,6 @@ const Login = () => {
       } else {
         history.push('/app/dashboard');
       }
-    }
-    if (isAuthenticated()) {
-      history.push('/app/dashboard');
     }
   };
 
@@ -96,59 +83,40 @@ const Login = () => {
     );
   };
 
-  const validate = () => {
-    let emailErrorMessage = '';
-    let passwordErrorMessage = '';
-
-    if (email) {
-      if (!email.includes('@')) emailErrorMessage = 'Invalid Email id';
-    } else emailErrorMessage = 'Please Enter Email-Id';
-    if (!password) passwordErrorMessage = 'Please Enter Password';
-
-    if (emailErrorMessage || passwordErrorMessage) {
-      setValues({
-        ...values,
-        emailError: emailErrorMessage,
-        passwordError: passwordErrorMessage,
-      });
-      return false;
-    }
-    return true;
-  };
-
   const logInForm = () => {
     return (
-      <div className='row justify-content-center'>
+      <div className='row justify-content-center p-5'>
         <div className='col-md-4'>
-          <h1 className='pb-4'>Sign in</h1>
-          <form>
-            <div className='form-group'>
-              <div className='text-danger'>{emailError}</div>
-              <label>Email Address</label>
-              <input
-                onChange={handleChange('email')}
-                value={email}
-                className='form-control'
-                type='email'
-                autoFocus
-              />
-            </div>
-            <div className='text-danger'>{passwordError}</div>
-            <div className='form-group'>
-              <label>Password</label>
-              <input
-                onChange={handleChange('password')}
-                value={password}
-                className='form-control'
-                type='password'
-              />
-            </div>
-            <button
-              onClick={onSubmit}
-              className='btn btn-primary btn-lg btn-center btn-block rounded'>
-              Submit
-            </button>
-          </form>
+          <h2 className='p-3'>Sign in</h2>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}>
+            {(formik) => {
+              return (
+                <Form>
+                  <FormikControl
+                    control='input'
+                    type='email'
+                    label='Email'
+                    name='emailId'
+                  />
+                  <FormikControl
+                    control='input'
+                    type='password'
+                    label='Password'
+                    name='password'
+                  />
+                  <button
+                    type='submit'
+                    className='btn btn-primary btn-md btn-block rounded col-md-4'
+                    disabled={!formik.isValid}>
+                    Submit
+                  </button>
+                </Form>
+              );
+            }}
+          </Formik>
         </div>
       </div>
     );

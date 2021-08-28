@@ -1,7 +1,7 @@
 import React from 'react';
 import * as FaIcons from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
-import { logoutUser } from '../../service/AuthService';
+import { logoutUser, register } from '../../service/AuthService';
 
 const Header = ({ showSidebar }) => {
   const history = useHistory();
@@ -9,6 +9,10 @@ const Header = ({ showSidebar }) => {
   const logout = () => {
     logoutUser();
     history.push('/');
+  };
+
+  const registerForm = () => {
+    history.push('/app/register');
   };
 
   return (
@@ -43,7 +47,11 @@ const Header = ({ showSidebar }) => {
               </div>
             </li>
             <li className='nav-item my-2 mx-3'>
-              <button className='btn btn-primary'>Register</button>
+              <button
+                className='btn btn-primary'
+                onClick={() => registerForm()}>
+                Register
+              </button>
             </li>
             <li className='nav-item my-2'>
               <button className='btn btn-primary' onClick={() => logout()}>

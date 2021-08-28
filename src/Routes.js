@@ -23,12 +23,14 @@ import Expenses from './container/expense/Expenses';
 import AddPurchasingProduct from './container/purchase-product/AddPurchasingProduct';
 import GetPurchasingProduct from './container/purchase-product/GetPurchasingProduct';
 import AssignProduct from './container/client/AssignProduct';
+import Register from './container/auth-module/Register';
 
 const Routes = () => {
   return (
     <div>
       <Navbar />
       <Switch>
+        <Route exact path='/app/register' component={Register} />
         <Route exact path='/app/dashboard' component={Layout} />
         <Route path='/app/add-product' exact component={AddProduct} />
         <Route path='/app/reports' component={Reports} />

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Products from '../../container/product/Products';
 import { getAllProduct } from '../../service/ProductService';
 import FileViewer from '../../util/FileViewer';
 
@@ -16,29 +17,31 @@ const ProductTable = () => {
     loadAllProducts();
   }, []);
 
-  const productList = products.map((product) => (
-    <tr scope='row' key={product.id}>
-      <td>{product.productName}</td>
-      <td>
-        {product.productImageLink == undefined ||
-        product.productImageLink == '' ? (
-          ''
-        ) : (
-          <FileViewer
-            productUrl={product.productImageLink}
-            width={'96'}
-            height={'65'}
-          />
-        )}
-      </td>
-      <td>{product.dimension}</td>
-      <td>{product.status}</td>
-      <td>{product.date.substring(0, 10)}</td>
-      <td>
-        {product.completedDate ? product.completedDate.substring(0, 10) : ''}
-      </td>
-    </tr>
-  ));
+  const productList =
+    products &&
+    products.map((product) => (
+      <tr scope='row' key={product.id}>
+        <td>{product.productName}</td>
+        <td>
+          {product.productImageLink == undefined ||
+          product.productImageLink == '' ? (
+            ''
+          ) : (
+            <FileViewer
+              productUrl={product.productImageLink}
+              width={'96'}
+              height={'65'}
+            />
+          )}
+        </td>
+        <td>{product.dimension}</td>
+        <td>{product.status}</td>
+        <td>{product.date.substring(0, 10)}</td>
+        <td>
+          {product.completedDate ? product.completedDate.substring(0, 10) : ''}
+        </td>
+      </tr>
+    ));
 
   return (
     <div>
