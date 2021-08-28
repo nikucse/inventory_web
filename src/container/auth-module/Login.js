@@ -19,7 +19,7 @@ const Login = () => {
     // password: "Ajit@123",
   };
 
-  const validationSchema = Yup.object({
+  const validationSchema = Yup.object().shape({
     emailId: Yup.string().email('Invalid Email format').required('Required'),
     password: Yup.string().required('Required'),
   });
