@@ -1,9 +1,6 @@
 {
   "name": "inventory_web",
   "version": "1.0.0",
-  "engines": {
-    "node": "v6.11.1"
-  },
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.13.0",
