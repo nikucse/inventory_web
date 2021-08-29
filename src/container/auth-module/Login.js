@@ -19,7 +19,7 @@ const Login = () => {
     // password: "Ajit@123",
   };
 
-  const validationSchema = Yup.object().shape({
+  const loginValidationSchema = Yup.object({
     emailId: Yup.string().email('Invalid Email format').required('Required'),
     password: Yup.string().required('Required'),
   });
@@ -90,7 +90,7 @@ const Login = () => {
           <h2 className='p-3'>Sign in</h2>
           <Formik
             initialValues={initialValues}
-            validationSchema={validationSchema}
+            validationSchema={loginValidationSchema}
             onSubmit={onSubmit}>
             {(formik) => {
               return (

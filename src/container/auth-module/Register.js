@@ -1,5 +1,3 @@
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Form, Formik } from 'formik';
 import React from 'react';
 import { register } from '../../service/AuthService';
@@ -33,16 +31,13 @@ const Register = () => {
     });
   };
 
-  const validationSchema = Yup.object().shape({
+  const registerValidationSchema = Yup.object({
     firstName: Yup.string().required('Required'),
     emailId: Yup.string().email('Invalid Email format').required('Required'),
     password: Yup.string().required('Required'),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password'), ''], 'Passwords must match')
       .required('Required'),
-  });
-  useForm({
-    resolver: yupResolver(validationSchema),
   });
 
   return (
@@ -51,7 +46,7 @@ const Register = () => {
         <h2 className='p-3'>Register User</h2>
         <Formik
           initialValues={initialValues}
-          validationSchema={validationSchema}
+          validationSchema={registerValidationSchema}
           onSubmit={onSubmit}>
           {(formik) => {
             return (
