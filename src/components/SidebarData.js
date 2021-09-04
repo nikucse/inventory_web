@@ -8,7 +8,7 @@ export const SidebarData = [
     title: 'Dashboard',
     path: '/app/dashboard',
     icon: <AiIcons.AiFillHome />,
-    cName: 'nav-text muted',
+    cName: 'nav-text',
   },
 
   {

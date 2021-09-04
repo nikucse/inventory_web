@@ -16,10 +16,9 @@ const Header = ({ showSidebar }) => {
   };
 
   return (
-    <nav className='navbar navbar-expand-md bg-dark navbar-dark pb-2 fixed-top'>
+    <nav className='navbar navbar-expand-md bg-light navbar-light pb-2 fixed-top'>
       <div className='container-fluid ml-0 mr-0'>
         <a className='navbar-brand'>
-          {/* LOGO */}
           <FaIcons.FaBars onClick={showSidebar} />
         </a>
         <button
@@ -29,23 +28,8 @@ const Header = ({ showSidebar }) => {
           data-bs-target='#navmenu'>
           <span className='navbar-toggler-icon'></span>
         </button>
-        <div className='collapse navbar-collapse bg-dark' id='navmenu'>
+        <div className='collapse navbar-collapse bg-light' id='navmenu'>
           <ul className='navbar-nav ml-auto'>
-            <li className='nav-item'>
-              <div className='input-group my-2 mr-3'>
-                <input
-                  type='text'
-                  className='form-control'
-                  placeholder='Search...'
-                />
-                <button
-                  className='btn btn-primary'
-                  type='button'
-                  id='button-addon2'>
-                  <FaIcons.FaSearch />
-                </button>
-              </div>
-            </li>
             <li className='nav-item my-2 mx-3'>
               <button
                 className='btn btn-primary'
@@ -53,7 +37,7 @@ const Header = ({ showSidebar }) => {
                 Register
               </button>
             </li>
-            <li className='nav-item my-2'>
+            <li className='nav-item my-2 mr-5'>
               <button className='btn btn-primary' onClick={() => logout()}>
                 Logout
               </button>

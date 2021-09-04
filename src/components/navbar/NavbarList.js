@@ -1,8 +1,7 @@
-import React from "react";
-import DailyStatusCount from "../count/DailyStatusCount";
-import EmployeeTable from "../table/EmployeeTable";
-import ProductTable from "../table/ProductTable";
-import "./NavbarList.css";
+import React from 'react';
+import DailyStatusCount from '../count/DailyStatusCount';
+import EmployeeTable from '../table/EmployeeTable';
+import ProductTable from '../table/ProductTable';
 
 const NavbarList = () => {
   return (
