@@ -15,22 +15,9 @@ const AddExpense = () => {
     paymentStatus: '',
     message: '',
     isEdit: false,
-    error,
-    loading,
-    didRedirect,
   });
 
-  const {
-    purpose,
-    category,
-    amount,
-    paymentStatus,
-    message,
-    error,
-    loading,
-    didRedirect,
-    isEdit,
-  } = values;
+  const { purpose, category, amount, paymentStatus, message, isEdit } = values;
 
   useEffect(() => {
     console.log('Add Expense ==> ', history.location.state);

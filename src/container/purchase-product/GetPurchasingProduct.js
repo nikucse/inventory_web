@@ -5,11 +5,7 @@ import { COLUMNS } from '../../util/react-table-util/PurchasingColumns';
 import GlobalFilterOnReactTable from '../../components/filter/GlobalFilterOnReactTable';
 
 import '../product/products.css';
-import { useHistory } from 'react-router-dom';
-
 const GetPurchasingProduct = () => {
-  const history = useHistory();
-
   const [purchasings, setPurchasings] = useState([]);
 
   const loadAllPurchasingProduct = () => {
@@ -45,6 +41,7 @@ const GetPurchasingProduct = () => {
       initialState: {
         hiddenColumns: columns.map((column) => {
           if (column.show === false) return column.accessor || column.id;
+          else return '';
         }),
       },
     },

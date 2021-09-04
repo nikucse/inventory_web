@@ -5,8 +5,6 @@ import { getAllEmployee } from '../../service/EmployeeService';
 
 const Employees = () => {
   const [employees, setEmployees] = useState([]);
-  const [employee, setEmployee] = useState({});
-  const [error, setError] = useState([]);
   let history = useHistory();
 
   const loadAllEmployee = () => {

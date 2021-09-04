@@ -8,8 +8,6 @@ import FileViewer from '../../util/FileViewer';
 
 const Products = (props) => {
   const [products, setProducts] = useState([]);
-  const [product, setProduct] = useState({});
-  const [error, setError] = useState([]);
   let history = useHistory();
 
   const loadAllProducts = () => {
@@ -41,7 +39,7 @@ const Products = (props) => {
       <td>{product.dimension}</td>
       <td onClick={() => displayImage(product.productImageLink)}>
         {product.productImageLink === '' ||
-        product.productImageLink == undefined ? (
+        product.productImageLink === undefined ? (
           ''
         ) : (
           <FileViewer

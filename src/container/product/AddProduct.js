@@ -15,7 +15,7 @@ const AddProduct = () => {
   const [values, setValues] = useState({
     productName: '',
     category: '0',
-    productImageLink,
+    productImageLink: '',
     dimension: '',
     color: '',
     price: '',
@@ -24,9 +24,6 @@ const AddProduct = () => {
     location: '',
     status: '0',
     message: '',
-    error: false,
-    loading: false,
-    didRedirect: false,
     isEdit: false,
   });
 
@@ -42,9 +39,6 @@ const AddProduct = () => {
     location,
     status,
     message,
-    error,
-    loading,
-    didRedirect,
     isEdit,
   } = values;
 

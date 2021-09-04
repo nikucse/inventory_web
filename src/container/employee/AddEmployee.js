@@ -38,9 +38,6 @@ const AddEmployee = () => {
     state,
     city,
     zip,
-    error,
-    loading,
-    didRedirect,
     isEdit,
   } = values;
 

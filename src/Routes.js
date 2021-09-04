@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Login from '../src/container/auth-module/Login';
 import Layout from './container/layout/Layout';
 import AddAttendance from './container/attendance/AddAttendance';
@@ -6,7 +6,7 @@ import AddBill from './container/bill/AddBill';
 import Bills from './container/bill/Bills';
 import AddClient from './container/client/AddClient';
 import Navbar from './components/Navbar';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import Reports from './container/Reports';
 import Products from './container/product/Products';
 import Dashboard from '../src/container/dashboard/Dashboard';

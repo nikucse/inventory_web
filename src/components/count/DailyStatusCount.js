@@ -39,7 +39,6 @@ const DailyStatusCount = () => {
 
   return (
     <div>
-      <h2></h2>
       <div className='container pt-2'>
         <div className='row text-center g-4'>
           <div className='col-md'>
@@ -55,9 +54,9 @@ const DailyStatusCount = () => {
                     <span>
                       {' '}
                       ₹{' '}
-                      {expenses == undefined
+                      {expenses === undefined
                         ? 0
-                        : expenses[0] == undefined
+                        : expenses[0] === undefined
                         ? 0
                         : expenses[0]}
                     </span>
@@ -68,9 +67,9 @@ const DailyStatusCount = () => {
                     <span>
                       {' '}
                       ₹{' '}
-                      {expenses == undefined
+                      {expenses === undefined
                         ? 0
-                        : expenses[1] == undefined
+                        : expenses[1] === undefined
                         ? 0
                         : expenses[1]}
                     </span>
@@ -88,12 +87,13 @@ const DailyStatusCount = () => {
                 <h3 className='card-title mb-3'>Orders</h3>
                 <p className='card-text'>
                   <span>
-                    Pending :<span> {orders == undefined ? 0 : orders[0]}</span>
+                    Pending :
+                    <span> {orders === undefined ? 0 : orders[0]}</span>
                   </span>
                   <br />
                   <span>
                     Completed :
-                    <span> {orders == undefined ? 0 : orders[1]}</span>
+                    <span> {orders === undefined ? 0 : orders[1]}</span>
                   </span>
                 </p>
               </div>

@@ -5,7 +5,6 @@ import { COLUMNS } from '../../util/react-table-util/BillColumns';
 import GlobalFilterOnReactTable from '../../components/filter/GlobalFilterOnReactTable';
 
 import '../product/products.css';
-import { useHistory } from 'react-router-dom';
 
 const Bills = () => {
   const [bills, setBills] = useState([]);
@@ -43,6 +42,7 @@ const Bills = () => {
       initialState: {
         hiddenColumns: columns.map((column) => {
           if (column.show === false) return column.accessor || column.id;
+          else return '';
         }),
       },
     },

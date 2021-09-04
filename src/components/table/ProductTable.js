@@ -9,7 +9,6 @@ const ProductTable = () => {
   const loadAllProducts = () => {
     getAllProduct().then((data) => {
       setProducts(data);
-      console.log(data);
     });
   };
 
@@ -23,8 +22,8 @@ const ProductTable = () => {
       <tr scope='row' key={product.id}>
         <td>{product.productName}</td>
         <td>
-          {product.productImageLink == undefined ||
-          product.productImageLink == '' ? (
+          {product.productImageLink === undefined ||
+          product.productImageLink === '' ? (
             ''
           ) : (
             <FileViewer

@@ -11,12 +11,9 @@ const AssignProduct = () => {
   const [products, setProducts] = useState([]);
   const [values, setValues] = useState({
     message: '',
-    error,
-    loading,
-    didRedirect,
   });
 
-  const { message, error, loading, didRedirect } = values;
+  const { message } = values;
 
   const loadAllProduct = () => {
     getAllProduct().then((data) => {

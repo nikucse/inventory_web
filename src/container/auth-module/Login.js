@@ -34,9 +34,14 @@ const Login = () => {
   const { user } = isAuthenticated();
 
   const onSubmit = (values) => {
-    console.log(values);
     login(values).then((data) => {
-      if (data.reason) {
+      if (data === undefined) {
+        setErrors({
+          ...errors,
+          error: 'Please Check Server Try After Sometime',
+          loading: false,
+        });
+      } else if (data.reason) {
         setErrors({ ...errors, error: data.message, loading: false });
       } else {
         authenticate(data, () => {
@@ -109,7 +114,7 @@ const Login = () => {
                   />
                   <button
                     type='submit'
-                    className='btn btn-primary btn-md btn-block rounded col-md-4'
+                    className='btn btn-primary btn-md btn-block rounded col'
                     disabled={!formik.isValid}>
                     Submit
                   </button>

@@ -5,11 +5,8 @@ import { COLUMNS } from '../../util/react-table-util/OrderColumns';
 import GlobalFilterOnReactTable from '../../components/filter/GlobalFilterOnReactTable';
 
 import '../product/products.css';
-import { useHistory } from 'react-router';
 
 const Orders = () => {
-  const history = useHistory();
-
   const [orders, setOrders] = useState([]);
 
   const loadAllOrders = () => {
@@ -45,6 +42,7 @@ const Orders = () => {
       initialState: {
         hiddenColumns: columns.map((column) => {
           if (column.show === false) return column.accessor || column.id;
+          else return '';
         }),
       },
     },

@@ -15,26 +15,13 @@ const AddBill = () => {
   const [values, setValues] = useState({
     billType: '',
     paymentMode: '',
-    billImageLink,
+    billImageLink: '',
     amount: '',
     status: '',
     message: '',
-    error: false,
-    loading: false,
-    didRedirect: false,
   });
 
-  const {
-    billType,
-    paymentMode,
-    billImageLink,
-    amount,
-    status,
-    message,
-    error,
-    loading,
-    didRedirect,
-  } = values;
+  const { billType, paymentMode, amount, status, message } = values;
 
   const onSubmit = (event) => {
     event.preventDefault();

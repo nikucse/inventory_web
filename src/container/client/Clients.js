@@ -61,6 +61,7 @@ const Clients = () => {
       initialState: {
         hiddenColumns: columns.map((column) => {
           if (column.show === false) return column.accessor || column.id;
+          else return '';
         }),
       },
     },
