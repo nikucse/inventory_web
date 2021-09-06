@@ -88,11 +88,7 @@ const Orders = () => {
                   onClick={() => showMoreInfo(row.original)}>
                   {row.cells.map((cell) => {
                     return (
-                      <td
-                        {...cell.getCellProps()}
-                        onClick={() => console.log('Cell=====> ', cell.value)}>
-                        {cell.render('Cell')}
-                      </td>
+                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                     );
                   })}
                 </tr>

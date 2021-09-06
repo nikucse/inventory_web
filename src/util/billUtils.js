@@ -1,68 +1,68 @@
 export const billTypeOptions = [
   {
-    value: '0',
-    label: 'Select',
+    value: '',
+    key: 'Select',
     selected: 'true',
   },
   {
     value: 'CR',
-    label: 'Credit',
+    key: 'Credit',
     selected: 'false',
   },
   {
     value: 'DR',
-    label: 'Debit',
+    key: 'Debit',
     selected: 'false',
   },
 ];
 
 export const paymentModeOptions = [
   {
-    value: '0',
-    label: 'Select',
+    value: '',
+    key: 'Select',
     selected: 'true',
   },
   {
     value: 'No',
-    label: 'No',
+    key: 'No',
     selected: 'false',
   },
   {
     value: 'Cash',
-    label: 'Cash',
+    key: 'Cash',
     selected: 'false',
   },
   {
     value: 'Cheque',
-    label: 'Cheque',
+    key: 'Cheque',
     selected: 'false',
   },
   {
     value: 'Online',
-    label: 'Online',
+    key: 'Online',
     selected: 'false',
   },
 ];
 
 export const billStatusOptions = [
   {
-    value: '0',
-    label: 'Select',
+    value: '',
+    key: 'Select',
     selected: 'true',
   },
   {
     value: 'Pending',
-    label: 'Pending',
+    key: 'Pending',
     selected: 'false',
   },
   {
     value: 'Completed',
-    label: 'Completed',
+    key: 'Completed',
     selected: 'true',
   },
   {
     value: 'Partial',
-    label: 'Partial',
+    key: 'Partial',
     selected: 'false',
   },
 ];

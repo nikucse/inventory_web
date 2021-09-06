@@ -9,22 +9,15 @@ import Header from './navbar/Header';
 function Navbar() {
   const [sidebar, setSidebar] = useState(true);
 
-  const showSidebar = () => setSidebar(!sidebar);
+  const showSidebar = () => setSidebar(sidebar);
 
   return (
     <IconContext.Provider value={{ color: '#393f49' }}>
       <Header showSidebar={showSidebar} />
       <div className='navbar'></div>
-      {/* <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-       */}
       <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-        <ul className='nav-menu-items' onClick={showSidebar}>
-          <li className='navbar-toggle'>
-            <Link to='#' className='menu-bars'>
-              <AiIcons.AiOutlineClose />
-            </Link>
-          </li>
-
+        <ul className='nav-menu-items py-5' onClick={showSidebar}>
+          <li></li>
           {SidebarData.map((item, index) => {
             return (
               <li key={index} className={item.cName}>

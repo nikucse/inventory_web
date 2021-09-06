@@ -40,61 +40,82 @@ const Register = () => {
       .required('Required'),
   });
 
-  return (
-    <div className='row justify-content-center p-5'>
-      <div className='col-md-4'>
-        <h2 className='p-3'>Register User</h2>
-        <Formik
-          initialValues={initialValues}
-          validationSchema={registerValidationSchema}
-          onSubmit={onSubmit}>
-          {(formik) => {
-            return (
-              <Form>
-                <FormikControl
-                  control='input'
-                  type='text'
-                  label='First Name'
-                  name='firstName'
-                />
-                <FormikControl
-                  control='input'
-                  type='text'
-                  label='Last Name'
-                  name='lastName'
-                />
-                <FormikControl
-                  control='input'
-                  type='email'
-                  label='Email'
-                  name='emailId'
-                />
-                <FormikControl
-                  control='input'
-                  type='password'
-                  label='Password'
-                  name='password'
-                />
-                <FormikControl
-                  control='input'
-                  type='password'
-                  label='Confirm Password'
-                  name='confirmPassword'
-                />
+  const registerForm = () => {
+    return (
+      <div className='h-100'>
+        <div className='container h-100'>
+          <div className='row justify-content-sm-center h-100'>
+            <div class='col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9'>
+              <div class='text-center mt-5'></div>
+              <div className='card shadow-lg'>
+                <div className='card-body p-5'>
+                  <h1 className='fs-4 card-title fw-bold mb-4'>Add User</h1>
+                  <Formik
+                    initialValues={initialValues}
+                    validationSchema={registerValidationSchema}
+                    onSubmit={onSubmit}>
+                    {(formik) => {
+                      return (
+                        <Form autoComplete='off'>
+                          <FormikControl
+                            control='input'
+                            type='text'
+                            label='First Name'
+                            name='firstName'
+                            autofocus
+                          />
+                          <FormikControl
+                            control='input'
+                            type='text'
+                            label='Last Name'
+                            name='lastName'
+                          />
+                          <FormikControl
+                            control='input'
+                            type='email'
+                            label='E-Mail Address'
+                            name='emailId'
+                          />
+                          <FormikControl
+                            control='input'
+                            type='password'
+                            label='Password'
+                            name='password'
+                          />
+                          <FormikControl
+                            control='input'
+                            type='password'
+                            label='Confirm Password'
+                            name='confirmPassword'
+                          />
 
-                <button
-                  type='submit'
-                  className='btn btn-primary btn-md btn-block rounded col-md-4'
-                  disabled={formik.isValid}>
-                  Submit
-                </button>
-              </Form>
-            );
-          }}
-        </Formik>
+                          <div className='d-flex flex-row-reverse'>
+                            <button type='submit' className='btn btn-primary'>
+                              Add User
+                            </button>
+                          </div>
+                        </Form>
+                      );
+                    }}
+                  </Formik>
+                </div>
+                <div class='card-footer py-3 border-0'>
+                  <div class='text-center'>
+                    Already have an account?{' '}
+                    <a href='index.html' class='text-dark'>
+                      Login
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
+
+  return <div>{registerForm()}</div>;
 };
 
 export default Register;

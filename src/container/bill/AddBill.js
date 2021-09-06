@@ -6,7 +6,7 @@ import {
   billStatusOptions,
   billTypeOptions,
   paymentModeOptions,
-} from '../../util/billUtils';
+} from '../../util/BillUtils';
 import ImageUploader from '../../components/ImageUploader';
 
 const AddBill = () => {

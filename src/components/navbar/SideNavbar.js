@@ -1,5 +1,5 @@
-import React from "react";
-import NavbarList from "./NavbarList";
+import React from 'react';
+import NavbarList from './NavbarList';
 
 const SideNavbar = () => {
   return (

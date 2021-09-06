@@ -13,7 +13,7 @@ import Dashboard from '../src/container/dashboard/Dashboard';
 import NotFound from './components/NotFound';
 import Employees from './container/employee/Employees';
 import AddEmployee from './container/employee/AddEmployee';
-import AddProduct from './container/product/AddProduct';
+import AddProduct from './container/product/NewAddProduct';
 import Clients from './container/client/Clients';
 import AddExpense from './container/expense/AddExpense';
 import AddMaterial from './container/material/AddMaterial';

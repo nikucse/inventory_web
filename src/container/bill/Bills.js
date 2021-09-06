@@ -3,11 +3,13 @@ import { getAllBill } from '../../service/BillService';
 import { useTable, useGlobalFilter } from 'react-table';
 import { COLUMNS } from '../../util/react-table-util/BillColumns';
 import GlobalFilterOnReactTable from '../../components/filter/GlobalFilterOnReactTable';
-
 import '../product/products.css';
+import { FaPlus } from 'react-icons/fa';
+import { useHistory } from 'react-router-dom';
 
 const Bills = () => {
   const [bills, setBills] = useState([]);
+  const history = useHistory();
 
   const loadAllBills = () => {
     getAllBill().then((data) => {
@@ -51,6 +53,10 @@ const Bills = () => {
 
   const { globalFilter } = state;
 
+  const billForm = () => {
+    history.push('/app/add-bill');
+  };
+
   const tableDesign = () => {
     return (
       <div className='container-fluid'>
@@ -62,6 +68,14 @@ const Bills = () => {
             filter={globalFilter}
             setFilter={setGlobalFilter}
           />
+          <div className='pt-3'>
+            <button
+              className='btn btn-success'
+              type='button'
+              onClick={() => billForm()}>
+              <FaPlus /> Add Client
+            </button>
+          </div>
         </div>
         <table {...getTableProps()} className='table'>
           <thead className='bg-primary text-light'>

@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { addOrder } from '../../service/OrderService';
 import { getAllProduct } from '../../service/ProductService';
 import { getAllClient } from '../../service/ClientService';
-import { paymentModeOptions } from '../../util/billUtils';
+import { paymentModeOptions } from '../../util/BillUtils';
 import moment from 'moment';
 
 const AddOrder = () => {

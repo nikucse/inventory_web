@@ -5,8 +5,8 @@ import TextError from '../../components/TextError';
 const Input = (props) => {
   const { label, name, ...rest } = props;
   return (
-    <div className='form-group'>
-      <label htmlFor={name} className='form-label'>
+    <div className='mb-3'>
+      <label htmlFor={name} className='mb-2 text-muted'>
         {label}
       </label>
       <Field className='form-control' id={name} name={name} {...rest} />

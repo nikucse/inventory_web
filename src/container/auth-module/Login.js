@@ -13,10 +13,6 @@ const Login = () => {
   const initialValues = {
     emailId: '',
     password: '',
-    //emailId: 'nikul@gmail.com',
-    //password: 'Nikul@123',
-    // emailId: "ajit@gmail.com",
-    // password: "Ajit@123",
   };
 
   const loginValidationSchema = Yup.object({
@@ -77,7 +73,7 @@ const Login = () => {
   const errorMessage = () => {
     return (
       <div className='row'>
-        <div className='col-md-6 offset-sm-3 text-left'>
+        <div className='col-md-6 offset-sm-3 text-left pt-5'>
           <div
             className='alert alert-danger'
             style={{ display: error ? '' : 'none' }}>
@@ -90,51 +86,81 @@ const Login = () => {
 
   const logInForm = () => {
     return (
-      <div className='row justify-content-center p-5'>
-        <div className='col-md-4'>
-          <h2 className='p-3'>Sign in</h2>
-          <Formik
-            initialValues={initialValues}
-            validationSchema={loginValidationSchema}
-            onSubmit={onSubmit}>
-            {(formik) => {
-              return (
-                <Form>
-                  <FormikControl
-                    control='input'
-                    type='email'
-                    label='Email'
-                    name='emailId'
-                  />
-                  <FormikControl
-                    control='input'
-                    type='password'
-                    label='Password'
-                    name='password'
-                  />
-                  <button
-                    type='submit'
-                    className='btn btn-primary btn-md btn-block rounded col'
-                    disabled={!formik.isValid}>
-                    Submit
-                  </button>
-                </Form>
-              );
-            }}
-          </Formik>
+      <div className='h-100'>
+        <div class='container h-100'>
+          <div class='row justify-content-sm-center h-100'>
+            <div class='col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9'>
+              <div class='text-center my-2'>
+                <img
+                  src='https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg'
+                  alt='logo'
+                  width='100'
+                />
+              </div>
+              <div class='card shadow-lg'>
+                <div class='card-body p-5'>
+                  <h1 class='fs-4 card-title fw-bold mb-4'>Login</h1>
+                  <Formik
+                    initialValues={initialValues}
+                    validationSchema={loginValidationSchema}
+                    onSubmit={onSubmit}>
+                    {(formik) => {
+                      return (
+                        <Form autocomplete='off'>
+                          <FormikControl
+                            control='input'
+                            type='email'
+                            label='E-Mail Address'
+                            name='emailId'
+                          />
+
+                          <a
+                            href='forgot.html'
+                            class='d-grid d-md-flex justify-content-end'>
+                            Forgot Password?
+                          </a>
+                          <FormikControl
+                            control='input'
+                            type='password'
+                            label='Password'
+                            name='password'
+                          />
+
+                          <div className='d-flex flex-row-reverse'>
+                            <button type='submit' className='btn btn-primary'>
+                              Login
+                            </button>
+                          </div>
+                        </Form>
+                      );
+                    }}
+                  </Formik>
+                </div>
+                <div className='card-footer py-3 border-0'>
+                  <div class='text-center'>
+                    Don't have an account?{' '}
+                    <a href='register.html' class='text-dark'>
+                      Create One
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div className='text-center mt-5 text-muted'>
+                Copyright &copy; 2020 &mdash; Technuzone
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
   };
 
   return (
-    <div className='p-5 h-100 bg-dark text-light Login'>
-      <div className='container login-in'>
-        {loadingMessage()}
-        {errorMessage()}
-        {logInForm()}
-        {performRedirect()}
-      </div>
+    <div>
+      {loadingMessage()}
+      {errorMessage()}
+      {logInForm()}
+      {performRedirect()}
     </div>
   );
 };

@@ -5,7 +5,8 @@ import { COLUMNS } from '../../util/react-table-util/ClientColumns';
 import GlobalFilterOnReactTable from '../../components/filter/GlobalFilterOnReactTable';
 
 import '../product/products.css';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
+import { FaPlus } from 'react-icons/fa';
 
 const Clients = () => {
   const history = useHistory();
@@ -26,14 +27,6 @@ const Clients = () => {
     console.log('onEditClient = ', client);
     history.push({
       pathname: '/app/add-client',
-      state: client,
-    });
-  };
-
-  const onAssignProductToClient = (client) => {
-    console.log(client);
-    history.push({
-      pathname: '/app/assign-product-to-client',
       state: client,
     });
   };
@@ -70,6 +63,10 @@ const Clients = () => {
 
   const { globalFilter } = state;
 
+  const clientForm = () => {
+    history.push('/app/add-client');
+  };
+
   const tableDesign = () => {
     return (
       <div className='container-fluid'>
@@ -81,6 +78,15 @@ const Clients = () => {
             filter={globalFilter}
             setFilter={setGlobalFilter}
           />
+
+          <div className='pt-3'>
+            <button
+              className='btn btn-success'
+              type='button'
+              onClick={() => clientForm()}>
+              <FaPlus /> Add Client
+            </button>
+          </div>
         </div>
         <table {...getTableProps()} className='table'>
           <thead className='bg-primary text-light'>
@@ -91,7 +97,6 @@ const Clients = () => {
                     {column.render('Header')}
                   </th>
                 ))}
-                <th className='bg-primary px-4'>Assign Product</th>
               </tr>
             ))}
           </thead>
@@ -109,12 +114,6 @@ const Clients = () => {
                       </td>
                     );
                   })}
-                  <td
-                    className='btn btn-success'
-                    {...row.getRowProps()}
-                    onClick={() => onAssignProductToClient(row.original)}>
-                    Assign
-                  </td>
                 </tr>
               );
             })}

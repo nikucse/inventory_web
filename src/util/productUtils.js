@@ -1,38 +1,38 @@
 // ================>  Category Options
 export const categoryOptionData = [
   {
-    value: '0',
-    lable: 'Select',
+    value: '',
+    key: 'Select',
     selected: 'true',
   },
   {
     value: 'Sofa',
-    lable: 'Sofa',
+    key: 'Sofa',
     selected: 'false',
   },
   {
     value: 'Table',
-    lable: 'Table',
+    key: 'Table',
     selected: 'false',
   },
   {
     value: 'Chair',
-    lable: 'Chair',
+    key: 'Chair',
     selected: 'false',
   },
   {
     value: 'Bed',
-    lable: 'Bed',
+    key: 'Bed',
     selected: 'false',
   },
   {
     value: 'Cupboard',
-    lable: 'CupBoard',
+    key: 'CupBoard',
     selected: 'false',
   },
   {
     value: 'Other',
-    lable: 'OTHER',
+    key: 'OTHER',
     selected: 'false',
   },
 ];
@@ -40,38 +40,38 @@ export const categoryOptionData = [
 // ================================>  Product Status Option
 export const statusOptionData = [
   {
-    value: '0',
-    lable: 'Select',
+    value: '',
+    key: 'Select',
     selected: 'true',
   },
   {
     value: 'Not Started',
-    lable: 'NotStarted',
+    key: 'Not Started',
     selected: 'false',
   },
   {
     value: 'Carpentry',
-    lable: 'Carpentry',
+    key: 'Carpentry',
     selected: 'false',
   },
   {
     value: 'Polish',
-    lable: 'Polish',
+    key: 'Polish',
     selected: 'false',
   },
   {
     value: 'Completed',
-    lable: 'Completed',
+    key: 'Completed',
     selected: 'false',
   },
   {
     value: 'Dispatched',
-    lable: 'Dispatched',
+    key: 'Dispatched',
     selected: 'false',
   },
   {
     value: 'Dilevered',
-    lable: 'Dilevered',
+    key: 'Dilevered',
     selected: 'false',
   },
 ];

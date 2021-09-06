@@ -55,12 +55,6 @@ const Employees = () => {
               className='form-control'
               placeholder='Search Employee'
             />
-            <button
-              className='btn btn-primary'
-              type='button'
-              id='button-addon2'>
-              <FaSearch />
-            </button>
           </div>
         </div>
       </div>

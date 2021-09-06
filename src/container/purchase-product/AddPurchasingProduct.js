@@ -4,7 +4,7 @@ import {
   billStatusOptions,
   billTypeOptions,
   paymentModeOptions,
-} from '../../util/billUtils';
+} from '../../util/BillUtils';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { addPurchasingProduct } from '../../service/PurchasingService';

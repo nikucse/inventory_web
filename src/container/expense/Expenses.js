@@ -5,7 +5,8 @@ import { COLUMNS } from '../../util/react-table-util/ExpenseColumns';
 import GlobalFilterOnReactTable from '../../components/filter/GlobalFilterOnReactTable';
 
 import '../product/products.css';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
+import { FaPlus } from 'react-icons/fa';
 
 const Expenses = () => {
   const history = useHistory();
@@ -62,6 +63,10 @@ const Expenses = () => {
 
   const { globalFilter } = state;
 
+  const expenseForm = () => {
+    history.push('/app/add-expense');
+  };
+
   const tableDesign = () => {
     return (
       <div className='container-fluid'>
@@ -73,6 +78,14 @@ const Expenses = () => {
             filter={globalFilter}
             setFilter={setGlobalFilter}
           />
+          <div className='pt-3'>
+            <button
+              className='btn btn-success'
+              type='button'
+              onClick={() => expenseForm()}>
+              <FaPlus /> Add Expenses
+            </button>
+          </div>
         </div>
         <table {...getTableProps()} className='table'>
           <thead className='bg-primary text-light'>

@@ -1,6 +1,5 @@
-import React from "react";
-import Header from "./Header";
-import SideNavbar from "./SideNavbar";
+import React from 'react';
+import SideNavbar from './SideNavbar';
 
 const Navbar = () => {
   return (
