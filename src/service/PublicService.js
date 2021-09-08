@@ -16,7 +16,6 @@ export const login = (user) => {
       } else {
         console.log(error.message);
       }
-
       return error.data;
     });
 };

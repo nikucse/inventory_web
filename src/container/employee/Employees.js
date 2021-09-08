@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaEdit, FaPlus, FaSearch } from 'react-icons/fa';
+import { FaEdit, FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 import { getAllEmployee } from '../../service/EmployeeService';
 import Base from '../core/Base';

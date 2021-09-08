@@ -5,11 +5,11 @@ import { useHistory } from 'react-router-dom';
 import { authenticate, isAuthenticated } from '../../service/AuthService';
 import { login } from '../../service/PublicService';
 import * as Yup from 'yup';
-
 import './Login.css';
 
 const Login = () => {
   const history = useHistory();
+
   const initialValues = {
     emailId: '',
     password: '',
@@ -87,19 +87,19 @@ const Login = () => {
   const logInForm = () => {
     return (
       <div className='h-100'>
-        <div class='container h-100'>
-          <div class='row justify-content-sm-center h-100'>
-            <div class='col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9'>
-              <div class='text-center my-2'>
+        <div className='container h-100'>
+          <div className='row justify-content-sm-center h-100'>
+            <div className='col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9'>
+              <div className='text-center my-2'>
                 <img
                   src='https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg'
                   alt='logo'
                   width='100'
                 />
               </div>
-              <div class='card shadow-lg'>
-                <div class='card-body p-5'>
-                  <h1 class='fs-4 card-title fw-bold mb-4'>Login</h1>
+              <div className='card shadow-lg'>
+                <div className='card-body p-5'>
+                  <h1 className='fs-4 card-title fw-bold mb-4'>Login</h1>
                   <Formik
                     initialValues={initialValues}
                     validationSchema={loginValidationSchema}
@@ -112,6 +112,7 @@ const Login = () => {
                             type='email'
                             label='E-Mail Address'
                             name='emailId'
+                            autoFocus
                           />
 
                           <a
@@ -137,7 +138,7 @@ const Login = () => {
                   </Formik>
                 </div>
                 <div className='card-footer py-3 border-0'>
-                  <div class='text-center'>
+                  <div className='text-center'>
                     Don't have an account?{' '}
                     <a href='register.html' class='text-dark'>
                       Create One
