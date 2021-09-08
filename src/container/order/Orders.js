@@ -5,6 +5,7 @@ import { COLUMNS } from '../../util/react-table-util/OrderColumns';
 import GlobalFilterOnReactTable from '../../components/filter/GlobalFilterOnReactTable';
 
 import '../product/products.css';
+import Base from '../core/Base';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -57,7 +58,7 @@ const Orders = () => {
 
   const tableDesign = () => {
     return (
-      <div className='container'>
+      <div className='container py-5'>
         <div className='row justify-content-center'>
           <div className='col-md-6 m-2'>
             <h2 className='heading-section'>Orders</h2>
@@ -100,7 +101,7 @@ const Orders = () => {
     );
   };
 
-  return <div className='container-fluid py-5'>{tableDesign()}</div>;
+  return <Base>{tableDesign()}</Base>;
 };
 
 export default Orders;

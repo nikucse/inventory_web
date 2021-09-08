@@ -5,7 +5,10 @@ import ImageUploader from '../../components/ImageUploader';
 import { convertBase64 } from '../../util/BasicUtils';
 import { getAllEmployee } from '../../service/EmployeeService';
 import FileViewer from '../../util/FileViewer';
-import { categoryOptionData, statusOptionData } from '../../util/productUtils';
+import {
+  categoryOptionData,
+  statusOptionData,
+} from '../../constant/CommonOptions';
 import './AddProduct.css';
 
 const AddProduct = () => {

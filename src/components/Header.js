@@ -1,7 +1,7 @@
 import React from 'react';
 import * as FaIcons from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
-import { logoutUser } from '../../service/AuthService';
+import { logoutUser } from '../service/AuthService';
 
 const Header = ({ showSidebar }) => {
   const history = useHistory();

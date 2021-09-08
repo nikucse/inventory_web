@@ -1,4 +1,4 @@
-import { Form, Formik } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
 import { register } from '../../service/AuthService';
 import * as Yup from 'yup';
@@ -31,9 +31,11 @@ const Register = () => {
     });
   };
 
-  const registerValidationSchema = Yup.object({
+  const validationSchema = Yup.object().shape({
     firstName: Yup.string().required('Required'),
-    emailId: Yup.string().email('Invalid Email format').required('Required'),
+    emailId: Yup.string()
+      .email('Invalid Email format i.e abc@xyz.com')
+      .required('Required'),
     password: Yup.string().required('Required'),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password'), ''], 'Passwords must match')
@@ -52,21 +54,19 @@ const Register = () => {
                   <h1 className='fs-4 card-title fw-bold mb-4'>Add User</h1>
                   <Formik
                     initialValues={initialValues}
-                    validationSchema={registerValidationSchema}
+                    validationSchema={validationSchema}
                     onSubmit={onSubmit}>
                     {(formik) => {
                       return (
                         <Form autoComplete='off'>
                           <FormikControl
                             control='input'
-                            type='text'
                             label='First Name'
                             name='firstName'
                             autofocus
                           />
                           <FormikControl
                             control='input'
-                            type='text'
                             label='Last Name'
                             name='lastName'
                           />

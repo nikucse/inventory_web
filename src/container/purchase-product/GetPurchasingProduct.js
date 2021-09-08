@@ -9,6 +9,7 @@ import GlobalFilterOnReactTable from '../../components/filter/GlobalFilterOnReac
 import { FaPlus } from 'react-icons/fa';
 import '../product/products.css';
 import { useHistory } from 'react-router-dom';
+import Base from '../core/Base';
 
 const GetPurchasingProduct = () => {
   const [purchasings, setPurchasings] = useState([]);
@@ -61,57 +62,61 @@ const GetPurchasingProduct = () => {
 
   const tableDesign = () => {
     return (
-      <div className='container'>
-        <div className='row justify-content-center'>
-          <div className='col-md-6 m-2'>
-            <h2 className='heading-section'>Purchasing Products</h2>
-          </div>
+      <div className='container-fluid py-5'>
+        <div className='container'>
+          <div className='row justify-content-center'>
+            <div className='col-md-6 m-2'>
+              <h2 className='heading-section'>Purchasing Products</h2>
+            </div>
 
-          <GlobalFilterOnReactTable
-            filter={globalFilter}
-            setFilter={setGlobalFilter}
-          />
-          <div className='pt-3'>
-            <button
-              className='btn btn-success'
-              type='button'
-              onClick={() => purchasingForm()}>
-              <FaPlus /> Add Purchasing
-            </button>
+            <GlobalFilterOnReactTable
+              filter={globalFilter}
+              setFilter={setGlobalFilter}
+            />
+            <div className='pt-3'>
+              <button
+                className='btn btn-success'
+                type='button'
+                onClick={() => purchasingForm()}>
+                <FaPlus /> Add Purchasing
+              </button>
+            </div>
           </div>
-        </div>
-        <table {...getTableProps()} className='table'>
-          <thead className='bg-primary text-light'>
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()} className='bg-primary'>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()} className='px-4'>
-                    {column.render('Header')}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => {
-                    return (
-                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                    );
-                  })}
+          <table {...getTableProps()} className='table'>
+            <thead className='bg-primary text-light'>
+              {headerGroups.map((headerGroup) => (
+                <tr
+                  {...headerGroup.getHeaderGroupProps()}
+                  className='bg-primary'>
+                  {headerGroup.headers.map((column) => (
+                    <th {...column.getHeaderProps()} className='px-4'>
+                      {column.render('Header')}
+                    </th>
+                  ))}
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()}>
+                    {row.cells.map((cell) => {
+                      return (
+                        <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   };
 
-  return <div className='container-fluid py-5'>{tableDesign()}</div>;
+  return <Base>{tableDesign()}</Base>;
 };
 
 export default GetPurchasingProduct;

@@ -4,15 +4,16 @@ import { Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
 import './Navbar.css';
 import { IconContext } from 'react-icons';
-import Header from './navbar/Header';
+import Header from './Header';
 
-function Navbar() {
+const Navbar = () => {
   const [sidebar, setSidebar] = useState(true);
 
   const showSidebar = () => setSidebar(sidebar);
 
   return (
-    <IconContext.Provider value={{ color: '#393f49' }}>
+    // <IconContext.Provider value={{ color: '#393f49' }}>
+    <div>
       <Header showSidebar={showSidebar} />
       <div className='navbar'></div>
       <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
@@ -30,8 +31,9 @@ function Navbar() {
           })}
         </ul>
       </nav>
-    </IconContext.Provider>
+    </div>
+    // </IconContext.Provider>
   );
-}
+};
 
 export default Navbar;

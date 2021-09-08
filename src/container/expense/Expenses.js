@@ -7,6 +7,7 @@ import GlobalFilterOnReactTable from '../../components/filter/GlobalFilterOnReac
 import '../product/products.css';
 import { useHistory } from 'react-router-dom';
 import { FaPlus } from 'react-icons/fa';
+import Base from '../core/Base';
 
 const Expenses = () => {
   const history = useHistory();
@@ -69,58 +70,62 @@ const Expenses = () => {
 
   const tableDesign = () => {
     return (
-      <div className='container-fluid'>
-        <div className='row'>
-          <div className='col-md-6 m-2'>
-            <h2 className='heading-section'>Daily Expense List</h2>
+      <div className='container-fluid py-5'>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-md-6 m-2'>
+              <h2 className='heading-section'>Daily Expense List</h2>
+            </div>
+            <GlobalFilterOnReactTable
+              filter={globalFilter}
+              setFilter={setGlobalFilter}
+            />
+            <div className='pt-3'>
+              <button
+                className='btn btn-success'
+                type='button'
+                onClick={() => expenseForm()}>
+                <FaPlus /> Add Expenses
+              </button>
+            </div>
           </div>
-          <GlobalFilterOnReactTable
-            filter={globalFilter}
-            setFilter={setGlobalFilter}
-          />
-          <div className='pt-3'>
-            <button
-              className='btn btn-success'
-              type='button'
-              onClick={() => expenseForm()}>
-              <FaPlus /> Add Expenses
-            </button>
-          </div>
-        </div>
-        <table {...getTableProps()} className='table'>
-          <thead className='bg-primary text-light'>
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()} className='bg-primary'>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()} className='px-4'>
-                    {column.render('Header')}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
-              prepareRow(row);
-              return (
+          <table {...getTableProps()} className='table'>
+            <thead className='bg-primary text-light'>
+              {headerGroups.map((headerGroup) => (
                 <tr
-                  {...row.getRowProps()}
-                  onClick={() => onEditExpense(row.original)}>
-                  {row.cells.map((cell) => {
-                    return (
-                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                    );
-                  })}
+                  {...headerGroup.getHeaderGroupProps()}
+                  className='bg-primary'>
+                  {headerGroup.headers.map((column) => (
+                    <th {...column.getHeaderProps()} className='px-4'>
+                      {column.render('Header')}
+                    </th>
+                  ))}
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr
+                    {...row.getRowProps()}
+                    onClick={() => onEditExpense(row.original)}>
+                    {row.cells.map((cell) => {
+                      return (
+                        <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   };
 
-  return <div className='container-fluid py-5'>{tableDesign()}</div>;
+  return <Base>{tableDesign()}</Base>;
 };
 
 export default Expenses;

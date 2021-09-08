@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import MonthList from '../../constant/MonthList';
 import './products.css';
 import FileViewer from '../../util/FileViewer';
+import Base from '../core/Base';
 
 const Products = (props) => {
   const [products, setProducts] = useState([]);
@@ -66,43 +67,45 @@ const Products = (props) => {
   ));
 
   return (
-    <div className='container-fluid py-5'>
-      <div className='row justify-content-center'>
-        <div className='col-md-6 text-center m-2'>
-          <h2 className='heading-section'>Product List</h2>
+    <Base>
+      <div className='container py-5'>
+        <div className='row justify-content-center'>
+          <div className='col-md-6 text-center m-2'>
+            <h2 className='heading-section'>Product List</h2>
+          </div>
+          <div className='px-5'>
+            <button
+              className='btn btn-success'
+              type='button'
+              onClick={() => productForm()}>
+              <FaPlus /> Add Product
+            </button>
+          </div>
+          <MonthList />
         </div>
-        <div className='px-5'>
-          <button
-            className='btn btn-success'
-            type='button'
-            onClick={() => productForm()}>
-            <FaPlus /> Add Product
-          </button>
+        <div className='row justify-content-center'>
+          <div className='col-md-12'>
+            <table className='table'>
+              <thead className='bg-primary text-light'>
+                <tr>
+                  <th>Name</th>
+                  <th>Dimension</th>
+                  <th>Photo</th>
+                  <th>Price</th>
+                  <th>Actual Price</th>
+                  <th>Build By</th>
+                  <th>Status</th>
+                  <th>Message</th>
+                  <th>Order Date</th>
+                  <th>Edit</th>
+                </tr>
+              </thead>
+              <tbody>{productList}</tbody>
+            </table>
+          </div>
         </div>
-        <MonthList />
       </div>
-      <div className='row justify-content-center'>
-        <div className='col-md-12'>
-          <table className='table'>
-            <thead className='bg-primary text-light'>
-              <tr>
-                <th>Name</th>
-                <th>Dimension</th>
-                <th>Photo</th>
-                <th>Price</th>
-                <th>Actual Price</th>
-                <th>Build By</th>
-                <th>Status</th>
-                <th>Message</th>
-                <th>Order Date</th>
-                <th>Edit</th>
-              </tr>
-            </thead>
-            <tbody>{productList}</tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+    </Base>
   );
 };
 

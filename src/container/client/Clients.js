@@ -7,6 +7,7 @@ import GlobalFilterOnReactTable from '../../components/filter/GlobalFilterOnReac
 import '../product/products.css';
 import { useHistory } from 'react-router-dom';
 import { FaPlus } from 'react-icons/fa';
+import Base from '../core/Base';
 
 const Clients = () => {
   const history = useHistory();
@@ -69,57 +70,61 @@ const Clients = () => {
 
   const tableDesign = () => {
     return (
-      <div className='container-fluid'>
-        <div className='row'>
-          <div className='col-md-6 m-2'>
-            <h2 className='heading-section'>Client List</h2>
-          </div>
-          <GlobalFilterOnReactTable
-            filter={globalFilter}
-            setFilter={setGlobalFilter}
-          />
+      <Base>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-md-6 m-2'>
+              <h2 className='heading-section'>Client List</h2>
+            </div>
+            <GlobalFilterOnReactTable
+              filter={globalFilter}
+              setFilter={setGlobalFilter}
+            />
 
-          <div className='pt-3'>
-            <button
-              className='btn btn-success'
-              type='button'
-              onClick={() => clientForm()}>
-              <FaPlus /> Add Client
-            </button>
+            <div className='pt-3'>
+              <button
+                className='btn btn-success'
+                type='button'
+                onClick={() => clientForm()}>
+                <FaPlus /> Add Client
+              </button>
+            </div>
           </div>
-        </div>
-        <table {...getTableProps()} className='table'>
-          <thead className='bg-primary text-light'>
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()} className='bg-primary'>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()} className='px-4'>
-                    {column.render('Header')}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => {
-                    return (
-                      <td
-                        {...cell.getCellProps()}
-                        onClick={() => onEditClient(row.original)}>
-                        {cell.render('Cell')}
-                      </td>
-                    );
-                  })}
+          <table {...getTableProps()} className='table'>
+            <thead className='bg-primary text-light'>
+              {headerGroups.map((headerGroup) => (
+                <tr
+                  {...headerGroup.getHeaderGroupProps()}
+                  className='bg-primary'>
+                  {headerGroup.headers.map((column) => (
+                    <th {...column.getHeaderProps()} className='px-4'>
+                      {column.render('Header')}
+                    </th>
+                  ))}
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()}>
+                    {row.cells.map((cell) => {
+                      return (
+                        <td
+                          {...cell.getCellProps()}
+                          onClick={() => onEditClient(row.original)}>
+                          {cell.render('Cell')}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </Base>
     );
   };
 

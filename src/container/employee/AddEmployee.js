@@ -1,9 +1,44 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
+import React, { useState, useEffect } from 'react';
+import { Form, Formik } from 'formik';
+import FormikControl from '../formik/FormikControl';
+import { useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
 import { addEmployee, updateEmployee } from '../../service/EmployeeService';
+import Base from '../core/Base';
+import { countryList } from '../../constant/CountryList';
+import { indiaStateList } from '../../constant/IndiaStateList';
+import { employeeDesignationOptions } from '../../constant/CommonOptions';
 
 const AddEmployee = () => {
   let history = useHistory();
+
+  const initialValues = {
+    fullName: '',
+    emailId: '',
+    designation: '',
+    perDayWages: '',
+    address: '',
+    panCardNo: '',
+    adhaarCardNo: '',
+    primaryContactNo: '',
+    secondaryContactNo: '',
+    country: '',
+    state: '',
+    pinCode: '',
+  };
+
+  const validationSchema = Yup.object().shape({
+    fullName: Yup.string().required('Required'),
+    emailId: Yup.string().email('Invalid E-mail format ').required('Required'),
+    designation: Yup.string().required('Required'),
+    perDayWages: Yup.number().required('Required'),
+    address: Yup.string().required('Required'),
+    primaryContactNo: Yup.number().required('Required'),
+    country: Yup.string().required('Please Select Country'),
+    state: Yup.string().required('Please Select State'),
+    pinCode: Yup.number().required('Required'),
+  });
+
   const [values, setValues] = useState({
     fullName: '',
     emailId: '',
@@ -16,12 +51,7 @@ const AddEmployee = () => {
     secondaryContactNo: '',
     country: '',
     state: '',
-    city: '',
-    zip: '',
-    error: '',
-    loading: false,
-    didRedirect: false,
-    isEdit: false,
+    pinCode: '',
   });
 
   const {
@@ -111,200 +141,144 @@ const AddEmployee = () => {
   };
 
   return (
-    <div className='container'>
-      {isEdit ? (
-        <h2 className='text-center'>Update Employee</h2>
-      ) : (
-        <h2 className='text-center'>Add Employee</h2>
-      )}
-      <form className='row g-3'>
-        <div className='col-md-6 mb-3'>
-          <label htmlFor='fullName' className='form-label'>
-            Full Name
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            id='fullName'
-            placeholder='Full Name'
-            onChange={handleChange('fullName')}
-            value={fullName}
-          />
-        </div>
-        <div className='col-md-6 mb-3'>
-          <label htmlFor='emailId' className='form-label'>
-            Email
-          </label>
-          <input
-            type='email'
-            className='form-control'
-            id='emailId'
-            placeholder='Email Id'
-            onChange={handleChange('emailId')}
-            value={emailId}
-          />
-        </div>
-        <div className='col-md-6 mb-3'>
-          <label htmlFor='designation' className='form-label'>
-            Designation
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            id='designation'
-            placeholder='Organization Name'
-            onChange={handleChange('designation')}
-            value={designation}
-          />
-        </div>
+    <Base>
+      <div className='h-100'>
+        <div className='container h-100'>
+          <div className='row justify-content-sm-center h-100'>
+            <div className='col-lg-8 col-md-10 col-sm-12'>
+              <div className='text-end my-5'></div>
+              <div className='card shadow-lg'>
+                <div className='card-body p-5'>
+                  <h2 className='fs-4 card-title fw-bold mb-4'>Add Employee</h2>
+                  <Formik
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={onSubmit}>
+                    {(formik) => {
+                      return (
+                        <Form autoComplete='off'>
+                          <div className='row'>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                label='Enter Full Name'
+                                name='fullName'
+                              />
+                            </div>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                label='Enter Email-Id '
+                                name='emailId'
+                              />
+                            </div>
+                          </div>
+                          <div className='row'>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='select'
+                                label='Designation'
+                                name='designation'
+                                options={employeeDesignationOptions}
+                              />
+                            </div>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                type='Number'
+                                label='Per Day Wages'
+                                name='perDayWages'
+                              />
+                            </div>
+                          </div>
 
-        <div className='col-6 mb-3'>
-          <label htmlFor='perDayWages' className='form-label'>
-            Per Day Wages
-          </label>
-          <input
-            type='Number'
-            className='form-control'
-            id='perDayWages'
-            placeholder='278'
-            onChange={handleChange('perDayWages')}
-            value={perDayWages}
-          />
+                          <div className='row'>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                label='Contact No 1'
+                                name='primaryContactNo'
+                              />
+                            </div>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                type='Number'
+                                label='Contact No 2'
+                                name='secondaryContactNo'
+                              />
+                            </div>
+                          </div>
+
+                          <div className='row'>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                label='Pan Card'
+                                name='panCardNo'
+                              />
+                            </div>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                type='Number'
+                                label='Adhaar No'
+                                name='adhaarCardNo'
+                              />
+                            </div>
+                          </div>
+
+                          <div className='row'>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                label='Adress'
+                                name='address'
+                              />
+                            </div>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='select'
+                                label='Country'
+                                name='country'
+                                options={countryList}
+                              />
+                            </div>
+                          </div>
+                          <div className='row'>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='select'
+                                label='State'
+                                name='state'
+                                options={indiaStateList}
+                              />
+                            </div>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                label='Pincode'
+                                name='pinCode'
+                              />
+                            </div>
+                          </div>
+
+                          <div className='d-flex flex-row-reverse'>
+                            <button type='submit' className='btn btn-primary'>
+                              Add Employee
+                            </button>
+                          </div>
+                        </Form>
+                      );
+                    }}
+                  </Formik>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className='col-md-6 mb-3'>
-          <label htmlFor='primaryContactNo' className='form-label'>
-            Primary Contact No
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            id='primaryContactNo'
-            placeholder='999999999'
-            onChange={handleChange('primaryContactNo')}
-            value={primaryContactNo}
-          />
-        </div>
-        <div className='col-md-6 mb-3'>
-          <label htmlFor='secondaryContactNo' className='form-label'>
-            Secondary Contact No
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            id='secondaryContactNo'
-            placeholder='999999999'
-            onChange={handleChange('secondaryContactNo')}
-            value={secondaryContactNo}
-          />
-        </div>
-        <div className='col-md-6 mb-3'>
-          <label htmlFor='panCardNo' className='form-label'>
-            Pancard
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            id='panCardNo'
-            placeholder='Enter Some Extra Info'
-            onChange={handleChange('panCardNo')}
-            value={panCardNo}
-          />
-        </div>
-        <div className='col-md-6 mb-3'>
-          <label htmlFor='adhaarCardNo' className='form-label'>
-            Aadhaar
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            id='adhaarCardNo'
-            placeholder='Enter Some Extra Info'
-            onChange={handleChange('adhaarCardNo')}
-            value={adhaarCardNo}
-          />
-        </div>
-        <div className='col-7 mb-3'>
-          <label htmlFor='address' className='form-label'>
-            Address
-          </label>
-          <textarea
-            // type='text'
-            className='form-control'
-            id='address'
-            placeholder='Apartment, studio, or floor'
-            onChange={handleChange('address')}
-            value={address}
-          />
-        </div>
-        <div className='col-md-6 mb-3'>
-          <label htmlFor='country' className='form-label'>
-            Country
-          </label>
-          <select
-            id='country'
-            className='form-control'
-            onChange={handleChange('country')}
-            value={country}>
-            <option selected>INDIA</option>
-            <option>...</option>
-          </select>
-        </div>
-        <div className='col-md-6 mb-3'>
-          <label htmlFor='state' className='form-label'>
-            State
-          </label>
-          <select
-            id='state'
-            className='form-control'
-            onChange={handleChange('state')}
-            value={state}>
-            <option selected>Choose...</option>
-            <option value='delhi'>Delhi</option>
-          </select>
-        </div>
-        <div className='col-md-6 mb-3'>
-          <label htmlFor='city' className='form-label'>
-            City
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            id='city'
-            onChange={handleChange('city')}
-            value={city}
-          />
-        </div>
-        <div className='col-md-6 mb-3'>
-          <label htmlFor='zip' className='form-label'>
-            Zip Code
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            id='zip'
-            onChange={handleChange('zip')}
-            value={zip}
-          />
-        </div>
-        <div className='col-12 text-center'>
-          {isEdit ? (
-            <button
-              type='submit'
-              className='btn btn-primary btn-lg col-md-6'
-              onClick={onUpdate}>
-              Update
-            </button>
-          ) : (
-            <button
-              type='submit'
-              className='btn btn-primary btn-lg col-md-6'
-              onClick={onSubmit}>
-              Submit
-            </button>
-          )}
-        </div>
-      </form>
-    </div>
+      </div>
+    </Base>
   );
 };
 

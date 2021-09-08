@@ -8,29 +8,36 @@ import ImageUploader from '../../components/ImageUploader';
 import { convertBase64 } from '../../util/BasicUtils';
 import { getAllEmployee } from '../../service/EmployeeService';
 import FileViewer from '../../util/FileViewer';
-import { categoryOptionData, statusOptionData } from '../../util/productUtils';
+import {
+  categoryOptionData,
+  statusOptionData,
+} from '../../constant/CommonOptions';
 import { getAllClient } from '../../service/ClientService';
-import { paymentModeOptions, billStatusOptions } from '../../util/BillUtils';
+import {
+  paymentModeOptions,
+  billStatusOptions,
+} from '../../constant/CommonOptions';
+import Base from '../core/Base';
 
 const AddProduct = () => {
   let history = useHistory();
   const [employees, setEmployees] = useState([]);
+  const [productImageLink, setProductImageLink] = useState('');
   const [clients, setClients] = useState([]);
   const buildByOptions = [{ value: '', key: 'Select Employee' }];
   const clientListOptions = [{ value: '', key: 'Select Client' }];
 
   employees.map((employee) => {
-    buildByOptions.push({ key: employee.fullName, value: employee.id });
+    buildByOptions.push({ key: employee.fullName, value: employee.fullName });
   });
 
   clients.map((client) => {
-    clientListOptions.push({ key: client.fullName, client: client.id });
+    clientListOptions.push({ key: client.fullName, client: client.fullName });
   });
 
   const initialValues = {
     productName: '',
     category: '',
-    productImageLink: '',
     dimension: '',
     polish: '',
     price: '',
@@ -72,10 +79,9 @@ const AddProduct = () => {
   }, []);
 
   const onSubmit = (values) => {
-    alert(values);
-    addProduct(values).then((data) => {
+    addProduct({ values, productImageLink }).then((data) => {
       if (data.error) {
-        //setValues({ ...values, error: data.error, loading: false });
+        alert('Error ', data.reason);
       }
       history.push('/app/products');
     });
@@ -83,19 +89,19 @@ const AddProduct = () => {
 
   const setImageData = async (imageData) => {
     const base64 = await convertBase64(imageData);
-    initialValues.productImageLink = base64;
+    setProductImageLink(base64);
   };
 
   const addProductForm = () => {
     return (
       <div className='h-100'>
         <div className='container h-100'>
-          <div className='row justify-content-sm-ceneter h-100'>
+          <div className='row justify-content-sm-center h-100'>
             <div className='col-lg-8 col-md-10 col-sm-12'>
               <div className='text-end my-5'></div>
               <div className='card shadow-lg'>
                 <div className='card-body p-5'>
-                  <h1 className='fs-4 card-title fw-bold mb-4'>Add Product</h1>
+                  <h2 className='fs-4 card-title fw-bold mb-4'>Add Product</h2>
                   <Formik
                     initialValues={initialValues}
                     validationSchema={validationSchema}
@@ -117,7 +123,6 @@ const AddProduct = () => {
                             <div className='col-lg-6 col-md-6 col-sm-12'>
                               <FormikControl
                                 control='input'
-                                type='text'
                                 label='Enter Product Name'
                                 name='productName'
                               />
@@ -135,7 +140,6 @@ const AddProduct = () => {
                             <div className='col-lg-6 col-md-6 col-sm-12'>
                               <FormikControl
                                 control='input'
-                                type='text'
                                 label='Enter Dimension'
                                 name='dimension'
                               />
@@ -143,7 +147,6 @@ const AddProduct = () => {
                             <div className='col-lg-6 col-md-6 col-sm-12'>
                               <FormikControl
                                 control='input'
-                                type='text'
                                 label='Polish'
                                 name='polish'
                               />
@@ -237,7 +240,6 @@ const AddProduct = () => {
                             <div className='col'>
                               <FormikControl
                                 control='input'
-                                type='text'
                                 label='Message'
                                 name='message'
                               />
@@ -261,7 +263,7 @@ const AddProduct = () => {
     );
   };
 
-  return <div>{addProductForm()}</div>;
+  return <Base>{addProductForm()}</Base>;
 };
 
 export default AddProduct;
