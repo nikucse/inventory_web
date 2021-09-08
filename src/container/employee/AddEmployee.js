@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Form, Formik } from 'formik';
 import FormikControl from '../formik/FormikControl';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
-import { addEmployee, updateEmployee } from '../../service/EmployeeService';
+import { addEmployee } from '../../service/EmployeeService';
 import Base from '../core/Base';
 import { countryList } from '../../constant/CountryList';
 import { indiaStateList } from '../../constant/IndiaStateList';
@@ -39,105 +39,14 @@ const AddEmployee = () => {
     pinCode: Yup.number().required('Required'),
   });
 
-  const [values, setValues] = useState({
-    fullName: '',
-    emailId: '',
-    designation: '',
-    perDayWages: '',
-    address: '',
-    panCardNo: '',
-    adhaarCardNo: '',
-    primaryContactNo: '',
-    secondaryContactNo: '',
-    country: '',
-    state: '',
-    pinCode: '',
-  });
-
-  const {
-    fullName,
-    emailId,
-    designation,
-    perDayWages,
-    address,
-    panCardNo,
-    adhaarCardNo,
-    primaryContactNo,
-    secondaryContactNo,
-    country,
-    state,
-    city,
-    zip,
-    isEdit,
-  } = values;
-
-  useEffect(() => {
-    if (history.location.state && history.location.state.fullName)
-      setValues({ ...values, ...history.location.state, isEdit: true });
-    history.push({
-      state: {},
-    });
-  }, []);
-
-  const onSubmit = (event) => {
-    event.preventDefault();
-    setValues({ ...values, error: false, loading: true });
-
-    addEmployee({
-      fullName,
-      emailId,
-      designation,
-      perDayWages,
-      address,
-      panCardNo,
-      adhaarCardNo,
-      primaryContactNo,
-      secondaryContactNo,
-      country,
-      state,
-      city,
-      zip,
-    })
-      .then((data) => {
-        if (data.error) {
-          setValues({ ...values, error: data.error, loading: false });
-        } else {
-          setValues({
-            ...values,
-            didRedirect: true,
-          });
-          history.push('/app/employees');
-          console.log('Add Employee Detail =====> ', data);
-        }
-      })
-      .catch((err) => {
-        console.log('Login request failed');
+  const onSubmit = (values) => {
+    addEmployee(values).then((data) => {
+      if (data.error) {
+        alert('Error ', data.reason);
+      } else {
         history.push('/app/employees');
-      });
-  };
-
-  const onUpdate = (event) => {
-    event.preventDefault();
-    console.log('values', values);
-    updateEmployee(values)
-      .then((data) => {
-        if (data.error) {
-          setValues({ ...values, error: data.error, loading: false });
-        } else {
-          setValues({
-            ...values,
-            didRedirect: true,
-          });
-          history.push('/app/employees');
-
-          console.log('Edit Employee Detail =====> ', data);
-        }
-      })
-      .catch((err) => console.log('Add Product request failed', err));
-  };
-
-  const handleChange = (name) => (event) => {
-    setValues({ ...values, error: false, [name]: event.target.value });
+      }
+    });
   };
 
   return (
