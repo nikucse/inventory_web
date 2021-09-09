@@ -86,7 +86,7 @@ const Products = (props) => {
         <div className='row justify-content-center'>
           <div className='col-md-12'>
             <table className='table'>
-              <thead className='bg-primary text-light'>
+              <thead className='bg-primary text-light fw-bold'>
                 <tr>
                   <th>Name</th>
                   <th>Dimension</th>
