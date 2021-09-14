@@ -18,3 +18,12 @@ export const getAllPurchasingProduct = () => {
     })
     .catch((error) => console.error(error));
 };
+
+export const getPurchasingProductById = (id) => {
+  return axios
+    .get(`/purchasing/${id}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.error(error));
+};

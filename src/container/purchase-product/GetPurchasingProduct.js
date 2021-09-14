@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import {
-  addPurchasingProduct,
-  getAllPurchasingProduct,
-} from '../../service/PurchasingService';
+import { getAllPurchasingProduct } from '../../service/PurchasingService';
 import { useTable, useGlobalFilter } from 'react-table';
 import { COLUMNS } from '../../util/react-table-util/PurchasingColumns';
 import GlobalFilterOnReactTable from '../../components/filter/GlobalFilterOnReactTable';
-import { FaPlus } from 'react-icons/fa';
+import { FaEdit, FaPlus } from 'react-icons/fa';
 import '../product/products.css';
 import { useHistory } from 'react-router-dom';
 import Base from '../core/Base';
@@ -27,6 +24,14 @@ const GetPurchasingProduct = () => {
   const getData = (data) => {
     if (data) return data;
     else return [];
+  };
+
+  const onEditPurchasingProduct = (purchasingProduct) => {
+    console.log('onEditProduct = ', purchasingProduct);
+    history.push({
+      pathname: `/app/edit-purchasing-product/${purchasingProduct.id}`,
+      state: purchasingProduct,
+    });
   };
 
   const columns = useMemo(() => COLUMNS, []);
@@ -93,6 +98,7 @@ const GetPurchasingProduct = () => {
                       {column.render('Header')}
                     </th>
                   ))}
+                  <th>Edit</th>
                 </tr>
               ))}
             </thead>
@@ -106,6 +112,11 @@ const GetPurchasingProduct = () => {
                         <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                       );
                     })}
+                    <td
+                      className='text-primary'
+                      onClick={() => onEditPurchasingProduct(row.original)}>
+                      <FaEdit />
+                    </td>
                   </tr>
                 );
               })}

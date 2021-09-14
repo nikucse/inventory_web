@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { Form, Formik } from 'formik';
+import FormikControl from '../formik/FormikControl';
+import * as Yup from 'yup';
 import { addProduct, updateProduct } from '../../service/ProductService';
-import { useHistory } from 'react-router-dom';
 import ImageUploader from '../../components/ImageUploader';
 import { convertBase64 } from '../../util/BasicUtils';
 import { getAllEmployee } from '../../service/EmployeeService';
@@ -9,294 +11,267 @@ import {
   categoryOptionData,
   statusOptionData,
 } from '../../constant/CommonOptions';
-import './AddProduct.css';
+import { getAllClient } from '../../service/ClientService';
+import { paymentModeOptions } from '../../constant/CommonOptions';
+import Base from '../core/Base';
 
-const AddProduct = () => {
-  let history = useHistory();
+const AddProduct = ({ history, match }) => {
+  const { id } = match.params;
+  const isAddMode = !id;
+  const [formValues, setFormValues] = useState(null);
+
   const [employees, setEmployees] = useState([]);
+  const [productImageLink, setProductImageLink] = useState('');
+  const [clients, setClients] = useState([]);
+  const buildByOptions = [{ value: '', key: 'Select Employee' }];
+  const clientListOptions = [{ value: '', key: 'Select Client' }];
 
-  const [values, setValues] = useState({
-    productName: '',
-    category: '0',
-    productImageLink: '',
-    dimension: '',
-    color: '',
-    price: '',
-    actualPrice: '',
-    buildBy: '0',
-    location: '',
-    status: '0',
-    message: '',
-    isEdit: false,
+  employees.map((employee) => {
+    buildByOptions.push({ key: employee.fullName, value: employee.fullName });
   });
 
-  const {
-    productName,
-    category,
-    productImageLink,
-    dimension,
-    color,
-    price,
-    actualPrice,
-    buildBy,
-    location,
-    status,
-    message,
-    isEdit,
-  } = values;
+  clients.map((client) => {
+    clientListOptions.push({ key: client.fullName, client: client.fullName });
+  });
 
-  const loadAllEmployee = () => {
+  const initialValues = {
+    productName: '',
+    category: '',
+    dimension: '',
+    polish: '',
+    price: '',
+    actualPrice: '',
+    buildBy: '',
+    clientId: '',
+    status: '',
+    message: '',
+    quantity: '1',
+    deliveryDate: '',
+    advance: '',
+    paymentMode: '',
+  };
+  const validationSchema = Yup.object().shape({
+    productName: Yup.string().required("Can't be Blank"),
+    category: Yup.string().required('Please Select Category'),
+    dimension: Yup.string().required('Please Enter Product Dimension'),
+    price: Yup.string().required('Please Enter Product Price'),
+    actualPrice: Yup.string().required('Please Enter Actual Price'),
+    buildBy: Yup.string().required('Please Select Built By'),
+    status: Yup.string().required('Please Select Status'),
+    paymentMode: Yup.string().required('Please Select Mode Of Payment'),
+    clientId: Yup.string().required('Please Select Client'),
+    deliveryDate: Yup.string().required('Please Select Delivery Date'),
+  });
+
+  const loadAllEmployeeAndClient = () => {
     getAllEmployee().then((data) => {
       setEmployees(data);
-      console.log(data);
+    });
+
+    getAllClient().then((data) => {
+      setClients(data);
     });
   };
 
   useEffect(() => {
-    loadAllEmployee();
-    if (history.location.state && history.location.state.productName)
-      setValues({ ...values, ...history.location.state, isEdit: true });
-    history.push({
-      state: {},
-    });
+    loadAllEmployeeAndClient();
+    if (history.location.state && history.location.state.productName) {
+      setFormValues({
+        ...history.location.state,
+        deliveryDate: new Date(history.location.state.deliveryDate),
+      });
+    }
   }, []);
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    console.log('values', values);
-    addProduct(values)
-      .then((data) => {
-        if (data.error) {
-          setValues({ ...values, error: data.error, loading: false });
-        } else {
-          setValues({
-            ...values,
-            didRedirect: true,
-          });
-
-          history.push('/app/products');
-          console.log('Add Product Detail =====> ', data);
-        }
-      })
-      .catch((err) => console.log('Add Product request failed', err));
-  };
-
-  const onUpdate = (event) => {
-    event.preventDefault();
-    console.log('values', values);
-    updateProduct(values)
-      .then((data) => {
-        if (data.error) {
-          setValues({ ...values, error: data.error, loading: false });
-        } else {
-          setValues({
-            ...values,
-            didRedirect: true,
-          });
-          history.push('/app/products');
-
-          console.log('Add Product Detail =====> ', data);
-        }
-      })
-      .catch((err) => console.log('Add Product request failed', err));
-  };
-  const handleChange = (name) => (event) => {
-    console.log(event.target.value);
-    setValues({ ...values, error: false, [name]: event.target.value });
+  const onSubmit = (values) => {
+    addProduct({ ...values, productImageLink }).then((data) => {
+      if (data.error) {
+        alert('Error ', data.reason);
+      }
+      history.push('/app/products');
+    });
   };
 
   const setImageData = async (imageData) => {
     const base64 = await convertBase64(imageData);
-    setValues({ ...values, error: false, productImageLink: base64 });
+    setProductImageLink(base64);
   };
 
-  return (
-    <div className='container mt-3'>
-      {isEdit ? (
-        <h2 className=''>Edit Product</h2>
-      ) : (
-        <h2 className=''>Add Product</h2>
-      )}
-      <form className='g-3'>
-        <div className='row'>
-          <div className='col-md-6 pl-0'>
-            <div className='col-md-12 mb-3'>
-              <label htmlFor='name' className='form-label'>
-                Product Name
-              </label>
-              <input
-                type='text'
-                className='form-control'
-                id='name'
-                placeholder='Product Name'
-                onChange={handleChange('productName')}
-                value={productName}
-                required
-              />
-            </div>
+  const addProductForm = () => {
+    return (
+      <div className='h-100'>
+        <div className='container h-100'>
+          <div className='row justify-content-sm-center h-100'>
+            <div className='col-lg-8 col-md-10 col-sm-12'>
+              <div className='text-end my-5'></div>
+              <div className='card shadow-lg'>
+                <div className='card-body p-5'>
+                  <h2 className='fs-4 card-title fw-bold mb-4'>
+                    {isAddMode ? 'Add Product' : 'Edit Product'}
+                  </h2>
+                  <Formik
+                    initialValues={formValues || initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={onSubmit}
+                    enableReinitialize>
+                    {(formik) => {
+                      return (
+                        <Form autoComplete='off'>
+                          <div className='row pb-5'>
+                            <div className='col'>
+                              <ImageUploader
+                                parentImageSet={setImageData}
+                                fieldLabel='Upload Product Image'
+                                field='productImageLink'
+                              />
+                            </div>
+                          </div>
 
-            <div className='col-md-12 mb-3'>
-              <label htmlFor='category' className='form-label'>
-                Category
-              </label>
-              <select
-                id='category'
-                className='form-control'
-                onChange={handleChange('category')}
-                value={category}>
-                {categoryOptionData.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.lable}
-                  </option>
-                ))}
-              </select>
-            </div>
+                          <div className='row'>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                label='Enter Product Name'
+                                name='productName'
+                              />
+                            </div>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='select'
+                                label='Select Category'
+                                name='category'
+                                options={categoryOptionData}
+                              />
+                            </div>
+                          </div>
+                          <div className='row'>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                label='Enter Dimension'
+                                name='dimension'
+                              />
+                            </div>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                label='Polish'
+                                name='polish'
+                              />
+                            </div>
+                          </div>
+                          <div className='row'>
+                            <div className='col-lg-3 col-md-3 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                type='Number'
+                                label='Product Price'
+                                name='price'
+                              />
+                            </div>
+                            <div className='col-lg-3 col-md-3 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                type='Number'
+                                label='Actual Amount'
+                                name='actualPrice'
+                              />
+                            </div>
 
-            <div className='col-md-12 mb-3'>
-              <label htmlFor='dimension' className='form-label'>
-                Dimension
-              </label>
-              <input
-                type='text'
-                className='form-control'
-                id='dimension'
-                placeholder='6X6*4'
-                onChange={handleChange('dimension')}
-                value={dimension}
-                required
-              />
+                            <div className='col-lg-3 col-md-3 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                type='Number'
+                                label='Advance Amount'
+                                name='advance'
+                              />
+                            </div>
+                            <div className='col-lg-3 col-md-3 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                type='Number'
+                                label='Total Quantity'
+                                name='quantity'
+                              />
+                            </div>
+                          </div>
+
+                          <div className='row'>
+                            <div className='col-lg-6 col-md-4 col-sm-12'>
+                              <FormikControl
+                                control='select'
+                                label='Select Build By'
+                                name='buildBy'
+                                options={buildByOptions}
+                              />
+                            </div>
+
+                            <div className='col-lg-3 col-md-4 col-sm-12'>
+                              <FormikControl
+                                control='select'
+                                label='Product Status'
+                                name='status'
+                                options={statusOptionData}
+                              />
+                            </div>
+                            <div className='col-lg-3 col-md-4 col-sm-12'>
+                              <FormikControl
+                                control='select'
+                                label='Mode Of Payment'
+                                name='paymentMode'
+                                options={paymentModeOptions}
+                              />
+                            </div>
+                          </div>
+
+                          <div className='row'>
+                            <div className='col-lg-6 col-md-4 col-sm-12'>
+                              <FormikControl
+                                control='select'
+                                label='Client Name'
+                                name='clientId'
+                                options={clientListOptions}
+                              />
+                            </div>
+                            <div className='col-lg-6 col-md-4 col-sm-12'>
+                              <FormikControl
+                                control='date'
+                                label='Delivery Date'
+                                name='deliveryDate'
+                                minDate={new Date()}
+                                showYearDropdown
+                                scrollableMonthYearDropdown
+                              />
+                            </div>
+                          </div>
+                          <div className='row'>
+                            <div className='col'>
+                              <FormikControl
+                                control='input'
+                                label='Message'
+                                name='message'
+                              />
+                            </div>
+                          </div>
+                          <div className='d-flex flex-row-reverse'>
+                            <button type='submit' className='btn btn-primary'>
+                              {isAddMode ? 'Add Product' : 'Update'}
+                            </button>
+                          </div>
+                        </Form>
+                      );
+                    }}
+                  </Formik>
+                </div>
+              </div>
             </div>
           </div>
-          {isEdit ? (
-            <FileViewer
-              productUrl={productImageLink}
-              width={'450'}
-              height={'250'}
-            />
-          ) : (
-            <ImageUploader
-              parentImageSet={setImageData}
-              fieldLabel='Upload Product Image'
-              field='productImageLink'
-            />
-          )}
         </div>
-        <div className='row'>
-          <div className='col-md-6 pl-0'>
-            <div className='col-md-12 mb-3'>
-              <label htmlFor='color' className='form-label'>
-                Color
-              </label>
-              <input
-                type='text'
-                className='form-control'
-                id='color'
-                placeholder='water color, rust'
-                onChange={handleChange('color')}
-                value={color}
-              />
-            </div>
-            <div className='col-md-12 mb-3'>
-              <label htmlFor='price' className='form-label'>
-                Price
-              </label>
-              <input
-                type='Number'
-                className='form-control'
-                id='price'
-                placeholder='27800'
-                onChange={handleChange('price')}
-                value={price}
-              />
-            </div>
-            <div className='col-md-12 mb-3'>
-              <label htmlFor='actualPrice' className='form-label'>
-                Actual Price
-              </label>
-              <input
-                type='Number'
-                className='form-control'
-                id='actualPrice'
-                placeholder='24800'
-                onChange={handleChange('actualPrice')}
-                value={actualPrice}
-              />
-            </div>
-          </div>
-          <div className='col-md-6 pl-0'>
-            <div className='col-md-12 mb-3'>
-              <label htmlFor='buildBy' className='form-label'>
-                Build By
-              </label>
-              <select
-                id='buildBy'
-                className='form-control'
-                onChange={handleChange('buildBy')}
-                value={buildBy}>
-                <option key='0' value='0'>
-                  Select
-                </option>
-                {employees.map((employee) => (
-                  <option key={employee.id} value={employee.fullName}>
-                    {employee.fullName}
-                  </option>
-                ))}
-              </select>
-            </div>
+      </div>
+    );
+  };
 
-            <div className='col-md-12 mb-3'>
-              <label htmlFor='status' className='form-label'>
-                Status
-              </label>
-              <select
-                id='status'
-                className='form-control form-control'
-                onChange={handleChange('status')}
-                value={status}>
-                {statusOptionData.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.lable}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className='col-md-12 mb-3'>
-              <label htmlFor='message' className='form-label'>
-                Message
-              </label>
-              <input
-                type='text'
-                className='form-control'
-                id='message'
-                placeholder='Enter Some Extra Info'
-                onChange={handleChange('message')}
-                value={message}
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className='col-12 text-center'>
-          {isEdit ? (
-            <button
-              type='submit'
-              className='btn btn-primary btn-lg col-md-6'
-              onClick={onUpdate}>
-              Update
-            </button>
-          ) : (
-            <button
-              type='submit'
-              className='btn btn-primary btn-lg col-md-6'
-              onClick={onSubmit}>
-              Add Product
-            </button>
-          )}
-        </div>
-      </form>
-    </div>
-  );
+  return <Base>{addProductForm()}</Base>;
 };
 
 export default AddProduct;

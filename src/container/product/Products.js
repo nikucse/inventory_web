@@ -25,7 +25,7 @@ const Products = (props) => {
   const onEditProduct = (product) => {
     console.log('onEditProduct = ', product);
     history.push({
-      pathname: '/app/add-product',
+      pathname: `/app/edit-product/${product.id}`,
       state: product,
     });
   };

@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Formik } from 'formik';
 import FormikControl from '../formik/FormikControl';
-import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import { paymentModeOptions } from '../../constant/CommonOptions';
 import { addPurchasingProduct } from '../../service/PurchasingService';
 import { purchasingProductOptions } from '../../constant/CommonOptions';
 import Base from '../core/Base';
 
-const AddPurchasingProduct = () => {
-  let history = useHistory();
+const AddPurchasingProduct = ({ history, match }) => {
+  const { id } = match.params;
+  const isAddMode = !id;
+  const [formValues, setFormValues] = useState(null);
+
+  useEffect(() => {
+    if (history.location.state && history.location.state.productName) {
+      setFormValues({
+        ...history.location.state,
+        purchaseDate: new Date(history.location.state.purchaseDate),
+      });
+    }
+  }, []);
 
   const initialValues = {
     productName: '',
@@ -52,13 +62,16 @@ const AddPurchasingProduct = () => {
               <div className='text-end my-5'></div>
               <div className='card shadow-lg'>
                 <div className='card-body p-5'>
-                  <h1 className='fs-4 card-title fw-bold mb-4'>
-                    Add Purchasing Product
-                  </h1>
+                  <h2 className='fs-4 card-title fw-bold mb-4'>
+                    {isAddMode
+                      ? 'Add Purchasing Product'
+                      : 'Edit Purchasing Product'}
+                  </h2>
                   <Formik
-                    initialValues={initialValues}
+                    initialValues={formValues || initialValues}
                     validationSchema={validationSchema}
-                    onSubmit={onSubmit}>
+                    onSubmit={onSubmit}
+                    enableReinitialize>
                     {(formik) => {
                       return (
                         <Form autoComplete='off'>
@@ -108,9 +121,10 @@ const AddPurchasingProduct = () => {
                             <div className='col-lg-6 col-md-6 col-sm-12'>
                               <FormikControl
                                 control='date'
+                                dateFormat='dd/MM/yyyy'
                                 label='Purchasing Date'
                                 name='purchaseDate'
-                                minDate={new Date()}
+                                maxDate={new Date()}
                                 showYearDropdown
                                 scrollableMonthYearDropdown
                               />
@@ -136,7 +150,7 @@ const AddPurchasingProduct = () => {
 
                           <div className='d-flex flex-row-reverse'>
                             <button type='submit' className='btn btn-primary'>
-                              Submit
+                              {isAddMode ? 'Submit' : 'Update'}
                             </button>
                           </div>
                         </Form>

@@ -6,7 +6,7 @@ import { addOrder } from '../../service/OrderService';
 import { getAllProduct } from '../../service/ProductService';
 import { getAllClient } from '../../service/ClientService';
 import { paymentModeOptions } from '../../constant/CommonOptions';
-import moment from 'moment';
+import { format } from 'date-fns';
 
 const AddOrder = () => {
   const history = useHistory();
@@ -62,9 +62,7 @@ const AddOrder = () => {
 
     let deliveryDate = '';
     if (selectedDate) {
-      deliveryDate = moment(new Date(selectedDate))
-        .format('DD-MM-YYYY')
-        .toString();
+      deliveryDate = format(new Date(selectedDate)).format('dd-MM-yyyy');
     }
     setValues({ ...values, error: false, loading: true });
 

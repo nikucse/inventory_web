@@ -1,16 +1,16 @@
 import React from 'react';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import Login from '../src/container/auth-module/Login';
 import AddAttendance from './container/attendance/AddAttendance';
 import AddBill from './container/bill/AddBill';
 import Bills from './container/bill/Bills';
 import AddClient from './container/client/AddClient';
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import Reports from './container/Reports';
 import Products from './container/product/Products';
 import NotFound from './components/NotFound';
 import Employees from './container/employee/Employees';
 import AddEmployee from './container/employee/AddEmployee';
-import AddProduct from './container/product/NewAddProduct';
+import AddProduct from './container/product/AddProduct';
 import Clients from './container/client/Clients';
 import AddExpense from './container/expense/AddExpense';
 import AddMaterial from './container/material/AddMaterial';
@@ -32,6 +32,11 @@ const Routes = () => {
         <PrivateRoute exact path='/app/dashboard' component={Dashboard} />
         <PrivateRoute exact path='/app/register' component={Register} />
         <PrivateRoute path='/app/add-product' exact component={AddProduct} />
+        <PrivateRoute
+          path='/app/edit-product/:id'
+          exact
+          component={AddProduct}
+        />
         <PrivateRoute path='/app/reports' component={Reports} />
         <PrivateRoute path='/app/products' component={Products} />
         <PrivateRoute path='/app/login' exact component={Login} />
@@ -50,6 +55,11 @@ const Routes = () => {
         <PrivateRoute path='/app/orders' exact component={Orders} />
         <PrivateRoute
           path='/app/add-purchasing-product'
+          exact
+          component={AddPurchasingProduct}
+        />
+        <PrivateRoute
+          path='/app/edit-purchasing-product/:id'
           exact
           component={AddPurchasingProduct}
         />
