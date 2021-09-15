@@ -2,6 +2,9 @@ import React from 'react';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
+import * as RiIcons from 'react-icons/ri';
+import * as GiIcons from 'react-icons/gi';
+import * as BiIcons from 'react-icons/bi';
 
 export const SidebarData = [
   {
@@ -14,19 +17,19 @@ export const SidebarData = [
   {
     title: 'Products',
     path: '/app/products',
-    icon: <FaIcons.FaCartPlus />,
+    icon: <FaIcons.FaListUl />,
     cName: 'nav-text',
   },
   {
     title: 'Purchasing Products',
     path: '/app/purchasing-product-list',
-    icon: <FaIcons.FaCartPlus />,
+    icon: <BiIcons.BiPurchaseTagAlt />,
     cName: 'nav-text',
   },
   {
     title: 'Expenses',
     path: '/app/expenses',
-    icon: <FaIcons.FaCartPlus />,
+    icon: <GiIcons.GiExpense />,
     cName: 'nav-text',
   },
   // {
@@ -49,27 +52,21 @@ export const SidebarData = [
     cName: 'nav-text',
   },
   {
-    title: 'Add Employee',
-    path: '/app/add-employee',
-    icon: <IoIcons.IoMdPeople />,
-    cName: 'nav-text',
-  },
-  {
     title: 'Clients',
     path: '/app/clients',
-    icon: <IoIcons.IoIosPaper />,
+    icon: <IoIcons.IoMdPerson />,
     cName: 'nav-text',
   },
   {
     title: 'Bills',
     path: '/app/bills',
-    icon: <IoIcons.IoMdHelpCircle />,
+    icon: <RiIcons.RiBillLine />,
     cName: 'nav-text',
   },
   {
     title: 'Orders',
     path: '/app/orders',
-    icon: <IoIcons.IoMdHelpCircle />,
+    icon: <IoIcons.IoIosPaper />,
     cName: 'nav-text',
   },
   // {

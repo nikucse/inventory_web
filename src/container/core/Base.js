@@ -5,7 +5,7 @@ import Notify from '../../components/Notify';
 
 const Base = ({ children, message, type }) => {
   return (
-    <div>
+    <div className>
       <Navbar />
       <div>{children}</div>
       <Notify message={message} type={type} />

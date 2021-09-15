@@ -62,7 +62,7 @@ const Register = () => {
           <div className='row justify-content-sm-center h-100'>
             <div className='col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9 '>
               <div className='text-center mt-5'></div>
-              <div className='card shadow-lg bg-light'>
+              <div className='card shadow-lg'>
                 <div className='card-body p-5'>
                   <h2 className='fs-4 card-title fw-bold mb-4'>Add User</h2>
                   <Formik

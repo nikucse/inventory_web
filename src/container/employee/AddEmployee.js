@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Formik } from 'formik';
 import FormikControl from '../formik/FormikControl';
 import { useHistory } from 'react-router-dom';
@@ -9,8 +9,18 @@ import { countryList } from '../../constant/CountryList';
 import { indiaStateList } from '../../constant/IndiaStateList';
 import { employeeDesignationOptions } from '../../constant/CommonOptions';
 
-const AddEmployee = () => {
-  let history = useHistory();
+const AddEmployee = ({ history, match }) => {
+  const { id } = match.params;
+  const isAddMode = !id;
+  const [formValues, setFormValues] = useState(null);
+
+  useEffect(() => {
+    if (history.location.state && history.location.state.fullName) {
+      setFormValues({
+        ...history.location.state,
+      });
+    }
+  }, []);
 
   const initialValues = {
     fullName: '',
@@ -58,11 +68,14 @@ const AddEmployee = () => {
               <div className='text-end my-5'></div>
               <div className='card shadow-lg'>
                 <div className='card-body p-5'>
-                  <h2 className='fs-4 card-title fw-bold mb-4'>Add Employee</h2>
+                  <h2 className='fs-4 card-title fw-bold mb-4'>
+                    {isAddMode ? 'Add Employee' : 'Edit Employee'}
+                  </h2>
                   <Formik
-                    initialValues={initialValues}
+                    initialValues={formValues || initialValues}
                     validationSchema={validationSchema}
-                    onSubmit={onSubmit}>
+                    onSubmit={onSubmit}
+                    enableReinitialize>
                     {(formik) => {
                       return (
                         <Form autoComplete='off'>
@@ -174,7 +187,7 @@ const AddEmployee = () => {
 
                           <div className='d-flex flex-row-reverse'>
                             <button type='submit' className='btn btn-primary'>
-                              Add Employee
+                              {isAddMode ? 'Add Employee' : 'Update'}
                             </button>
                           </div>
                         </Form>

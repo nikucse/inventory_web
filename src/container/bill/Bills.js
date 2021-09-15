@@ -75,7 +75,7 @@ const Bills = () => {
                 className='btn btn-success'
                 type='button'
                 onClick={() => billForm()}>
-                <FaPlus /> Add Client
+                <FaPlus /> Add Bill
               </button>
             </div>
           </div>

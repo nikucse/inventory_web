@@ -46,7 +46,7 @@ const ProductTable = () => {
     <div>
       <table className='table'>
         <thead>
-          <tr className='bg-primary'>
+          <tr className='bg-primary text-light'>
             <th scope='col'>Name</th>
             <th scope='col'>Image</th>
             <th scope='col'>Dimension</th>

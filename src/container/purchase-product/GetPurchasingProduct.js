@@ -27,7 +27,6 @@ const GetPurchasingProduct = () => {
   };
 
   const onEditPurchasingProduct = (purchasingProduct) => {
-    console.log('onEditProduct = ', purchasingProduct);
     history.push({
       pathname: `/app/edit-purchasing-product/${purchasingProduct.id}`,
       state: purchasingProduct,

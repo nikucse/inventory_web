@@ -6,7 +6,7 @@ import GlobalFilterOnReactTable from '../../components/filter/GlobalFilterOnReac
 
 import '../product/products.css';
 import { useHistory } from 'react-router-dom';
-import { FaPlus } from 'react-icons/fa';
+import { FaEdit, FaPlus } from 'react-icons/fa';
 import Base from '../core/Base';
 
 const Clients = () => {
@@ -25,9 +25,8 @@ const Clients = () => {
   }, []);
 
   const onEditClient = (client) => {
-    console.log('onEditClient = ', client);
     history.push({
-      pathname: '/app/add-client',
+      pathname: `/app/edit-client/${client.id}`,
       state: client,
     });
   };
@@ -101,6 +100,7 @@ const Clients = () => {
                       {column.render('Header')}
                     </th>
                   ))}
+                  <th>Edit</th>
                 </tr>
               ))}
             </thead>
@@ -111,13 +111,14 @@ const Clients = () => {
                   <tr {...row.getRowProps()}>
                     {row.cells.map((cell) => {
                       return (
-                        <td
-                          {...cell.getCellProps()}
-                          onClick={() => onEditClient(row.original)}>
-                          {cell.render('Cell')}
-                        </td>
+                        <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                       );
                     })}
+                    <td
+                      className='text-primary'
+                      onClick={() => onEditClient(row.original)}>
+                      <FaEdit />
+                    </td>
                   </tr>
                 );
               })}

@@ -124,7 +124,7 @@ const AddPurchasingProduct = ({ history, match }) => {
                                 dateFormat='dd/MM/yyyy'
                                 label='Purchasing Date'
                                 name='purchaseDate'
-                                maxDate={new Date()}
+                                minDate={new Date()}
                                 showYearDropdown
                                 scrollableMonthYearDropdown
                               />

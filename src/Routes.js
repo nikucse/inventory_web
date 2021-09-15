@@ -41,17 +41,31 @@ const Routes = () => {
         <PrivateRoute path='/app/products' component={Products} />
         <PrivateRoute path='/app/login' exact component={Login} />
         <PrivateRoute path='/app/material' exact component={AddMaterial} />
+
         <PrivateRoute path='/app/add-bill' exact component={AddBill} />
         <PrivateRoute path='/app/bills' exact component={Bills} />
+
         <PrivateRoute path='/app/clients' exact component={Clients} />
         <PrivateRoute path='/app/add-client' exact component={AddClient} />
+        <PrivateRoute path='/app/edit-client/:id' exact component={AddClient} />
 
         <PrivateRoute path='/app/add-employee' exact component={AddEmployee} />
+        <PrivateRoute
+          path='/app/edit-employee/:id'
+          exact
+          component={AddEmployee}
+        />
         <PrivateRoute path='/app/employees' exact component={Employees} />
+
         <PrivateRoute path='/app/add-expense' exact component={AddExpense} />
+        <PrivateRoute
+          path='/app/edit-expense/:id'
+          exact
+          component={AddExpense}
+        />
         <PrivateRoute path='/app/expenses' exact component={Expenses} />
         <PrivateRoute path='/app/attendance' exact component={AddAttendance} />
-        <PrivateRoute path='/app/order' exact component={AddOrder} />
+        <PrivateRoute path='/app/edit-order/:id' exact component={AddOrder} />
         <PrivateRoute path='/app/orders' exact component={Orders} />
         <PrivateRoute
           path='/app/add-purchasing-product'

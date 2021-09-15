@@ -1,7 +1,6 @@
 import { authAxios } from '../util/interceptor';
 
 export const addProduct = (product) => {
-  console.log('Product    -===========>  ', product);
   return authAxios
     .post(`/product/add`, product)
     .then((res) => {
@@ -11,13 +10,17 @@ export const addProduct = (product) => {
 };
 
 export const updateProduct = (product) => {
-  console.log('Product    -===========>  ', product);
   return authAxios
     .post(`/product/update/${product.id}`, product)
     .then((res) => {
       return res.data;
     })
-    .catch((error) => console.error(error));
+    .catch((error) => {
+      alert(error);
+      if (error.response) {
+        return error.response.data;
+      }
+    });
 };
 
 export const getAllProduct = () => {
@@ -40,7 +43,7 @@ export const getProductByDate = (date) => {
 
 export const getProductById = (id) => {
   return authAxios
-    .get(`/product/id/${id}`)
+    .get(`/product/${id}`)
     .then((res) => {
       return res.data;
     })

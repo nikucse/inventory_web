@@ -106,7 +106,7 @@ const Login = () => {
                     onSubmit={onSubmit}>
                     {(formik) => {
                       return (
-                        <Form autocomplete='off'>
+                        <Form autoComplete='off'>
                           <FormikControl
                             control='input'
                             type='email'
@@ -117,7 +117,7 @@ const Login = () => {
 
                           <a
                             href='forgot.html'
-                            class='d-grid d-md-flex justify-content-end'>
+                            className='d-grid d-md-flex justify-content-end'>
                             Forgot Password?
                           </a>
                           <FormikControl

@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Form, Formik } from 'formik';
 import FormikControl from '../formik/FormikControl';
 import * as Yup from 'yup';
-import { addProduct, updateProduct } from '../../service/ProductService';
+import {
+  addProduct,
+  updateProduct,
+  getProductById,
+} from '../../service/ProductService';
 import ImageUploader from '../../components/ImageUploader';
 import { convertBase64 } from '../../util/BasicUtils';
 import { getAllEmployee } from '../../service/EmployeeService';
@@ -58,7 +62,7 @@ const AddProduct = ({ history, match }) => {
     actualPrice: Yup.string().required('Please Enter Actual Price'),
     buildBy: Yup.string().required('Please Select Built By'),
     status: Yup.string().required('Please Select Status'),
-    paymentMode: Yup.string().required('Please Select Mode Of Payment'),
+    //paymentMode: Yup.string().required('Please Select Mode Of Payment'),
     clientId: Yup.string().required('Please Select Client'),
     deliveryDate: Yup.string().required('Please Select Delivery Date'),
   });
@@ -80,16 +84,26 @@ const AddProduct = ({ history, match }) => {
         ...history.location.state,
         deliveryDate: new Date(history.location.state.deliveryDate),
       });
+      setProductImageLink(history.location.state.productImageLink);
     }
   }, []);
 
   const onSubmit = (values) => {
-    addProduct({ ...values, productImageLink }).then((data) => {
-      if (data.error) {
-        alert('Error ', data.reason);
-      }
-      history.push('/app/products');
-    });
+    if (isAddMode) {
+      addProduct({ ...values, productImageLink }).then((data) => {
+        if (data.error) {
+          alert('Error ', data.reason);
+        }
+        history.push('/app/products');
+      });
+    } else {
+      updateProduct({ ...values, productImageLink }).then((data) => {
+        if (data.error) {
+          alert('Error ', data.reason);
+        }
+        history.push('/app/products');
+      });
+    }
   };
 
   const setImageData = async (imageData) => {
@@ -124,6 +138,13 @@ const AddProduct = ({ history, match }) => {
                                 fieldLabel='Upload Product Image'
                                 field='productImageLink'
                               />
+                              {productImageLink.includes('base64') ? null : (
+                                <FileViewer
+                                  productUrl={productImageLink}
+                                  width={'200'}
+                                  height={'170'}
+                                />
+                              )}
                             </div>
                           </div>
 
@@ -169,6 +190,7 @@ const AddProduct = ({ history, match }) => {
                                 name='price'
                               />
                             </div>
+                            {isAddMode}
                             <div className='col-lg-3 col-md-3 col-sm-12'>
                               <FormikControl
                                 control='input'
@@ -177,23 +199,28 @@ const AddProduct = ({ history, match }) => {
                                 name='actualPrice'
                               />
                             </div>
+                            {isAddMode ? (
+                              <div className='col-lg-3 col-md-3 col-sm-12'>
+                                <FormikControl
+                                  control='input'
+                                  type='Number'
+                                  label='Advance Amount'
+                                  name='advance'
+                                  disabled
+                                />
+                              </div>
+                            ) : null}
 
-                            <div className='col-lg-3 col-md-3 col-sm-12'>
-                              <FormikControl
-                                control='input'
-                                type='Number'
-                                label='Advance Amount'
-                                name='advance'
-                              />
-                            </div>
-                            <div className='col-lg-3 col-md-3 col-sm-12'>
-                              <FormikControl
-                                control='input'
-                                type='Number'
-                                label='Total Quantity'
-                                name='quantity'
-                              />
-                            </div>
+                            {isAddMode ? (
+                              <div className='col-lg-3 col-md-3 col-sm-12'>
+                                <FormikControl
+                                  control='input'
+                                  type='Number'
+                                  label='Total Quantity'
+                                  name='quantity'
+                                />
+                              </div>
+                            ) : null}
                           </div>
 
                           <div className='row'>
@@ -214,14 +241,16 @@ const AddProduct = ({ history, match }) => {
                                 options={statusOptionData}
                               />
                             </div>
-                            <div className='col-lg-3 col-md-4 col-sm-12'>
-                              <FormikControl
-                                control='select'
-                                label='Mode Of Payment'
-                                name='paymentMode'
-                                options={paymentModeOptions}
-                              />
-                            </div>
+                            {isAddMode ? (
+                              <div className='col-lg-3 col-md-4 col-sm-12'>
+                                <FormikControl
+                                  control='select'
+                                  label='Mode Of Payment'
+                                  name='paymentMode'
+                                  options={paymentModeOptions}
+                                />
+                              </div>
+                            ) : null}
                           </div>
 
                           <div className='row'>

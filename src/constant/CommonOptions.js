@@ -107,8 +107,8 @@ export const statusOptionData = [
     key: 'Dispatched',
   },
   {
-    value: 'Dilevered',
-    key: 'Dilevered',
+    value: 'Cancel',
+    key: 'Cancel',
   },
 ];
 

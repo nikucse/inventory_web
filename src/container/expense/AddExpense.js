@@ -3,16 +3,27 @@ import { Form, Formik } from 'formik';
 import FormikControl from '../formik/FormikControl';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
-import { addExpense, updateExpense } from '../../service/ExpenseService';
+import { addExpense } from '../../service/ExpenseService';
 import {
   expenseCategoryOptionData,
   expensePaymentStatusOptions,
 } from '../../constant/CommonOptions';
 import Base from '../core/Base';
+import { format } from 'date-fns';
+const AddExpense = ({ history, match }) => {
+  const { id } = match.params;
+  const isAddMode = !id;
+  const [formValues, setFormValues] = useState(null);
 
-const AddExpense = () => {
-  const history = useHistory();
-  const [isEdit, setEdit] = useState(false);
+  useEffect(() => {
+    console.log(history.location.state);
+    if (history.location.state && history.location.state.expenseDate) {
+      setFormValues({
+        ...history.location.state,
+        expenseDate: new Date(history.location.state.expenseDate),
+      });
+    }
+  }, []);
 
   const initialValues = {
     purpose: '',
@@ -32,6 +43,8 @@ const AddExpense = () => {
   });
 
   const onSubmit = (values) => {
+    console.log(values);
+
     addExpense(values).then((data) => {
       if (data.error) {
         alert('Error  ====>  ', data.reson);
@@ -51,19 +64,14 @@ const AddExpense = () => {
               <div className='text-end my-5'></div>
               <div className='card shadow-lg'>
                 <div className='card-body p-5'>
-                  {isEdit ? (
-                    <h1 className='fs-4 card-title fw-bold mb-4'>
-                      Edit Daily expense
-                    </h1>
-                  ) : (
-                    <h1 className='fs-4 card-title fw-bold mb-4'>
-                      Add Daily expense
-                    </h1>
-                  )}
+                  <h2 className='fs-4 card-title fw-bold mb-4'>
+                    {isAddMode ? 'Add Expense ' : 'Edit Expense '}
+                  </h2>
                   <Formik
-                    initialValues={initialValues}
+                    initialValues={formValues || initialValues}
                     validationSchema={validationSchema}
-                    onSubmit={onSubmit}>
+                    onSubmit={onSubmit}
+                    enableReinitialize>
                     {(formik) => {
                       return (
                         <Form autoComplete='off'>
@@ -71,6 +79,7 @@ const AddExpense = () => {
                             <div className='col-lg-6 col-md-6 col-sm-12'>
                               <FormikControl
                                 control='date'
+                                dateFormat='dd/MM/yyyy'
                                 label='Enter Expense Date'
                                 name='expenseDate'
                                 maxDate={new Date()}
@@ -127,15 +136,9 @@ const AddExpense = () => {
                             </div>
                           </div>
                           <div className='d-flex flex-row-reverse'>
-                            {isEdit ? (
-                              <button type='submit' className='btn btn-primary'>
-                                Update
-                              </button>
-                            ) : (
-                              <button type='submit' className='btn btn-primary'>
-                                Submit
-                              </button>
-                            )}
+                            <button type='submit' className='btn btn-primary'>
+                              {isAddMode ? 'Submit' : 'Update'}
+                            </button>
                           </div>
                         </Form>
                       );

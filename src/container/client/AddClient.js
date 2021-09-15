@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Formik } from 'formik';
 import FormikControl from '../formik/FormikControl';
 import { useHistory } from 'react-router-dom';
@@ -8,9 +8,18 @@ import { countryList } from '../../constant/CountryList';
 import { indiaStateList } from '../../constant/IndiaStateList';
 import Base from '../core/Base';
 
-const AddClient = () => {
-  let history = useHistory();
+const AddClient = ({ history, match }) => {
+  const { id } = match.params;
+  const isAddMode = !id;
+  const [formValues, setFormValues] = useState(null);
 
+  useEffect(() => {
+    if (history.location.state && history.location.state.fullName) {
+      setFormValues({
+        ...history.location.state,
+      });
+    }
+  }, []);
   const initialValues = {
     fullName: '',
     emailId: '',
@@ -55,11 +64,14 @@ const AddClient = () => {
               <div className='text-center mt-5'></div>
               <div className='card shadow-lg'>
                 <div className='card-body p-5'>
-                  <h1 className='fs-4 card-title fw-bold mb-4'>Add Client</h1>
+                  <h1 className='fs-4 card-title fw-bold mb-4'>
+                    {isAddMode ? 'Add Client' : 'Edit Client'}
+                  </h1>
                   <Formik
-                    initialValues={initialValues}
+                    initialValues={formValues || initialValues}
                     validationSchema={validationSchema}
-                    onSubmit={onSubmit}>
+                    onSubmit={onSubmit}
+                    enableReinitialize>
                     {(formik) => {
                       return (
                         <Form autoComplete='off'>
@@ -156,7 +168,7 @@ const AddClient = () => {
 
                           <div className='d-flex flex-row-reverse'>
                             <button type='submit' className='btn btn-primary'>
-                              Submit
+                              {isAddMode ? 'Submit' : 'Update'}
                             </button>
                           </div>
                         </Form>

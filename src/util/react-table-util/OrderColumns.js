@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 export const COLUMNS = [
   {
     Header: 'Id',
@@ -19,6 +21,9 @@ export const COLUMNS = [
   {
     Header: 'Delivery Date',
     accessor: 'deliveryDate',
+    Cell: ({ value }) => {
+      return format(new Date(value), 'dd/MM/yyyy');
+    },
   },
   {
     Header: 'Advance Amount',

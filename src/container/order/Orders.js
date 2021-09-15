@@ -6,9 +6,12 @@ import GlobalFilterOnReactTable from '../../components/filter/GlobalFilterOnReac
 
 import '../product/products.css';
 import Base from '../core/Base';
+import { FaEdit } from 'react-icons/fa';
+import { useHistory } from 'react-router-dom';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const history = useHistory();
 
   const loadAllOrders = () => {
     getAllOrder().then((data) => {
@@ -56,6 +59,13 @@ const Orders = () => {
     console.log('========>', data);
   };
 
+  const onEditOrder = (order) => {
+    history.push({
+      pathname: `/app/edit-order/${order.id}`,
+      state: order,
+    });
+  };
+
   const tableDesign = () => {
     return (
       <div className='container py-5'>
@@ -77,6 +87,7 @@ const Orders = () => {
                     {column.render('Header')}
                   </th>
                 ))}
+                <th>Edit</th>
               </tr>
             ))}
           </thead>
@@ -92,6 +103,11 @@ const Orders = () => {
                       <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                     );
                   })}
+                  <td
+                    className='text-primary'
+                    onClick={() => onEditOrder(row.original)}>
+                    <FaEdit />
+                  </td>
                 </tr>
               );
             })}

@@ -6,7 +6,7 @@ import GlobalFilterOnReactTable from '../../components/filter/GlobalFilterOnReac
 
 import '../product/products.css';
 import { useHistory } from 'react-router-dom';
-import { FaPlus } from 'react-icons/fa';
+import { FaEdit, FaPlus } from 'react-icons/fa';
 import Base from '../core/Base';
 
 const Expenses = () => {
@@ -26,7 +26,7 @@ const Expenses = () => {
 
   const onEditExpense = (expense) => {
     history.push({
-      pathname: '/app/add-expense',
+      pathname: `/app/edit-expense/${expense.id}`,
       state: expense,
     });
   };
@@ -100,6 +100,7 @@ const Expenses = () => {
                       {column.render('Header')}
                     </th>
                   ))}
+                  <th>Edit</th>
                 </tr>
               ))}
             </thead>
@@ -107,14 +108,18 @@ const Expenses = () => {
               {rows.map((row) => {
                 prepareRow(row);
                 return (
-                  <tr
-                    {...row.getRowProps()}
-                    onClick={() => onEditExpense(row.original)}>
+                  <tr {...row.getRowProps()}>
                     {row.cells.map((cell) => {
                       return (
                         <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                       );
                     })}
+
+                    <td
+                      className='text-primary'
+                      onClick={() => onEditExpense(row.original)}>
+                      <FaEdit />
+                    </td>
                   </tr>
                 );
               })}
