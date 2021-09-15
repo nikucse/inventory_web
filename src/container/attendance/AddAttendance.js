@@ -8,16 +8,12 @@ const AddAttendance = () => {
 
   const [values, setValues] = useState({
     empId: '',
-    date: null,
+    date: '',
     totalHours: '',
     location: '',
-    error: '',
-    loading: false,
-    didRedirect: false,
   });
 
-  const { empId, date, totalHours, location, error, loading, didRedirect } =
-    values;
+  const { empId, date, totalHours, location } = values;
 
   const onSubmit = (event) => {
     event.preventDefault();

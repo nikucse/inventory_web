@@ -9,8 +9,8 @@ const ImageUploader = ({ parentImageSet, fieldLabel, field }) => {
     parentImageSet(file);
   };
   return (
-    <div className='col-md-6'>
-      <label htmlFor={field} className='form-label'>
+    <div className='mb-3'>
+      <label htmlFor={field} className='mb-2 text-muted'>
         {fieldLabel}
       </label>
 
@@ -23,7 +23,7 @@ const ImageUploader = ({ parentImageSet, fieldLabel, field }) => {
         accept='.pdf, .jpeg, .png, .jpg'
       />
       {imagePreview && (
-        <div className='card mr-3'>
+        <div className='card mb-3'>
           <img
             src='img_avatar.png'
             src={imagePreview !== null ? imagePreview : ''}

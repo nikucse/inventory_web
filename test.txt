@@ -1,2 +1,1 @@
-a2d2ff light
-073b4c dark
+https://github.com/technext/product-admin/blob/master/add-product.html

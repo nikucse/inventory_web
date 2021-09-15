@@ -1,5 +1,4 @@
 import { authAxios as axios } from '../util/interceptor';
-import { API } from '../backend';
 
 export const addOrder = (client) => {
   return axios

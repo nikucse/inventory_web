@@ -5,12 +5,13 @@ import { COLUMNS } from '../../util/react-table-util/OrderColumns';
 import GlobalFilterOnReactTable from '../../components/filter/GlobalFilterOnReactTable';
 
 import '../product/products.css';
-import { useHistory } from 'react-router';
+import Base from '../core/Base';
+import { FaEdit } from 'react-icons/fa';
+import { useHistory } from 'react-router-dom';
 
 const Orders = () => {
-  const history = useHistory();
-
   const [orders, setOrders] = useState([]);
+  const history = useHistory();
 
   const loadAllOrders = () => {
     getAllOrder().then((data) => {
@@ -45,6 +46,7 @@ const Orders = () => {
       initialState: {
         hiddenColumns: columns.map((column) => {
           if (column.show === false) return column.accessor || column.id;
+          else return '';
         }),
       },
     },
@@ -57,9 +59,16 @@ const Orders = () => {
     console.log('========>', data);
   };
 
+  const onEditOrder = (order) => {
+    history.push({
+      pathname: `/app/edit-order/${order.id}`,
+      state: order,
+    });
+  };
+
   const tableDesign = () => {
     return (
-      <div className='container'>
+      <div className='container py-5'>
         <div className='row justify-content-center'>
           <div className='col-md-6 m-2'>
             <h2 className='heading-section'>Orders</h2>
@@ -78,6 +87,7 @@ const Orders = () => {
                     {column.render('Header')}
                   </th>
                 ))}
+                <th>Edit</th>
               </tr>
             ))}
           </thead>
@@ -90,13 +100,14 @@ const Orders = () => {
                   onClick={() => showMoreInfo(row.original)}>
                   {row.cells.map((cell) => {
                     return (
-                      <td
-                        {...cell.getCellProps()}
-                        onClick={() => console.log('Cell=====> ', cell.value)}>
-                        {cell.render('Cell')}
-                      </td>
+                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                     );
                   })}
+                  <td
+                    className='text-primary'
+                    onClick={() => onEditOrder(row.original)}>
+                    <FaEdit />
+                  </td>
                 </tr>
               );
             })}
@@ -106,7 +117,7 @@ const Orders = () => {
     );
   };
 
-  return <div className='container-fluid py-5'>{tableDesign()}</div>;
+  return <Base>{tableDesign()}</Base>;
 };
 
 export default Orders;

@@ -1,235 +1,169 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import {
-  billStatusOptions,
-  billTypeOptions,
-  paymentModeOptions,
-} from '../../util/billUtils';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import React, { useEffect, useState } from 'react';
+import { Form, Formik } from 'formik';
+import FormikControl from '../formik/FormikControl';
+import * as Yup from 'yup';
+import { paymentModeOptions } from '../../constant/CommonOptions';
 import { addPurchasingProduct } from '../../service/PurchasingService';
-import moment from 'moment';
+import { purchasingProductOptions } from '../../constant/CommonOptions';
+import Base from '../core/Base';
 
-const AddPurchasingProduct = () => {
-  let history = useHistory();
-  const [selectedDate, setSelectedDate] = useState('');
+const AddPurchasingProduct = ({ history, match }) => {
+  const { id } = match.params;
+  const isAddMode = !id;
+  const [formValues, setFormValues] = useState(null);
 
-  const [values, setValues] = useState({
+  useEffect(() => {
+    if (history.location.state && history.location.state.productName) {
+      setFormValues({
+        ...history.location.state,
+        purchaseDate: new Date(history.location.state.purchaseDate),
+      });
+    }
+  }, []);
+
+  const initialValues = {
     productName: '',
     shopName: '',
     paymentMode: '',
     category: '',
     amount: '',
-    balance: '',
+    paidAmount: '',
     paymentStatus: '',
+    purchaseDate: '',
     message: '',
-    error: false,
-    loading: false,
-    didRedirect: false,
-  });
-
-  const {
-    productName,
-    shopName,
-    paymentMode,
-    category,
-    amount,
-    balance,
-    paymentStatus,
-    message,
-    error,
-    loading,
-    didRedirect,
-  } = values;
-
-  const onSubmit = (event) => {
-    event.preventDefault();
-    console.log('values', values);
-    let purchaseDate = '';
-
-    if (selectedDate) {
-      purchaseDate = moment(new Date(selectedDate))
-        .format('DD-MM-YYYY')
-        .toString();
-    }
-
-    addPurchasingProduct({ ...values, purchaseDate })
-      .then((data) => {
-        if (data.error) {
-          setValues({ ...values, error: data.error, loading: false });
-        } else {
-          setValues({
-            ...values,
-            didRedirect: true,
-          });
-
-          history.push('/app/purchasing-product-list');
-          console.log('Upload bill =====> ', data);
-        }
-      })
-      .catch((err) => {
-        console.log('Add Product request failed', err);
-        history.push('/app/purchasing-product-list');
-      });
   };
 
-  const handleChange = (name) => (event) => {
-    console.log(event.target.value);
-    setValues({ ...values, error: false, [name]: event.target.value });
+  const validationSchema = Yup.object().shape({
+    productName: Yup.string().required("Product name can't be Empty"),
+    category: Yup.string().required('Please Select Category'),
+    shopName: Yup.string().required('Please Enter Shop Name'),
+    paidAmount: Yup.string().required('Please Enter Paid Amount'),
+    amount: Yup.string().required('Please Enter Actual Amount'),
+    paymentMode: Yup.string().required('Please Select Mode Of Payment'),
+    purchaseDate: Yup.string().required('Please Select Purchase Date'),
+  });
+
+  const onSubmit = (values) => {
+    addPurchasingProduct(values).then((data) => {
+      if (data && data.error) {
+        alert('Message ===> ', data.message);
+      } else {
+        history.push('/app/purchasing-product-list');
+      }
+    });
   };
 
   return (
-    <div className='container pt-3'>
-      <h2 className='text-center p-3'>Add Purchasig Product</h2>
-      <form className='row g-3'>
-        <div className='col-md-6 pt-3'>
-          <label htmlFor='productName' className='form-label'>
-            Product Name
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            id='productName'
-            placeholder='Product Name'
-            onChange={handleChange('productName')}
-            value={productName}
-          />
-        </div>
+    <Base>
+      <div className='h-100'>
+        <div className='container h-100'>
+          <div className='row justify-content-sm-center h-100'>
+            <div className='col-lg-8 col-md-10 col-sm-12'>
+              <div className='text-end my-5'></div>
+              <div className='card shadow-lg'>
+                <div className='card-body p-5'>
+                  <h2 className='fs-4 card-title fw-bold mb-4'>
+                    {isAddMode
+                      ? 'Add Purchasing Product'
+                      : 'Edit Purchasing Product'}
+                  </h2>
+                  <Formik
+                    initialValues={formValues || initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={onSubmit}
+                    enableReinitialize>
+                    {(formik) => {
+                      return (
+                        <Form autoComplete='off'>
+                          <div className='row'>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                label='Enter Product Name'
+                                name='productName'
+                              />
+                            </div>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                label='Enter Shop Name'
+                                name='shopName'
+                              />
+                            </div>
+                          </div>
+                          <div className='row'>
+                            <div className='col-lg-6 col-md-4 col-sm-12'>
+                              <FormikControl
+                                control='select'
+                                label='Category'
+                                name='category'
+                                options={purchasingProductOptions}
+                              />
+                            </div>
+                            <div className='col-lg-3 col-md-4 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                type='Number'
+                                label='Amount'
+                                name='amount'
+                              />
+                            </div>
+                            <div className='col-lg-3 col-md-4 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                type='Number'
+                                label='Paid Amount'
+                                name='paidAmount'
+                              />
+                            </div>
+                          </div>
+                          <div className='row'>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='date'
+                                dateFormat='dd/MM/yyyy'
+                                label='Purchasing Date'
+                                name='purchaseDate'
+                                minDate={new Date()}
+                                showYearDropdown
+                                scrollableMonthYearDropdown
+                              />
+                            </div>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='select'
+                                label='Mode Of Payment'
+                                name='paymentMode'
+                                options={paymentModeOptions}
+                              />
+                            </div>
+                          </div>
+                          <div className='row'>
+                            <div className='col'>
+                              <FormikControl
+                                control='input'
+                                label='Message'
+                                name='message'
+                              />
+                            </div>
+                          </div>
 
-        <div className='col-md-6 pt-3'>
-          <label htmlFor='shopName' className='form-label'>
-            Shop Name
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            id='shopName'
-            placeholder='Shop Name'
-            onChange={handleChange('shopName')}
-            value={shopName}
-          />
+                          <div className='d-flex flex-row-reverse'>
+                            <button type='submit' className='btn btn-primary'>
+                              {isAddMode ? 'Submit' : 'Update'}
+                            </button>
+                          </div>
+                        </Form>
+                      );
+                    }}
+                  </Formik>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div className='col-md-4 pt-3'>
-          <label htmlFor='category' className='form-label'>
-            Category
-          </label>
-          <select
-            id='category'
-            className='form-control'
-            onChange={handleChange('category')}
-            value={category}>
-            {billTypeOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className='col-md-4 pt-3'>
-          <label htmlFor='selectedDate' className='form-label'>
-            Purchasing Date
-          </label>
-          <br />
-          <DatePicker
-            id='selectedDate'
-            className='form-control'
-            selected={selectedDate}
-            dateFormat='dd/MM/yyyy'
-            maxDate={new Date()}
-            showYearDropdown
-            scrollableMonthYearDropdown
-            placeholderText='Purchasing Date'
-            onChange={(date) => setSelectedDate(date)}
-          />
-        </div>
-
-        <div className='col-md-4 pt-3'>
-          <label htmlFor='amount' className='form-label'>
-            Amount
-          </label>
-          <input
-            type='Number'
-            className='form-control'
-            id='amount'
-            placeholder='Amount'
-            onChange={handleChange('amount')}
-            value={amount}
-          />
-        </div>
-
-        <div className='col-md-6 pt-3'>
-          <label htmlFor='balance' className='form-label'>
-            Balance
-          </label>
-          <input
-            type='Number'
-            className='form-control'
-            id='balance'
-            placeholder='Balance'
-            onChange={handleChange('balance')}
-            value={balance}
-          />
-        </div>
-
-        <div className='col-md-6 pt-3'>
-          <label htmlFor='paymentStatus' className='form-label'>
-            Payment Status
-          </label>
-          <select
-            id='paymentStatus'
-            className='form-control'
-            onChange={handleChange('paymentStatus')}
-            value={paymentStatus}>
-            {billStatusOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className='col-md-6 pt-3'>
-          <label htmlFor='paymentMode' className='form-label'>
-            Payment Mode
-          </label>
-          <select
-            id='paymentMode'
-            className='form-control'
-            onChange={handleChange('paymentMode')}
-            value={paymentMode}>
-            {paymentModeOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className='col-md-6 p-3'>
-          <label htmlFor='message' className='form-label'>
-            Message
-          </label>
-          <textarea
-            className='form-control'
-            id='message'
-            placeholder='Enter Some Extra Info'
-            onChange={handleChange('message')}
-            value={message}
-          />
-        </div>
-
-        <div className='col-12 text-center'>
-          <button
-            type='submit'
-            className='btn btn-primary btn-lg col-md-6'
-            onClick={onSubmit}>
-            Submit
-          </button>
-        </div>
-      </form>
-    </div>
+      </div>
+    </Base>
   );
 };
 

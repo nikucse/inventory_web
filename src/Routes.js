@@ -1,15 +1,12 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import Login from '../src/container/auth-module/Login';
-import Layout from './container/layout/Layout';
 import AddAttendance from './container/attendance/AddAttendance';
 import AddBill from './container/bill/AddBill';
 import Bills from './container/bill/Bills';
 import AddClient from './container/client/AddClient';
-import Navbar from './components/Navbar';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Reports from './container/Reports';
 import Products from './container/product/Products';
-import Dashboard from '../src/container/dashboard/Dashboard';
 import NotFound from './components/NotFound';
 import Employees from './container/employee/Employees';
 import AddEmployee from './container/employee/AddEmployee';
@@ -22,53 +19,72 @@ import Orders from './container/order/Orders';
 import Expenses from './container/expense/Expenses';
 import AddPurchasingProduct from './container/purchase-product/AddPurchasingProduct';
 import GetPurchasingProduct from './container/purchase-product/GetPurchasingProduct';
-import AssignProduct from './container/client/AssignProduct';
 import Register from './container/auth-module/Register';
+import Dashboard from './container/dashboard/Dashboard';
+import PrivateRoute from './container/core/PrivateRoute';
 
 const Routes = () => {
   return (
-    <div>
-      <Navbar />
+    <BrowserRouter>
       <Switch>
-        <Route exact path='/app/register' component={Register} />
-        <Route exact path='/app/dashboard' component={Layout} />
-        <Route path='/app/add-product' exact component={AddProduct} />
-        <Route path='/app/reports' component={Reports} />
-        <Route path='/app/products' component={Products} />
-        <Route path='/app/login' exact component={Login} />
-        <Route path='/app/user/dashboard' exact component={Dashboard} />
-        <Route path='/app/admin/dashboard' exact component={Dashboard} />
-        <Route path='/app/super/dashboard' exact component={Dashboard} />
-        <Route path='/app/material' exact component={AddMaterial} />
-        <Route path='/app/add-bill' exact component={AddBill} />
-        <Route path='/app/bills' exact component={Bills} />
-        <Route path='/app/clients' exact component={Clients} />
-        <Route path='/app/add-client' exact component={AddClient} />
-        <Route
-          path='/app/assign-product-to-client'
+        <Route exact path='/' component={Login} />
+        <Route exact path='/login' component={Login} />
+        <PrivateRoute exact path='/app/dashboard' component={Dashboard} />
+        <PrivateRoute exact path='/app/register' component={Register} />
+        <PrivateRoute path='/app/add-product' exact component={AddProduct} />
+        <PrivateRoute
+          path='/app/edit-product/:id'
           exact
-          component={AssignProduct}
+          component={AddProduct}
         />
-        <Route path='/app/add-employee' exact component={AddEmployee} />
-        <Route path='/app/employees' exact component={Employees} />
-        <Route path='/app/add-expense' exact component={AddExpense} />
-        <Route path='/app/expenses' exact component={Expenses} />
-        <Route path='/app/attendance' exact component={AddAttendance} />
-        <Route path='/app/order' exact component={AddOrder} />
-        <Route path='/app/orders' exact component={Orders} />
-        <Route
+        <PrivateRoute path='/app/reports' component={Reports} />
+        <PrivateRoute path='/app/products' component={Products} />
+        <PrivateRoute path='/app/login' exact component={Login} />
+        <PrivateRoute path='/app/material' exact component={AddMaterial} />
+
+        <PrivateRoute path='/app/add-bill' exact component={AddBill} />
+        <PrivateRoute path='/app/bills' exact component={Bills} />
+
+        <PrivateRoute path='/app/clients' exact component={Clients} />
+        <PrivateRoute path='/app/add-client' exact component={AddClient} />
+        <PrivateRoute path='/app/edit-client/:id' exact component={AddClient} />
+
+        <PrivateRoute path='/app/add-employee' exact component={AddEmployee} />
+        <PrivateRoute
+          path='/app/edit-employee/:id'
+          exact
+          component={AddEmployee}
+        />
+        <PrivateRoute path='/app/employees' exact component={Employees} />
+
+        <PrivateRoute path='/app/add-expense' exact component={AddExpense} />
+        <PrivateRoute
+          path='/app/edit-expense/:id'
+          exact
+          component={AddExpense}
+        />
+        <PrivateRoute path='/app/expenses' exact component={Expenses} />
+        <PrivateRoute path='/app/attendance' exact component={AddAttendance} />
+        <PrivateRoute path='/app/edit-order/:id' exact component={AddOrder} />
+        <PrivateRoute path='/app/orders' exact component={Orders} />
+        <PrivateRoute
           path='/app/add-purchasing-product'
           exact
           component={AddPurchasingProduct}
         />
-        <Route
+        <PrivateRoute
+          path='/app/edit-purchasing-product/:id'
+          exact
+          component={AddPurchasingProduct}
+        />
+        <PrivateRoute
           path='/app/purchasing-product-list'
           exact
           component={GetPurchasingProduct}
         />
         <Route path='*' exact component={NotFound} />
       </Switch>
-    </div>
+    </BrowserRouter>
   );
 };
 

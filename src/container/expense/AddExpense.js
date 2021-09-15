@@ -1,219 +1,156 @@
 import React, { useState, useEffect } from 'react';
+import { Form, Formik } from 'formik';
+import FormikControl from '../formik/FormikControl';
 import { useHistory } from 'react-router-dom';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { addExpense, updateExpense } from '../../service/ExpenseService';
-import moment from 'moment';
+import * as Yup from 'yup';
+import { addExpense } from '../../service/ExpenseService';
+import {
+  expenseCategoryOptionData,
+  expensePaymentStatusOptions,
+} from '../../constant/CommonOptions';
+import Base from '../core/Base';
+import { format } from 'date-fns';
+const AddExpense = ({ history, match }) => {
+  const { id } = match.params;
+  const isAddMode = !id;
+  const [formValues, setFormValues] = useState(null);
 
-const AddExpense = () => {
-  const history = useHistory();
-  const [selectedDate, setSelectedDate] = useState('');
-  const [values, setValues] = useState({
+  useEffect(() => {
+    console.log(history.location.state);
+    if (history.location.state && history.location.state.expenseDate) {
+      setFormValues({
+        ...history.location.state,
+        expenseDate: new Date(history.location.state.expenseDate),
+      });
+    }
+  }, []);
+
+  const initialValues = {
     purpose: '',
     category: '',
     amount: '',
+    expenseDate: '',
     paymentStatus: '',
     message: '',
-    isEdit: false,
-    error,
-    loading,
-    didRedirect,
+  };
+
+  const validationSchema = Yup.object().shape({
+    purpose: Yup.string().required("Can't be Blank"),
+    category: Yup.string().required('Please Select Category'),
+    amount: Yup.string().required('Please Enter Amount Price'),
+    paymentStatus: Yup.string().required('Please Select Status'),
+    expenseDate: Yup.string().required('Please Select Expense Date'),
   });
 
-  const {
-    purpose,
-    category,
-    amount,
-    paymentStatus,
-    message,
-    error,
-    loading,
-    didRedirect,
-    isEdit,
-  } = values;
+  const onSubmit = (values) => {
+    console.log(values);
 
-  useEffect(() => {
-    console.log('Add Expense ==> ', history.location.state);
-    if (history.location.state && history.location.state.purpose) {
-      setValues({ ...values, ...history.location.state, isEdit: true });
-    }
-    history.push({
-      state: {},
+    addExpense(values).then((data) => {
+      if (data.error) {
+        alert('Error  ====>  ', data.reson);
+      } else {
+        history.push('/app/expenses');
+        console.log('Add Expense Detail =====> ', data);
+      }
     });
-  }, []);
-
-  const onSubmit = (event) => {
-    event.preventDefault();
-    let expenseDate = '';
-    if (selectedDate) {
-      expenseDate = moment(new Date(selectedDate))
-        .format('DD-MM-YYYY')
-        .toString();
-    }
-    setValues({ ...values, error: false, loading: true });
-    addExpense({
-      purpose,
-      category,
-      amount,
-      paymentStatus,
-      message,
-      expenseDate,
-    })
-      .then((data) => {
-        if (data.error) {
-          setValues({ ...values, error: data.error, loading: false });
-        } else {
-          setValues({
-            ...values,
-            didRedirect: true,
-          });
-          history.push('/app/expenses');
-          console.log('Add Expense Detail =====> ', data);
-        }
-      })
-      .catch(console.log('Failed to Add Expense'));
-  };
-
-  const onUpdate = (event) => {
-    event.preventDefault();
-    console.log('values', values);
-    updateExpense(values)
-      .then((data) => {
-        if (data.error) {
-          setValues({ ...values, error: data.error, loading: false });
-        } else {
-          setValues({
-            ...values,
-            didRedirect: true,
-          });
-          history.push('/app/expenses');
-        }
-      })
-      .catch((err) => console.log('Edit Exense request failed', err));
-  };
-
-  const handleChange = (name) => (event) => {
-    setValues({ ...values, error: false, [name]: event.target.value });
   };
 
   return (
-    <div className='container pt-5'>
-      {isEdit ? (
-        <h2 className='text-center'>Edit Daily expense</h2>
-      ) : (
-        <h2 className='text-center'>Add Daily expense</h2>
-      )}
-      <form className='row'>
-        <div className='col-md-5 pt-3'>
-          <label htmlFor='selectedDate' className='form-label'>
-            Expense Date
-          </label>
-          <br />
-          <DatePicker
-            id='selectedDate'
-            className='form-control'
-            selected={selectedDate}
-            dateFormat='dd/MM/yyyy'
-            maxDate={new Date()}
-            isClearable
-            showYearDropdown
-            scrollableMonthYearDropdown
-            placeholderText='Expense Date'
-            onChange={(date) => setSelectedDate(date)}
-          />
-        </div>
-        <div className='col-md-5 p-3'>
-          <label htmlFor='purpose' className='form-label'>
-            Purpose
-          </label>
-          <input
-            id='purpose'
-            className='form-control'
-            placeholder=''
-            onChange={handleChange('purpose')}
-            value={purpose}
-          />
-        </div>
+    <Base>
+      <div className='h-100'>
+        <div className='container h-100'>
+          <div className='row justify-content-sm-center h-100'>
+            <div className='col-lg-8 col-md-10 col-sm-12'>
+              <div className='text-end my-5'></div>
+              <div className='card shadow-lg'>
+                <div className='card-body p-5'>
+                  <h2 className='fs-4 card-title fw-bold mb-4'>
+                    {isAddMode ? 'Add Expense ' : 'Edit Expense '}
+                  </h2>
+                  <Formik
+                    initialValues={formValues || initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={onSubmit}
+                    enableReinitialize>
+                    {(formik) => {
+                      return (
+                        <Form autoComplete='off'>
+                          <div className='row'>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='date'
+                                dateFormat='dd/MM/yyyy'
+                                label='Enter Expense Date'
+                                name='expenseDate'
+                                maxDate={new Date()}
+                                showYearDropdown
+                                scrollableMonthYearDropdown
+                              />
+                            </div>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                type='text'
+                                label='Purpose'
+                                name='purpose'
+                              />
+                            </div>
+                          </div>
 
-        <div className='col-md-5 p-3'>
-          <label htmlFor='category' className='form-label'>
-            Category
-          </label>
-          <select
-            id='category'
-            className='form-control'
-            onChange={handleChange('category')}
-            value={category}>
-            <option>SELECT</option>
-            <option value='Food'>Food</option>
-            <option value='Petrol'>Petrol</option>
-            <option value='Travel'>Travel</option>
-            <option value='other'>Other</option>
-          </select>
-        </div>
+                          <div className='row'>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='select'
+                                label='Category'
+                                name='category'
+                                options={expenseCategoryOptionData}
+                              />
+                            </div>
 
-        <div className='col-md-5 p-3'>
-          <label htmlFor='amount' className='form-label'>
-            Amount
-          </label>
-          <input
-            type='number'
-            id='amount'
-            className='form-control'
-            placeholder=''
-            onChange={handleChange('amount')}
-            value={amount}
-          />
-        </div>
+                            <div className='col-lg-3 col-md-4 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                type='Number'
+                                label='Amount'
+                                name='amount'
+                              />
+                            </div>
+                            <div className='col-lg-3 col-md-4 col-sm-12'>
+                              <FormikControl
+                                control='select'
+                                label='Payment Status'
+                                name='paymentStatus'
+                                options={expensePaymentStatusOptions}
+                              />
+                            </div>
+                          </div>
 
-        <div className='col-md-5 p-3'>
-          <label htmlFor='paymentStatus' className='form-label'>
-            Payment Status
-          </label>
-          <select
-            id='paymentStatus'
-            className='form-control'
-            onChange={handleChange('paymentStatus')}
-            value={paymentStatus}>
-            <option>SELECT</option>
-            <option value='Paid'>Paid</option>
-            <option value='Pending'>Pending</option>
-            <option value='Partial'>Partial</option>
-          </select>
+                          <div className='row'>
+                            <div className='col'>
+                              <FormikControl
+                                control='input'
+                                type='text'
+                                label='Message'
+                                name='message'
+                              />
+                            </div>
+                          </div>
+                          <div className='d-flex flex-row-reverse'>
+                            <button type='submit' className='btn btn-primary'>
+                              {isAddMode ? 'Submit' : 'Update'}
+                            </button>
+                          </div>
+                        </Form>
+                      );
+                    }}
+                  </Formik>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div className='col-md-4 p-3'>
-          <label htmlFor='message' className='form-label'>
-            Message
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            id='message'
-            placeholder='Message'
-            onChange={handleChange('message')}
-            value={message}
-          />
-        </div>
-        <div className='col-12 text-center p-3'>
-          {isEdit ? (
-            <button
-              type='submit'
-              className='btn btn-primary btn-lg col-md-6'
-              onClick={onUpdate}>
-              Update
-            </button>
-          ) : (
-            <button
-              type='submit'
-              className='btn btn-primary btn-lg col-md-6'
-              onClick={onSubmit}>
-              Submit
-            </button>
-          )}
-        </div>
-      </form>
-    </div>
+      </div>
+    </Base>
   );
 };
 

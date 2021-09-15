@@ -6,7 +6,11 @@ export const register = (user) => {
     .then((response) => {
       return response.data;
     })
-    .catch((err) => console.log(err));
+    .catch((error) => {
+      if (error.response) {
+        return error.response.data;
+      }
+    });
 };
 
 export const authenticate = (data, next) => {

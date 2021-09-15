@@ -6,8 +6,8 @@ const Select = (props) => {
   const { label, name, options, ...rest } = props;
 
   return (
-    <div>
-      <label htmlFor='name' className='form-label'>
+    <div className='mb-3'>
+      <label htmlFor='name' className='mb-2 text-muted'>
         {label}
       </label>
       <Field
@@ -16,9 +16,9 @@ const Select = (props) => {
         id={name}
         name={name}
         {...rest}>
-        {options.map((option) => {
+        {options.map((option, index) => {
           return (
-            <option key={option.value} value={option.value}>
+            <option key={index} value={option.value}>
               {option.key}
             </option>
           );

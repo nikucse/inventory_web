@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { FaEdit } from 'react-icons/fa';
+import React, { useState, useEffect, useMemo } from 'react';
+import { FaEdit, FaPlus } from 'react-icons/fa';
 import { getAllProduct } from '../../service/ProductService';
-import { useHistory } from 'react-router-dom';
-import MonthList from '../../constant/MonthList';
+import { useTable, useGlobalFilter } from 'react-table';
+import { COLUMNS } from '../../util/react-table-util/ProductColumns';
+import GlobalFilterOnReactTable from '../../components/filter/GlobalFilterOnReactTable';
+import Base from '../core/Base';
 import './products.css';
-import FileViewer from '../../util/FileViewer';
+import { useHistory } from 'react-router-dom';
 
-const Products = (props) => {
+const Products = () => {
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState({});
   const [error, setError] = useState([]);
-  let history = useHistory();
+  const history = useHistory();
 
   const loadAllProducts = () => {
     getAllProduct().then((data) => {
       setProducts(data);
-      console.log(data);
     });
   };
 
@@ -23,81 +24,111 @@ const Products = (props) => {
     loadAllProducts();
   }, []);
 
+  const getData = (data) => {
+    if (data) return data;
+    else return [];
+  };
+
+  const columns = useMemo(() => COLUMNS, []);
+  const data = useMemo(() => getData(products), [products]);
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    state,
+    setGlobalFilter,
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState: {
+        hiddenColumns: columns.map((column) => {
+          if (column.show === false) return column.accessor || column.id;
+        }),
+      },
+    },
+    useGlobalFilter
+  );
+
+  const { globalFilter } = state;
+
+  const productForm = () => {
+    history.push('/app/add-product');
+  };
+
   const onEditProduct = (product) => {
-    console.log('onEditProduct = ', product);
     history.push({
-      pathname: '/app/add-product',
+      pathname: `/app/edit-product/${product.id}`,
       state: product,
     });
   };
 
-  const displayImage = (imageUrl) => {
-    console.log(imageUrl);
-  };
-
-  const productList = products.map((product) => (
-    <tr key={product.id}>
-      <td>{product.productName}</td>
-      <td>{product.dimension}</td>
-      <td onClick={() => displayImage(product.productImageLink)}>
-        {product.productImageLink === '' ||
-        product.productImageLink == undefined ? (
-          ''
-        ) : (
-          <FileViewer
-            productUrl={product.productImageLink}
-            width={'96'}
-            height={'65'}
-          />
-        )}
-      </td>
-      <td>{product.price}</td>
-      <td>{product.actualPrice}</td>
-      <td>{product.buildBy}</td>
-      {/* <td>{product.location}</td> */}
-      <td>{product.status}</td>
-      <td>{product.message}</td>
-      <td>{product.date.substring(0, 10)}</td>
-      {/* <td>{product.completedDate}</td> */}
-      <td className='text-primary' onClick={() => onEditProduct(product)}>
-        <FaEdit />
-      </td>
-    </tr>
-  ));
-
-  return (
-    <div className='container-fluid py-5'>
-      <div className='row justify-content-center'>
-        <div className='col-md-6 text-center m-2'>
-          <h2 className='heading-section'>Product List</h2>
-        </div>
-        <MonthList />
-      </div>
-      <div className='row justify-content-center'>
-        <div className='col-md-12'>
-          <table className='table'>
+  const tableDesign = () => {
+    return (
+      <div className='container-fluid py-5'>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-md-6 m-2'>
+              <h2 className='heading-section'>Product List</h2>
+            </div>
+            <GlobalFilterOnReactTable
+              filter={globalFilter}
+              setFilter={setGlobalFilter}
+            />
+            <div className='pt-3'>
+              <button
+                className='btn btn-success'
+                type='button'
+                onClick={() => productForm()}>
+                <FaPlus /> Add Product
+              </button>
+            </div>
+          </div>
+          <table {...getTableProps()} className='table'>
             <thead className='bg-primary text-light'>
-              <tr>
-                <th>Name</th>
-                <th>Dimension</th>
-                <th>Photo</th>
-                <th>Price</th>
-                <th>Actual Price</th>
-                <th>Build By</th>
-                {/* <th>Location</th> */}
-                <th>Status</th>
-                <th>Message</th>
-                <th>Order Date</th>
-                {/* <th>Completed Date</th> */}
-                <th>Edit</th>
-              </tr>
+              {headerGroups.map((headerGroup) => (
+                <tr
+                  {...headerGroup.getHeaderGroupProps()}
+                  className='bg-primary'>
+                  {headerGroup.headers.map((column) => (
+                    <th {...column.getHeaderProps()} className='px-4'>
+                      {column.render('Header')}
+                    </th>
+                  ))}
+                  <th>Edit</th>
+                </tr>
+              ))}
             </thead>
-            <tbody>{productList}</tbody>
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()}>
+                    {row.cells.map((cell) => {
+                      return (
+                        <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                      );
+                    })}
+
+                    <td
+                      className='text-primary'
+                      onClick={() => onEditProduct(row.original)}>
+                      <FaEdit />
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
           </table>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
+
+  return <Base>{tableDesign()}</Base>;
 };
 
 export default Products;

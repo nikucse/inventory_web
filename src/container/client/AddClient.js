@@ -1,280 +1,187 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
-import { addClient, updateClient } from '../../service/ClientService';
+import React, { useState, useEffect } from 'react';
+import { Form, Formik } from 'formik';
+import FormikControl from '../formik/FormikControl';
+import { useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
+import { addClient } from '../../service/ClientService';
+import { countryList } from '../../constant/CountryList';
+import { indiaStateList } from '../../constant/IndiaStateList';
+import Base from '../core/Base';
 
-const AddClient = () => {
-  let history = useHistory();
+const AddClient = ({ history, match }) => {
+  const { id } = match.params;
+  const isAddMode = !id;
+  const [formValues, setFormValues] = useState(null);
 
-  const [values, setValues] = useState({
+  useEffect(() => {
+    if (history.location.state && history.location.state.fullName) {
+      setFormValues({
+        ...history.location.state,
+      });
+    }
+  }, []);
+  const initialValues = {
     fullName: '',
     emailId: '',
     organization: '',
-    address: '',
     primaryContactNo: '',
     secondaryContactNo: '',
     country: '',
     state: '',
-    city: '',
-    zip: '',
-    other: '',
-    error: '',
-    loading: false,
-    didRedirect: false,
-    isEdit: false,
+    pinCode: '',
+    address: '',
+    message: '',
+  };
+
+  const validationSchema = Yup.object().shape({
+    fullName: Yup.string().required('Please Enter a Name'),
+    emailId: Yup.string()
+      .email('Invalid Email format i.e abc@xyz.com')
+      .required('Required'),
+    organization: Yup.string().required('Please Enter Organization'),
+    address: Yup.string().required('Please Enter Address'),
+    primaryContactNo: Yup.string().required('Please Enter Contact No'),
+    country: Yup.string().required('Please Select Country'),
+    state: Yup.string().required('Please Select State'),
   });
 
-  const {
-    fullName,
-    emailId,
-    organization,
-    address,
-    primaryContactNo,
-    secondaryContactNo,
-    country,
-    state,
-    city,
-    zip,
-    other,
-    error,
-    loading,
-    didRedirect,
-    isEdit,
-  } = values;
-
-  useEffect(() => {
-    if (history.location.state && history.location.state.fullName)
-      setValues({ ...values, ...history.location.state, isEdit: true });
-    history.push({
-      state: {},
+  const onSubmit = (values) => {
+    addClient(values).then((data) => {
+      if (data.error) {
+        alert('Error ', data.reason);
+      } else {
+        history.push('/app/clients');
+      }
     });
-  }, []);
-
-  const onSubmit = (event) => {
-    event.preventDefault();
-    setValues({ ...values, error: false, loading: true });
-
-    addClient({
-      fullName,
-      emailId,
-      organization,
-      address,
-      primaryContactNo,
-      secondaryContactNo,
-      country,
-      state,
-      city,
-      zip,
-      other,
-    })
-      .then((data) => {
-        if (data.error) {
-          setValues({ ...values, error: data.error, loading: false });
-        } else {
-          setValues({
-            ...values,
-            didRedirect: true,
-          });
-          history.push('/app/clients');
-          console.log('Add Client Detail =====> ', data);
-        }
-      })
-      .catch(console.log('Login request failed'));
-  };
-
-  const onUpdate = (event) => {
-    event.preventDefault();
-    console.log('values', values);
-    updateClient(values)
-      .then((data) => {
-        if (data.error) {
-          setValues({ ...values, error: data.error, loading: false });
-        } else {
-          setValues({
-            ...values,
-            didRedirect: true,
-          });
-          history.push('/app/clients');
-
-          console.log('Edit Client Detail =====> ', data);
-        }
-      })
-      .catch((err) => console.log('Add Product request failed', err));
-  };
-
-  const handleChange = (name) => (event) => {
-    setValues({ ...values, error: false, [name]: event.target.value });
   };
 
   return (
-    <div className='container'>
-      <br />
-      {isEdit ? (
-        <h2 className='text-center'>Edit Client</h2>
-      ) : (
-        <h2 className='text-center'>Add Client</h2>
-      )}
-      <form className='row g-3'>
-        <div className='col-md-5 mb-3'>
-          <label htmlFor='fullName' className='form-label'>
-            Full Name
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            id='fullName'
-            placeholder='Enter Full Name'
-            onChange={handleChange('fullName')}
-            value={fullName}
-          />
-        </div>
-        <div className='col-md-5 mb-3'>
-          <label htmlFor='emailId' className='form-label'>
-            Email
-          </label>
-          <input
-            type='email'
-            className='form-control'
-            id='emailId'
-            placeholder='Enter Email Id'
-            onChange={handleChange('emailId')}
-            value={emailId}
-          />
-        </div>
-        <div className='col-md-5 mb-3'>
-          <label htmlFor='organization' className='form-label'>
-            Organization Name
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            id='organization'
-            placeholder='Organization Name'
-            onChange={handleChange('organization')}
-            value={organization}
-          />
-        </div>
-        <div className='col-md-5 mb-3'>
-          <label htmlFor='primaryContactNo' className='form-label'>
-            Primary Contact No
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            id='primaryContactNo'
-            placeholder='999999999'
-            onChange={handleChange('primaryContactNo')}
-            value={primaryContactNo}
-          />
-        </div>
-        <div className='col-md-5 mb-3'>
-          <label htmlFor='secondaryContactNo' className='form-label'>
-            Secondary Contact No
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            id='secondaryContactNo'
-            placeholder='999999999'
-            onChange={handleChange('secondaryContactNo')}
-            value={secondaryContactNo}
-          />
-        </div>
-        <div className='col-md-5 mb-3'>
-          <label htmlFor='city' className='form-label'>
-            City
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            id='city'
-            onChange={handleChange('city')}
-            value={city}
-          />
-        </div>
-        <div className='col-md-5 mb-3'>
-          <label htmlFor='other' className='form-label'>
-            Message
-          </label>
-          <textarea
-            type='text'
-            className='form-control'
-            id='other'
-            placeholder='Enter Some Extra Info'
-            onChange={handleChange('other')}
-            value={other}
-          />
-        </div>
+    <Base>
+      <div className='h-100'>
+        <div className='container h-100'>
+          <div className='row justify-content-sm-center h-100'>
+            <div className='col-lg-8 col-md-10 col-sm-12'>
+              <div className='text-center mt-5'></div>
+              <div className='card shadow-lg'>
+                <div className='card-body p-5'>
+                  <h1 className='fs-4 card-title fw-bold mb-4'>
+                    {isAddMode ? 'Add Client' : 'Edit Client'}
+                  </h1>
+                  <Formik
+                    initialValues={formValues || initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={onSubmit}
+                    enableReinitialize>
+                    {(formik) => {
+                      return (
+                        <Form autoComplete='off'>
+                          <div className='row'>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                label='Full Name'
+                                name='fullName'
+                                autoFocus
+                              />
+                            </div>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                label='Email Id'
+                                name='emailId'
+                              />
+                            </div>
+                          </div>
 
-        <div className='col-5 mb-3'>
-          <label htmlFor='address' className='form-label'>
-            Address
-          </label>
-          <textarea
-            type='text'
-            className='form-control'
-            id='address'
-            placeholder='Apartment, studio, or floor'
-            onChange={handleChange('address')}
-            value={address}
-          />
+                          <div className='row'>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                label='Organization'
+                                name='organization'
+                              />
+                            </div>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                type='Number'
+                                label='Primary Contact-No'
+                                name='primaryContactNo'
+                              />
+                            </div>
+                          </div>
+
+                          <div className='row'>
+                            <div className='col-lg-6 col-md-6 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                type='Number'
+                                label='Secondary Contact-No'
+                                name='secondaryContactNo'
+                              />
+                            </div>
+                            <div className='col-lg-3 col-md-4 col-sm-12'>
+                              <FormikControl
+                                control='select'
+                                label='Country'
+                                name='country'
+                                options={countryList}
+                              />
+                            </div>
+                            <div className='col-lg-3 col-md-4 col-sm-12'>
+                              <FormikControl
+                                control='select'
+                                label='State'
+                                name='state'
+                                options={indiaStateList}
+                              />
+                            </div>
+                          </div>
+
+                          <div className='row'>
+                            <div className='col-lg-3 col-md-4 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                type='Number'
+                                label='Pincode'
+                                name='pinCode'
+                              />
+                            </div>
+                            <div className='col-lg-9 col-md-8 col-sm-12'>
+                              <FormikControl
+                                control='input'
+                                label='Address'
+                                name='address'
+                              />
+                            </div>
+                          </div>
+
+                          <div className='row'>
+                            <div className='col'>
+                              <FormikControl
+                                control='input'
+                                label='Message'
+                                name='message'
+                              />
+                            </div>
+                          </div>
+
+                          <div className='d-flex flex-row-reverse'>
+                            <button type='submit' className='btn btn-primary'>
+                              {isAddMode ? 'Submit' : 'Update'}
+                            </button>
+                          </div>
+                        </Form>
+                      );
+                    }}
+                  </Formik>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className='col-md-5 mb-3'>
-          <label htmlFor='zip' className='form-label'>
-            Zip Code
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            id='zip'
-            onChange={handleChange('zip')}
-            value={zip}
-          />
-        </div>
-        <div className='col-md-5 mb-3'>
-          <label htmlFor='country' className='form-label'>
-            Country
-          </label>
-          <select
-            id='country'
-            className='form-control'
-            onChange={handleChange('country')}
-            value='test'>
-            <option>INDIA</option>
-            <option>...</option>
-          </select>
-        </div>
-        <div className='col-md-5 mb-3'>
-          <label htmlFor='state' className='form-label'>
-            State
-          </label>
-          <select
-            id='state'
-            className='form-control'
-            onChange={handleChange('state')}
-            value='test'>
-            <option>Choose...</option>
-            <option>...</option>
-          </select>
-        </div>
-        <div className='col-md-12 text-center p-3'>
-          {isEdit ? (
-            <button
-              type='submit'
-              className='btn btn-primary btn-lg col-md-6'
-              onClick={onUpdate}>
-              Update
-            </button>
-          ) : (
-            <button
-              type='submit'
-              className='btn btn-primary btn-lg col-md-6'
-              onClick={onSubmit}>
-              Submit
-            </button>
-          )}
-        </div>
-      </form>
-    </div>
+      </div>
+    </Base>
   );
 };
 
