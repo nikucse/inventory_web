@@ -29,7 +29,7 @@ const AddEmployee = ({ history, match }) => {
     perDayWages: '',
     address: '',
     panCardNo: '',
-    adhaarCardNo: '',
+    aadhaarCardNo: '',
     primaryContactNo: '',
     secondaryContactNo: '',
     country: '',
