@@ -145,7 +145,7 @@ const AddEmployee = ({ history, match }) => {
                                 control='input'
                                 type='Number'
                                 label='Adhaar No'
-                                name='adhaarCardNo'
+                                name='aadhaarCardNo'
                               />
                             </div>
                           </div>
