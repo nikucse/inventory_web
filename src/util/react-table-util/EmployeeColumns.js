@@ -39,6 +39,6 @@ export const COLUMNS = [
   },
   {
     Header: 'AdharCard',
-    accessor: 'adhaarCardNo',
+    accessor: 'aadhaarCardNo',
   },
 ];
