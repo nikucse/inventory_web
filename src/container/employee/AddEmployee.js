@@ -39,7 +39,7 @@ const AddEmployee = ({ history, match }) => {
 
   const validationSchema = Yup.object().shape({
     fullName: Yup.string().required('Required'),
-    emailId: Yup.string().email('Invalid E-mail format ').required('Required'),
+    //emailId: Yup.string().email('Invalid E-mail format ').required('Required'),
     designation: Yup.string().required('Required'),
     perDayWages: Yup.number().required('Required'),
     address: Yup.string().required('Required'),
