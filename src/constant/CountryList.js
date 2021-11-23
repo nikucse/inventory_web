@@ -1,10 +1,10 @@
 import { indiaStateList } from './IndiaStateList';
 
 export const countryList = [
-  {
-    key: 'Select',
-    value: '',
-  },
+  // {
+  //   key: 'Select',
+  //   value: '',
+  // },
   //   { key: 'Albania', value: 'AL' },
   //   { key: 'Åland Islands', value: 'AX' },
   //   { key: 'Algeria', value: 'DZ' },

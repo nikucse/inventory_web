@@ -35,13 +35,13 @@ const AddClient = ({ history, match }) => {
 
   const validationSchema = Yup.object().shape({
     fullName: Yup.string().required('Please Enter a Name'),
-    emailId: Yup.string()
-      .email('Invalid Email format i.e abc@xyz.com')
-      .required('Required'),
-    organization: Yup.string().required('Please Enter Organization'),
-    address: Yup.string().required('Please Enter Address'),
+    // emailId: Yup.string()
+    //   .email('Invalid Email format i.e abc@xyz.com')
+    //   .required('Required'),
+    //organization: Yup.string().required('Please Enter Organization'),
+    //address: Yup.string().required('Please Enter Address'),
     primaryContactNo: Yup.string().required('Please Enter Contact No'),
-    country: Yup.string().required('Please Select Country'),
+    //country: Yup.string().required('Please Select Country'),
     state: Yup.string().required('Please Select State'),
   });
 

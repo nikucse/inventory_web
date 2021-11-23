@@ -165,10 +165,6 @@ export const paymentModeOptions = [
     selected: 'true',
   },
   {
-    value: 'No',
-    key: 'No',
-  },
-  {
     value: 'Cash',
     key: 'Cash',
   },
