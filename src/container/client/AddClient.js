@@ -38,10 +38,10 @@ const AddClient = ({ history, match }) => {
     // emailId: Yup.string()
     //   .email('Invalid Email format i.e abc@xyz.com')
     //   .required('Required'),
-    organization: Yup.string().required('Please Enter Organization'),
-    address: Yup.string().required('Please Enter Address'),
+    //organization: Yup.string().required('Please Enter Organization'),
+    //address: Yup.string().required('Please Enter Address'),
     primaryContactNo: Yup.string().required('Please Enter Contact No'),
-    country: Yup.string().required('Please Select Country'),
+    //country: Yup.string().required('Please Select Country'),
     state: Yup.string().required('Please Select State'),
   });
 

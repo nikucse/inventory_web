@@ -27,7 +27,10 @@ const AddProduct = ({ history, match }) => {
   const [employees, setEmployees] = useState([]);
   const [productImageLink, setProductImageLink] = useState('');
   const [clients, setClients] = useState([]);
-  const buildByOptions = [{ value: '', key: 'Select Employee' }];
+  const buildByOptions = [
+    { value: '', key: 'Select Employee' },
+    { value: 'NA', key: 'Not Decide' },
+  ];
   const clientListOptions = [{ value: '', key: 'Select Client' }];
 
   employees.map((employee) => {
@@ -57,14 +60,14 @@ const AddProduct = ({ history, match }) => {
   const validationSchema = Yup.object().shape({
     productName: Yup.string().required("Can't be Blank"),
     category: Yup.string().required('Please Select Category'),
-    dimension: Yup.string().required('Please Enter Product Dimension'),
-    price: Yup.string().required('Please Enter Product Price'),
-    actualPrice: Yup.string().required('Please Enter Actual Price'),
-    buildBy: Yup.string().required('Please Select Built By'),
+    //dimension: Yup.string().required('Please Enter Product Dimension'),
+    //price: Yup.string().required('Please Enter Product Price'),
+    //actualPrice: Yup.string().required('Please Enter Actual Price'),
+    //buildBy: Yup.string().required('Please Select Built By'),
     status: Yup.string().required('Please Select Status'),
     //paymentMode: Yup.string().required('Please Select Mode Of Payment'),
     clientId: Yup.string().required('Please Select Client'),
-    deliveryDate: Yup.string().required('Please Select Delivery Date'),
+    //deliveryDate: Yup.string().required('Please Select Delivery Date'),
   });
 
   const loadAllEmployeeAndClient = () => {

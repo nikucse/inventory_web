@@ -7,7 +7,6 @@ import Bills from './container/bill/Bills';
 import AddClient from './container/client/AddClient';
 import Reports from './container/Reports';
 import Products from './container/product/Products';
-import NotFound from './components/NotFound';
 import Employees from './container/employee/Employees';
 import AddEmployee from './container/employee/AddEmployee';
 import AddProduct from './container/product/AddProduct';
@@ -22,6 +21,7 @@ import GetPurchasingProduct from './container/purchase-product/GetPurchasingProd
 import Register from './container/auth-module/Register';
 import Dashboard from './container/dashboard/Dashboard';
 import PrivateRoute from './container/core/PrivateRoute';
+import NotFound from './pages/NotFound';
 
 const Routes = () => {
   return (
